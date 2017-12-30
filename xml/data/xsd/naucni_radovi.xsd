@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/naucni_radovi"
+    xmlns="http://www.ftn.uns.ac.rs/naucni_radovi" xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad"
+    xmlns:ulog="http://www.ftn.uns.ac.rs/uloge">
+    <xs:import namespace="http://www.ftn.uns.ac.rs/naucni_rad" schemaLocation="naucni_rad.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/uloge" schemaLocation="uloge.xsd"/>
+    <xs:element name="Naucni_radovi">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="nr:Naucni_rad"/>
+                <xs:element ref="ulog:Urednik"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
