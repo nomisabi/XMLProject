@@ -1,4 +1,4 @@
-package com.example.service;
+package com.example.repository;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.domain.Product;
-import com.example.domain.ProductSearchResult;
+import com.example.model.naucni_radovi.search.Product;
+import com.example.model.naucni_radovi.search.ProductSearchResult;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.marklogic.client.document.JSONDocumentManager;
 import com.marklogic.client.io.DocumentMetadataHandle;

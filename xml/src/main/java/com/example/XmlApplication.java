@@ -1,6 +1,5 @@
 package com.example;
 
-import com.example.domain.Product;
 import com.example.model.naucni_rad.NaucniRad;
 import com.marklogic.client.DatabaseClient;
 import com.marklogic.client.DatabaseClientFactory;

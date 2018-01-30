@@ -1,4 +1,4 @@
-package com.example.service.init;
+package com.example.repository.init;
 
 import java.io.FileReader;
 import java.io.IOException;

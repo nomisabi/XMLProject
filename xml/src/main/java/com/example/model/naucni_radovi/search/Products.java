@@ -1,4 +1,4 @@
-package com.example.domain;
+package com.example.model.naucni_radovi.search;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

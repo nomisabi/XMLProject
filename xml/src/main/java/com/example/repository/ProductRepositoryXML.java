@@ -1,4 +1,4 @@
-package com.example.service;
+package com.example.repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.domain.Product;
-import com.example.domain.ProductSearchResult;
+import com.example.model.naucni_radovi.search.Product;
+import com.example.model.naucni_radovi.search.ProductSearchResult;
 import com.marklogic.client.document.XMLDocumentManager;
 import com.marklogic.client.io.DocumentMetadataHandle;
 import com.marklogic.client.io.JAXBHandle;

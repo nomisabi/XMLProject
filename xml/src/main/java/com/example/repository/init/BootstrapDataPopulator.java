@@ -1,4 +1,4 @@
-package com.example.service.init;
+package com.example.repository.init;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,10 +13,10 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.domain.Product;
-import com.example.domain.Products;
-import com.example.service.ProductRepositoryJSON;
-import com.example.service.ProductRepositoryXML;
+import com.example.model.naucni_radovi.search.Product;
+import com.example.model.naucni_radovi.search.Products;
+import com.example.repository.ProductRepositoryJSON;
+import com.example.repository.ProductRepositoryXML;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**

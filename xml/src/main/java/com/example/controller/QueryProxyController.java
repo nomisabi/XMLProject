@@ -1,4 +1,4 @@
-package com.example.web;
+package com.example.controller;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -19,7 +19,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 @RestController
 public class QueryProxyController {
 
-	private static final Logger logger = LoggerFactory.getLogger(SampleRESTwithXMLController.class);
+	private static final Logger logger = LoggerFactory.getLogger(NaucniRadController.class);
 
 	@Autowired
 	protected Client jerseyClient;

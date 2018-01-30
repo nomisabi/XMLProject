@@ -1,9 +1,9 @@
-package com.example.service;
+package com.example.repository;
 
-import com.example.domain.NaucniRadSearchResult;
-import com.example.domain.Product;
-import com.example.domain.ProductSearchResult;
 import com.example.model.naucni_rad.NaucniRad;
+import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
+import com.example.model.naucni_radovi.search.Product;
+import com.example.model.naucni_radovi.search.ProductSearchResult;
 
 /**
  * Showcase for a simple repository allowing to access and modify

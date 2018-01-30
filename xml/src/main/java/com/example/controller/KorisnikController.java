@@ -1,4 +1,4 @@
-package com.example.web;
+package com.example.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,33 +18,30 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.example.domain.NaucniRadSearchResult;
-import com.example.domain.Product;
-import com.example.domain.ProductSearchResult;
-import com.example.model.naucni_rad.NaucniRad;
-import com.example.service.NaucniRadRepositoryXML;
-import com.example.service.ProductRepositoryXML;
+import com.example.model.uloge.TKorisnik;
+import com.example.service.KorisniciService;
+
 
 @RestController
-public class SampleRESTwithXMLController {
+public class KorisnikController {
 
-    private static final Logger logger = LoggerFactory.getLogger(SampleRESTwithXMLController.class);
+    private static final Logger logger = LoggerFactory.getLogger(KorisnikController.class);
     
     @Autowired
-    protected NaucniRadRepositoryXML nrRepositoryXML;
+    protected KorisniciService korisnikService;
 
 
     @RequestMapping(
-            value = "/naucni_radovi",
+            value = "/korisnici",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_XML_VALUE
     )
-    public ResponseEntity<String> createNaucniRad(@RequestBody NaucniRad nr, UriComponentsBuilder builder) {
-        nrRepositoryXML.add(nr);
+    public ResponseEntity<String> createTKorisnik(@RequestBody TKorisnik nr, UriComponentsBuilder builder) {
+        korisnikService.add(nr);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(
-                builder.path("/naucni_radovi/{id}.xml")
+                builder.path("/korisnik/{id}.xml")
                         .buildAndExpand(nr.getId()).toUri());
 
         return new ResponseEntity<>("", headers, HttpStatus.CREATED);
@@ -52,32 +50,32 @@ public class SampleRESTwithXMLController {
     
     
     @RequestMapping(
-            value = "/naucni_radovi/{id}.xml",
+            value = "/korisnik/{id}.xml",
             method = RequestMethod.DELETE
     )
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteNaucniRad(@PathVariable("id") String id) {
-        nrRepositoryXML.remove(id);
+    public void deleteTKorisnik(@PathVariable("id") String id) {
+        korisnikService.remove(id);
     }
 
     @RequestMapping(
-            value = "/naucni_radovi/{id}.xml",
+            value = "/korisnik/{id}.xml",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_XML_VALUE
     )
-    public NaucniRad readNaucniRad(@PathVariable("id") String id) {
-        return nrRepositoryXML.findById(id);
+    public TKorisnik readTKorisnik(@PathVariable("id") String id) {
+        return korisnikService.findById(id);
     }
 
     @RequestMapping(
-            value = "/naucni_rad.xml",
+            value = "/korisnik.xml",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_XML_VALUE
     )
-    public NaucniRadSearchResult searchNaucniRad(@RequestParam(required=false, value="name") String name) {
+    public com.example.model.uloge.search.TKorisnikSearchResult searchTKorisnik(@RequestParam(required=false, value="name") String name) {
         if (StringUtils.isEmpty(name)) {
-            logger.info("Lookup all {} naucni rad...", nrRepositoryXML.count());
-            return nrRepositoryXML.findAll();
+            logger.info("Lookup all {} naucni rad...", korisnikService.count());
+            return korisnikService.findAll();
         } else {
             logger.info("Lookup products by name: {}", name);
             return null;

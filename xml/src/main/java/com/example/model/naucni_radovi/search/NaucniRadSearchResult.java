@@ -1,4 +1,4 @@
-package com.example.domain;
+package com.example.model.naucni_radovi.search;
 
 import com.example.model.naucni_rad.NaucniRad;
 import com.marklogic.client.query.FacetResult;
