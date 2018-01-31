@@ -23,9 +23,11 @@ public interface KorisnikRepository {
 
 	TKorisnikSearchResult findAll();
 
-	//ProductSearchResult findByName(String name);
+	TKorisnik findByUsername(String username);
 
-	//ProductSearchResult findByYear(int year);
+	// ProductSearchResult findByName(String name);
+
+	// ProductSearchResult findByYear(int year);
 
 	Long count();
 

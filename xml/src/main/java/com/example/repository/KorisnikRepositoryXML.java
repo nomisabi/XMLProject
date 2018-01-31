@@ -88,8 +88,6 @@ public class KorisnikRepositoryXML implements KorisnikRepository {
 		queryManager.search(criteria, resultsHandle);
 		return toSearchResult(resultsHandle);
 	}
-	
-
 
 	// ~~
 
@@ -115,5 +113,17 @@ public class KorisnikRepositoryXML implements KorisnikRepository {
 			korisnici.add((TKorisnik) contentHandle.get(TKorisnik.class));
 		}
 		return new TKorisnikSearchResult(korisnici);
+	}
+
+	@Override
+	public TKorisnik findByUsername(String username) {
+		TKorisnik korisnik = null;
+		if (username.equals("admin")) {
+			korisnik = new TKorisnik();
+			korisnik.setKorisnickoIme("admin");
+			korisnik.setLozinka("admin");
+		}
+		return korisnik;
+
 	}
 }
