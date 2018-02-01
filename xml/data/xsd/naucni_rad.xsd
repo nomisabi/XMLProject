@@ -23,7 +23,7 @@
             <xs:attribute name="Id" type="xs:ID" use="required"/>
         </xs:complexType>
     </xs:element>
-    <xs:element name="Referenca" type="xs:IDREF"> </xs:element>
+    <xs:element name="Referenca" type="nr:TReferenca"> </xs:element>
     <xs:complexType abstract="true" name="TReferenca">
         <xs:sequence/>
     </xs:complexType>
@@ -101,7 +101,7 @@
         <xs:complexContent>
             <xs:extension base="nr:TReferenca">
                 <xs:sequence>
-                    <xs:element ref="nr:Naucni_rad"/>
+                    <xs:element name="Naucni_rad" type="xs:IDREF"/>
                 </xs:sequence>
                 <xs:attribute name="Strana">
                     <xs:simpleType>
@@ -117,7 +117,7 @@
         <xs:complexContent>
             <xs:extension base="nr:TReferenca">
                 <xs:sequence>
-                    <xs:element ref="rec:Recenzija"/>
+                    <xs:element name="Recenzija" type="xs:IDREF"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -126,7 +126,7 @@
         <xs:complexContent>
             <xs:extension base="nr:TReferenca">
                 <xs:sequence>
-                    <xs:element ref="nr:Poglavlje"/>
+                    <xs:element name="Poglavlje" type="xs:IDREF"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

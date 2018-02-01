@@ -18,30 +18,31 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.example.model.uloge.TKorisnik;
-import com.example.service.KorisniciService;
+import com.example.model.uloge.Autor;
+import com.example.model.uloge.search.AutorSearchResult;
+import com.example.service.AutorService;
 
 
 @RestController
-public class KorisnikController {
+public class AutorController {
 
-    private static final Logger logger = LoggerFactory.getLogger(KorisnikController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AutorController.class);
     
     @Autowired
-    protected KorisniciService korisnikService;
+    protected AutorService autorService;
 
 
     @RequestMapping(
-            value = "/korisnici",
+            value = "/autori",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_XML_VALUE
     )
-    public ResponseEntity<String> createTKorisnik(@RequestBody TKorisnik nr, UriComponentsBuilder builder) {
-        korisnikService.add(nr);
+    public ResponseEntity<String> createAutor(@RequestBody Autor nr, UriComponentsBuilder builder) {
+        autorService.add(nr);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(
-                builder.path("/korisnik/{id}.xml")
+                builder.path("/autori/{id}.xml")
                         .buildAndExpand(nr.getId()).toUri());
 
         return new ResponseEntity<>("", headers, HttpStatus.CREATED);
@@ -50,32 +51,32 @@ public class KorisnikController {
     
     
     @RequestMapping(
-            value = "/korisnik/{id}.xml",
+            value = "/autori/{id}.xml",
             method = RequestMethod.DELETE
     )
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTKorisnik(@PathVariable("id") String id) {
-        korisnikService.remove(id);
+    public void deleteAutor(@PathVariable("id") String id) {
+        autorService.remove(id);
     }
 
     @RequestMapping(
-            value = "/korisnik/{id}.xml",
+            value = "/autori/{id}.xml",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_XML_VALUE
     )
-    public TKorisnik readTKorisnik(@PathVariable("id") String id) {
-        return korisnikService.findById(id);
+    public Autor readAutor(@PathVariable("id") String id) {
+        return autorService.findById(id);
     }
 
     @RequestMapping(
-            value = "/korisnik.xml",
+            value = "/autori.xml",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_XML_VALUE
     )
-    public com.example.model.uloge.search.TKorisnikSearchResult searchTKorisnik(@RequestParam(required=false, value="name") String name) {
+    public AutorSearchResult searchAutor(@RequestParam(required=false, value="name") String name) {
         if (StringUtils.isEmpty(name)) {
-            logger.info("Lookup all {} naucni rad...", korisnikService.count());
-            return korisnikService.findAll();
+            logger.info("Lookup all {} naucni rad...", autorService.count());
+            return autorService.findAll();
         } else {
             logger.info("Lookup products by name: {}", name);
             return null;

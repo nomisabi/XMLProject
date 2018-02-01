@@ -119,7 +119,18 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="Recenzent" type="ul:TKorisnik"/>
+    <xs:element name="Recenzent">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="ul:TKorisnik">
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="Naucni_radovi"
+                            type="xs:IDREF"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="Institucija">
         <xs:complexType>
             <xs:sequence>

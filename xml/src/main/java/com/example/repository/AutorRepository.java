@@ -4,8 +4,9 @@ import com.example.model.naucni_rad.NaucniRad;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
 import com.example.model.naucni_radovi.search.Product;
 import com.example.model.naucni_radovi.search.ProductSearchResult;
+import com.example.model.uloge.Autor;
 import com.example.model.uloge.TKorisnik;
-import com.example.model.uloge.search.TKorisnikSearchResult;
+import com.example.model.uloge.search.AutorSearchResult;
 
 /**
  * Showcase for a simple repository allowing to access and modify
@@ -13,15 +14,15 @@ import com.example.model.uloge.search.TKorisnikSearchResult;
  *
  * @author Niko Schmuck
  */
-public interface KorisnikRepository {
+public interface AutorRepository {
 
-	void add(TKorisnik nr);
+	void add(Autor nr);
 
 	void remove(String id);
 
-	TKorisnik findById(String id);
+	Autor findById(String id);
 
-	TKorisnikSearchResult findAll();
+	AutorSearchResult findAll();
 
 	TKorisnik findByUsername(String username);
 

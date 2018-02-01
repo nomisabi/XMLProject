@@ -13,13 +13,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.model.uloge.TKorisnik;
-import com.example.repository.KorisnikRepository;
+import com.example.repository.AutorRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private KorisnikRepository korisnikRepository;
+	private AutorRepository korisnikRepository;
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		TKorisnik korisnik = korisnikRepository.findByUsername(username);

@@ -1,7 +1,7 @@
 package com.example.model.uloge.search;
 
 import com.example.model.naucni_rad.NaucniRad;
-import com.example.model.uloge.TKorisnik;
+import com.example.model.uloge.Autor;
 import com.marklogic.client.query.FacetResult;
 import com.marklogic.client.query.FacetValue;
 
@@ -13,22 +13,22 @@ import java.util.List;
  */
 @XmlRootElement(name = "searchresult")
 @XmlAccessorType(XmlAccessType.NONE)
-public class TKorisnikSearchResult {
+public class AutorSearchResult {
 
-    private List<TKorisnik> korisnici;
+    private List<Autor> autori;
 
     // Default constructor to keep JAXB happy
-    public TKorisnikSearchResult() {
+    public AutorSearchResult() {
     }
 
-    public TKorisnikSearchResult(List<TKorisnik> korisnici) {
-        this.korisnici = korisnici;
+    public AutorSearchResult(List<Autor> autori) {
+        this.autori = autori;
        }
 
-    @XmlElementWrapper(name = "korisnici")
-    @XmlElement(name = "korisnici")
-    public List<TKorisnik> getKorisnici() {
-        return korisnici;
+    @XmlElementWrapper(name = "autori")
+    @XmlElement(name = "autori")
+    public List<Autor> getAutori() {
+        return autori;
     }
 
 }

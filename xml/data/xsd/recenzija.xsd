@@ -61,6 +61,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
+            <xs:attribute name="Id" type="xs:ID"/>
         </xs:complexType>
     </xs:element>
     <xs:simpleType name="TPreporuka">

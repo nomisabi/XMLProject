@@ -14,8 +14,9 @@ import org.springframework.stereotype.Component;
 
 import com.example.model.naucni_rad.NaucniRad;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
+import com.example.model.uloge.Autor;
 import com.example.model.uloge.TKorisnik;
-import com.example.model.uloge.search.TKorisnikSearchResult;
+import com.example.model.uloge.search.AutorSearchResult;
 import com.marklogic.client.document.XMLDocumentManager;
 import com.marklogic.client.io.DocumentMetadataHandle;
 import com.marklogic.client.io.JAXBHandle;
@@ -33,11 +34,11 @@ import com.marklogic.client.query.StructuredQueryDefinition;
  * @author Niko Schmuck
  */
 @Component
-public class KorisnikRepositoryXML implements KorisnikRepository {
+public class AutorRepositoryXML implements AutorRepository {
 
-	private static final Logger logger = LoggerFactory.getLogger(KorisnikRepositoryXML.class);
+	private static final Logger logger = LoggerFactory.getLogger(AutorRepositoryXML.class);
 
-	public static final String COLLECTION_REF = "/korisnik.xml";
+	public static final String COLLECTION_REF = "/autori.xml";
 	public static final int PAGE_SIZE = 10;
 
 	@Autowired
@@ -47,14 +48,14 @@ public class KorisnikRepositoryXML implements KorisnikRepository {
 	protected XMLDocumentManager xmlDocumentManager;
 
 	@Override
-	public void add(TKorisnik korisnici) {
+	public void add(Autor autori) {
 		// Add this document to a dedicated collection for later retrieval
 		DocumentMetadataHandle metadata = new DocumentMetadataHandle();
 		metadata.getCollections().add(COLLECTION_REF);
 
-		JAXBHandle contentHandle = getTKorisnikHandle();
-		contentHandle.set(korisnici);
-		xmlDocumentManager.write(getDocId(korisnici.getId()), metadata, contentHandle);
+		JAXBHandle contentHandle = getAutorHandle();
+		contentHandle.set(autori);
+		xmlDocumentManager.write(getDocId(autori.getId()), metadata, contentHandle);
 	}
 
 	@Override
@@ -63,10 +64,10 @@ public class KorisnikRepositoryXML implements KorisnikRepository {
 	}
 
 	@Override
-	public TKorisnik findById(String id) {
-		JAXBHandle contentHandle = getTKorisnikHandle();
+	public Autor findById(String id) {
+		JAXBHandle contentHandle = getAutorHandle();
 		JAXBHandle result = xmlDocumentManager.read(getDocId(id), contentHandle);
-		return (TKorisnik) result.get(TKorisnik.class);
+		return (Autor) result.get(Autor.class);
 	}
 
 	@Override
@@ -80,7 +81,7 @@ public class KorisnikRepositoryXML implements KorisnikRepository {
 	}
 
 	@Override
-	public TKorisnikSearchResult findAll() {
+	public AutorSearchResult findAll() {
 		StructuredQueryBuilder sb = queryManager.newStructuredQueryBuilder();
 		StructuredQueryDefinition criteria = sb.collection(COLLECTION_REF);
 
@@ -91,9 +92,9 @@ public class KorisnikRepositoryXML implements KorisnikRepository {
 
 	// ~~
 
-	private JAXBHandle getTKorisnikHandle() {
+	private JAXBHandle getAutorHandle() {
 		try {
-			JAXBContext context = JAXBContext.newInstance(TKorisnik.class);
+			JAXBContext context = JAXBContext.newInstance(Autor.class);
 			return new JAXBHandle(context);
 		} catch (JAXBException e) {
 			throw new RuntimeException("Unable to create product JAXB context", e);
@@ -101,29 +102,29 @@ public class KorisnikRepositoryXML implements KorisnikRepository {
 	}
 
 	private String getDocId(String string) {
-		return String.format("/korisnici/%s.xml", string);
+		return String.format("/autori/%s.xml", string);
 	}
 
-	private TKorisnikSearchResult toSearchResult(SearchHandle resultsHandle) {
-		List<TKorisnik> korisnici = new ArrayList<>();
+	private AutorSearchResult toSearchResult(SearchHandle resultsHandle) {
+		List<Autor> autori = new ArrayList<>();
 		for (MatchDocumentSummary summary : resultsHandle.getMatchResults()) {
-			JAXBHandle contentHandle = getTKorisnikHandle();
+			JAXBHandle contentHandle = getAutorHandle();
 			logger.info("  * found {}", summary.getUri());
 			xmlDocumentManager.read(summary.getUri(), contentHandle);
-			korisnici.add((TKorisnik) contentHandle.get(TKorisnik.class));
+			autori.add((Autor) contentHandle.get(Autor.class));
 		}
-		return new TKorisnikSearchResult(korisnici);
+		return new AutorSearchResult(autori);
 	}
-
+	
 	@Override
-	public TKorisnik findByUsername(String username) {
-		TKorisnik korisnik = null;
-		if (username.equals("admin")) {
-			korisnik = new TKorisnik();
-			korisnik.setKorisnickoIme("admin");
-			korisnik.setLozinka("admin");
-		}
-		return korisnik;
-
-	}
+	 	public TKorisnik findByUsername(String username) {
+	 		TKorisnik korisnik = null;
+	 		if (username.equals("admin")) {
+	 			korisnik = new TKorisnik();
+	 			korisnik.setKorisnickoIme("admin");
+	 			korisnik.setLozinka("admin");
+	 		}
+	 		return korisnik;
+	 
+	 	}
 }
