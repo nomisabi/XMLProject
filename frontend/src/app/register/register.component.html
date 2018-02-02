@@ -1,0 +1,28 @@
+<div id="login-page">
+  <div class="container">
+    <form class="form-login" name="form">
+      <div class="login-wrap">
+        <br>
+        <input type="text" class="form-control" placeholder="Ime" name="ime" [(ngModel)]="korisnik.ime" >
+        <br>
+        <input type="text" class="form-control" placeholder="Prezime" name="prezime" [(ngModel)]="korisnik.prezime">
+        <br>
+        <input type="text" class="form-control" placeholder="Korisnicko ime" name="korisnicko_ime" [(ngModel)]="korisnik.korisnicko_ime" autofocus>
+        <br>
+        <input type="password" class="form-control" placeholder="Lozinka" name="lozinka" [(ngModel)]="korisnik.lozinka">
+        <br>
+        <input type="email" class="form-control" placeholder="E-mail" name="email" [(ngModel)]="korisnik.email">
+        <br>
+        <select class="form-control" [(ngModel)]="korisnik.uloga" [ngModelOptions]="{standalone: true}">
+          <option selected="selected">AUTOR</option>
+          <option>RECENZENT</option>
+        </select>
+        <br>
+        <br>
+        <button (click)="save()" class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> REGISTRUJ SE</button>
+      </div>
+    </form>	
+  </div>
+</div>
+<br>
+<br>

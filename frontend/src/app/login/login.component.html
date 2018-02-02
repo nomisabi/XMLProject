@@ -1,0 +1,27 @@
+<div id="login-page">
+	<div class="container">
+	  <form class="form-login" name="form" (ngSubmit)="login()">
+		  <div class="login-wrap">
+        <img src="http://www.freeiconspng.com/uploads/home-house-silhouette-icon-building--public-domain-pictures--20.png" class="login-image" >
+        <br>
+        <div class="form-group" >
+          <input type="text" class="form-control" placeholder="Korisnicko ime" name="username" [(ngModel)]="user.username"  autofocus>
+        </div>
+        <br>
+        <div class="form-group" >
+          <input type="password" class="form-control" placeholder="Lozinka" name="password" [(ngModel)]="user.password" >
+        </div>
+        <br>
+        <button class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> PRIJAVI SE</button>
+        <hr>
+        <div class="registration">
+          Jos uvek nemate nalog?
+          <br>
+          <a class="" (click)="gotoRegister()">Registrujte se</a>
+        </div>
+      </div>
+    </form>	
+  </div>
+</div>
+<br>
+<br>
