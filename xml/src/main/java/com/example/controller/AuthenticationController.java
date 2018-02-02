@@ -18,6 +18,7 @@ import com.example.dto.LoginCredential;
 import com.example.security.TokenUtils;
 
 @RestController
+@RequestMapping(value="/api")
 public class AuthenticationController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
