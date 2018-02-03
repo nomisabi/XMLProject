@@ -28,12 +28,18 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.authService.login(this.user.username, this.user.password)
-      .then( res => { 
-        console.log(localStorage.getItem('token')) 
-        this.toastr.success('Login success!');
+      .then( res => {  
+        this.toastr.success('Prijava uspesna!');
+        if(this.authService.isAuthor()){
+          this.router.navigate(['/autor']);
+        } else if (this.authService.isEditor()){
+          this.router.navigate(['/urednik']);
+        } else if (this.authService.isReviewer()) {
+          this.router.navigate(['recenzent']);
+        }      
       })
       .catch(error => {
-        this.toastr.error('Invalid username or password.');
+        this.toastr.error('Korisnicko ime ili lozinka nisu ispravni.');
       });
   }
 

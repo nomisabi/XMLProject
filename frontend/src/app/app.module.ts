@@ -12,6 +12,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { RegisterComponent } from './register/register.component';
+import { HomeComponent } from './home/home.component';
+import { HomeAuthorComponent } from './home-author/home-author.component';
+import { HomeEditorComponent } from './home-editor/home-editor.component';
+import { HomeReviewerComponent } from './home-reviewer/home-reviewer.component';
 
 
 export class CustomOption extends ToastOptions {
@@ -25,7 +29,11 @@ export class CustomOption extends ToastOptions {
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent,
+    HomeAuthorComponent,
+    HomeEditorComponent,
+    HomeReviewerComponent
   ],
   imports: [
     BrowserModule,

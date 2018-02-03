@@ -22,6 +22,7 @@ import org.xml.sax.SAXException;
 import com.example.service.Korisnici2Service;
 
 @RestController
+@RequestMapping(value="/api")
 public class Korisnik2Controller {
 	private static final Logger logger = LoggerFactory.getLogger(Korisnik2Controller.class);
 

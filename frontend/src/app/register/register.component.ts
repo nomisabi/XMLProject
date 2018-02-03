@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+
+import { AuthService } from '../login/auth.service';
+
 
 @Component({
   selector: 'app-register',
@@ -7,11 +12,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
   korisnik: KorisnikInterface;
-  fs = require('fs');
-  path = require('path');
-  xml2js = require('xml2js');
 
-  constructor() { 
+  constructor(private authService: AuthService,
+              private router: Router,
+              private toastr: ToastsManager, 
+              private vcr: ViewContainerRef) { 
+    this.toastr.setRootViewContainerRef(vcr);
     this.korisnik = {
       ime: '',
       prezime: '',
@@ -26,13 +32,26 @@ export class RegisterComponent implements OnInit {
   }
   
   jsToXmlFile(obj) {
-    var builder = new this.xml2js.Builder({rootName: "korisnik"});
-    var xml = builder.buildObject(obj);
-    console.log(xml);
+    var builder = require('xmlbuilder');
+    var root = builder.create('korisnik', {
+      xmldec: false,
+      stringify: {
+        eleName: function(val) {
+          return 'ko:' + val;
+        }
+      }
+    });
+    var ele = root.ele(this.korisnik);
+    var atr = root.att('xmlns:ko', 'http://www.ftn.uns.ac.rs/korisnici');
+    return root.end({ pretty: true });
   }
 
   save(){
     console.log(this.korisnik);
-    this.jsToXmlFile(this.korisnik);
+    var xml = this.jsToXmlFile(this.korisnik);
+  
+    this.authService.register(xml)
+        .then(() => this.router.navigate(['prijava']))
+        .catch(() => this.toastr.error('Registracija nije uspela'));
   }
 }
