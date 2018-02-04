@@ -1,5 +1,9 @@
 package com.example.controller;
 
+import java.io.IOException;
+
+import javax.xml.bind.JAXBException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.xml.sax.SAXException;
 
 import com.example.model.naucni_rad.NaucniRad;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
@@ -28,60 +33,58 @@ import com.example.service.NaucniRadService;
 @RestController
 public class NaucniRadController {
 
-    private static final Logger logger = LoggerFactory.getLogger(NaucniRadController.class);
-    
-    @Autowired
-    protected NaucniRadService naucniRadService;
+	private static final Logger logger = LoggerFactory.getLogger(NaucniRadController.class);
 
+	@Autowired
+	protected NaucniRadService naucniRadService;
 
-    @RequestMapping(
-            value = "/naucni_radovi",
-            method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_XML_VALUE
-    )
-    public ResponseEntity<String> createNaucniRad(@RequestBody NaucniRad nr, UriComponentsBuilder builder) {
-        naucniRadService.add(nr);
+	@RequestMapping(value = "/naucni_radovi", method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> createNaucniRad(@RequestBody String nr, UriComponentsBuilder builder) {
+		try {
+			naucniRadService.add(nr);
+			//HttpHeaders headers = new HttpHeaders();
+			// headers.setLocation(builder.path("/naucni_radovi/{id}.xml").buildAndExpand(nr.getId()).toUri());
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(
-                builder.path("/naucni_radovi/{id}.xml")
-                        .buildAndExpand(nr.getId()).toUri());
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		} catch (JAXBException | SAXException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>("Xml dokument nije validan", HttpStatus.BAD_REQUEST);
+		}
 
-        return new ResponseEntity<>("", headers, HttpStatus.CREATED);
-    }
+	}
 
-    
-    
-    @RequestMapping(
-            value = "/naucni_radovi/{id}.xml",
-            method = RequestMethod.DELETE
-    )
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteNaucniRad(@PathVariable("id") String id) {
-        naucniRadService.remove(id);
-    }
+	@RequestMapping(value = "/naucni_radovi/{id}.xml", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deleteNaucniRad(@PathVariable("id") String id) {
+		naucniRadService.remove(id);
+	}
 
-    @RequestMapping(
-            value = "/naucni_radovi/{id}.xml",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_XML_VALUE
-    )
-    public NaucniRad readNaucniRad(@PathVariable("id") String id) {
-        return naucniRadService.findById(id);
-    }
+	@RequestMapping(value = "/naucni_radovi/{id}.xml", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
+	public NaucniRad readNaucniRad(@PathVariable("id") String id) {
+		return naucniRadService.findById(id);
+	}
 
-    @RequestMapping(
-            value = "/naucni_radovi.xml",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_XML_VALUE
-    )
-    public NaucniRadSearchResult searchNaucniRad(@RequestParam(required=false, value="name") String name) {
-        if (StringUtils.isEmpty(name)) {
-            logger.info("Lookup all {} naucni rad...", naucniRadService.count());
-            return naucniRadService.findAll();
-        } else {
-            logger.info("Lookup products by name: {}", name);
-            return null;
-        }
-    }
+	@RequestMapping(value = "/naucni_radovi.xml", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
+	public NaucniRadSearchResult searchNaucniRad(@RequestParam(required = false, value = "name") String name) {
+		if (StringUtils.isEmpty(name)) {
+			logger.info("Lookup all {} naucni rad...", naucniRadService.count());
+			return naucniRadService.findAll();
+		} else {
+			logger.info("Lookup products by name: {}", name);
+			return null;
+		}
+	}
+
+	@RequestMapping(value = "/naucni_radovi/odobreno", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> findByStatus() {
+		String naucniRadovi;
+		try {
+			naucniRadovi = naucniRadService.findByStatus("Odobrodeno");
+			return new ResponseEntity<>(naucniRadovi, HttpStatus.OK);
+		} catch (IOException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+	}
 }

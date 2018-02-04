@@ -1,11 +1,11 @@
 package com.example.repository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.namespace.QName;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.model.naucni_rad.NaucniRad;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
+import com.example.utils.Utils;
 import com.marklogic.client.document.XMLDocumentManager;
 import com.marklogic.client.io.DocumentMetadataHandle;
 import com.marklogic.client.io.JAXBHandle;
@@ -24,18 +25,12 @@ import com.marklogic.client.query.QueryManager;
 import com.marklogic.client.query.StructuredQueryBuilder;
 import com.marklogic.client.query.StructuredQueryDefinition;
 
-/**
- * Sample implementation of the {@link NaucniRadRepository} making use of
- * MarkLogic's {@link XMLDocumentManager}.
- *
- * @author Niko Schmuck
- */
 @Component
 public class NaucniRadRepositoryXML implements NaucniRadRepository {
 
 	private static final Logger logger = LoggerFactory.getLogger(NaucniRadRepositoryXML.class);
 
-	public static final String COLLECTION_REF = "/naucni_rad.xml";
+	public static final String COLLECTION_REF = "/ftn/naucni_rad";
 	public static final int PAGE_SIZE = 10;
 
 	@Autowired
@@ -44,27 +39,35 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 	@Autowired
 	protected XMLDocumentManager xmlDocumentManager;
 
+	@Autowired
+	private Utils utils;
+
 	@Override
 	public void add(NaucniRad nr) {
-		// Add this document to a dedicated collection for later retrieval
 		DocumentMetadataHandle metadata = new DocumentMetadataHandle();
 		metadata.getCollections().add(COLLECTION_REF);
 
-		JAXBHandle contentHandle = getNaucniRadHandle();
+		JAXBHandle<NaucniRad> contentHandle = getNaucniRadHandle();
 		contentHandle.set(nr);
 		xmlDocumentManager.write(getDocId(nr.getId()), metadata, contentHandle);
 	}
 
 	@Override
 	public void remove(String id) {
-		xmlDocumentManager.delete(getDocId(id));
+		if (xmlDocumentManager.exists(id) != null) {
+			xmlDocumentManager.delete(getDocId(id));
+		}
 	}
 
 	@Override
 	public NaucniRad findById(String id) {
-		JAXBHandle contentHandle = getNaucniRadHandle();
-		JAXBHandle result = xmlDocumentManager.read(getDocId(id), contentHandle);
-		return (NaucniRad) result.get(NaucniRad.class);
+		JAXBHandle<NaucniRad> contentHandle = getNaucniRadHandle();
+		if (xmlDocumentManager.exists(getDocId(id)) != null) {
+			JAXBHandle<?> result = xmlDocumentManager.read(getDocId(id), contentHandle);
+			return result.get(NaucniRad.class);
+		}
+		return null;
+
 	}
 
 	@Override
@@ -86,15 +89,21 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 		queryManager.search(criteria, resultsHandle);
 		return toSearchResult(resultsHandle);
 	}
-	
 
+	@Override
+	public String findByStatus(String status) throws IOException {
+		String queryName = "findByStatus.xqy";
+		String query = utils.readQuery(queryName);
+		query = query.replace("param", status);
+		return utils.getResponse(query);
+	}
 
 	// ~~
 
-	private JAXBHandle getNaucniRadHandle() {
+	private JAXBHandle<NaucniRad> getNaucniRadHandle() {
 		try {
 			JAXBContext context = JAXBContext.newInstance(NaucniRad.class);
-			return new JAXBHandle(context);
+			return new JAXBHandle<NaucniRad>(context);
 		} catch (JAXBException e) {
 			throw new RuntimeException("Unable to create product JAXB context", e);
 		}
@@ -107,7 +116,7 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 	private NaucniRadSearchResult toSearchResult(SearchHandle resultsHandle) {
 		List<NaucniRad> nr = new ArrayList<>();
 		for (MatchDocumentSummary summary : resultsHandle.getMatchResults()) {
-			JAXBHandle contentHandle = getNaucniRadHandle();
+			JAXBHandle<NaucniRad> contentHandle = getNaucniRadHandle();
 			logger.info("  * found {}", summary.getUri());
 			xmlDocumentManager.read(summary.getUri(), contentHandle);
 			nr.add((NaucniRad) contentHandle.get(NaucniRad.class));
