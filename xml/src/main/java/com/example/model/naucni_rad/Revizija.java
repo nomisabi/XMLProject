@@ -79,7 +79,7 @@ import com.example.model.uloge.Autor;
 @XmlType(name = "", propOrder = {
     "naslov",
     "autor",
-    "abstrakt",
+   // "abstrakt",
     "kljucnaRec",
     "sadrzaj",
     "referenca",
@@ -93,8 +93,8 @@ public class Revizija {
     protected String naslov;
     @XmlElement(name = "Autor", namespace = "http://www.ftn.uns.ac.rs/uloge", required = true)
     protected List<Autor> autor;
-    @XmlElement(name = "Abstrakt", required = true)
-    protected TAbstrakt abstrakt;
+  //  @XmlElement(name = "Abstrakt", required = true)
+   // protected TAbstrakt abstrakt;
     @XmlElement(name = "Kljucna_rec", required = true)
     protected List<String> kljucnaRec;
     @XmlElement(name = "Sadrzaj", required = true)
@@ -171,9 +171,9 @@ public class Revizija {
      *     {@link TAbstrakt }
      *     
      */
-    public TAbstrakt getAbstrakt() {
-        return abstrakt;
-    }
+   // public TAbstrakt getAbstrakt() {
+    //    return abstrakt;
+   // }
 
     /**
      * Sets the value of the abstrakt property.
@@ -183,9 +183,9 @@ public class Revizija {
      *     {@link TAbstrakt }
      *     
      */
-    public void setAbstrakt(TAbstrakt value) {
-        this.abstrakt = value;
-    }
+  //  public void setAbstrakt(TAbstrakt value) {
+   //     this.abstrakt = value;
+   // }
 
     /**
      * Gets the value of the kljucnaRec property.

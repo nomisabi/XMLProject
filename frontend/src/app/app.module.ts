@@ -5,7 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ToastModule, ToastOptions } from 'ng2-toastr/ng2-toastr';
+import { DropdownModule } from 'ngx-dropdown';
 
+import { UploadFileService } from './add-work/upload-file.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthService } from './login/auth.service';
 import { AppComponent } from './app.component';
@@ -16,6 +18,7 @@ import { HomeComponent } from './home/home.component';
 import { HomeAuthorComponent } from './home-author/home-author.component';
 import { HomeEditorComponent } from './home-editor/home-editor.component';
 import { HomeReviewerComponent } from './home-reviewer/home-reviewer.component';
+import { AddWorkComponent } from './add-work/add-work.component';
 
 
 export class CustomOption extends ToastOptions {
@@ -33,7 +36,8 @@ export class CustomOption extends ToastOptions {
     HomeComponent,
     HomeAuthorComponent,
     HomeEditorComponent,
-    HomeReviewerComponent
+    HomeReviewerComponent,
+    AddWorkComponent
   ],
   imports: [
     BrowserModule,
@@ -42,10 +46,12 @@ export class CustomOption extends ToastOptions {
     HttpClientModule,
     AngularFontAwesomeModule,
     ToastModule.forRoot(),
+    DropdownModule,
     AppRoutingModule
   ],
   providers: [
     AuthService,
+    UploadFileService,
     { provide: ToastOptions, useClass: CustomOption },
     {
       provide: HTTP_INTERCEPTORS,

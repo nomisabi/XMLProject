@@ -31,8 +31,8 @@ public class NaucniRadService {
 	@Autowired
 	protected NaucniRadRepositoryXML nrRepositoryXML;
 
-	public void add(String naucniRad) throws JAXBException, SAXException {
-		NaucniRad nr = unmarshalling(naucniRad);
+	public void add(String file) throws JAXBException, SAXException {
+		NaucniRad nr = unmarshalling(file);
 		nr.setId(setId());
 		nr.getRevizija().get(0).setStatus(TStatus.POSLAT);
 		// String nrStr = marshalling(nr);
@@ -77,10 +77,9 @@ public class NaucniRadService {
 		return JAXBContext.newInstance(NaucniRad.class);
 	}
 
-	public NaucniRad unmarshalling(String naucniRad) throws JAXBException {
+	public NaucniRad unmarshalling(String file) throws JAXBException {
 		Unmarshaller unmarshaller = this.getNaucniRadContext().createUnmarshaller();
-		StringReader reader = new StringReader(naucniRad);
-		return (NaucniRad) unmarshaller.unmarshal(reader);
+		return (NaucniRad) unmarshaller.unmarshal(new File("./upload-dir/" + file));
 	}
 
 	private String marshalling(NaucniRad naucniRad) throws JAXBException {

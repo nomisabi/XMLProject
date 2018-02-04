@@ -7,12 +7,20 @@ import { HomeAuthorComponent } from './home-author/home-author.component';
 import { HomeReviewerComponent } from './home-reviewer/home-reviewer.component';
 import { HomeEditorComponent } from './home-editor/home-editor.component';
 import { HomeComponent } from './home/home.component';
+import { AddWorkComponent } from './add-work/add-work.component';
 
 const routers: Routes = [
   { path: 'prijava', component: LoginComponent },
   { path: 'registracija', component: RegisterComponent},
   { path: '', component: HomeComponent},
-  { path: 'autor', component: HomeAuthorComponent},
+  { path: 'autor', 
+    component: HomeAuthorComponent,
+    children: [
+    {
+      path: 'naucniRadovi/novi',
+      component: AddWorkComponent
+    }
+  ]},
   { path: 'recenzent', component: HomeReviewerComponent},
   { path: 'urednik', component: HomeEditorComponent},
   { path: '**', redirectTo: '' }
