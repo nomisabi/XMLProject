@@ -1,6 +1,9 @@
 package com.example.repository;
 
 import java.io.IOException;
+import java.util.List;
+
+import javax.xml.bind.JAXBException;
 
 import com.example.model.naucni_rad.NaucniRad;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
@@ -15,7 +18,9 @@ public interface NaucniRadRepository {
 
 	NaucniRadSearchResult findAll();
 
-	String findByStatus(String status) throws IOException;
+	List<NaucniRad> findByStatus(String status) throws IOException, JAXBException;
+
+	List<NaucniRad> findMy(String username) throws IOException, JAXBException;
 
 	// ProductSearchResult findByName(String name);
 

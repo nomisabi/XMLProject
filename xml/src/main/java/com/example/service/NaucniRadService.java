@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.xml.XMLConstants;
@@ -18,9 +20,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
+import com.example.dto.Work;
+import com.example.korisnici.Korisnik;
 import com.example.model.naucni_rad.NaucniRad;
+import com.example.model.naucni_rad.Revizija;
 import com.example.model.naucni_rad.TStatus;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
+import com.example.model.recenzija.Recenzija;
+import com.example.model.uloge.Recenzent;
 import com.example.repository.NaucniRadRepositoryXML;
 import com.example.utils.MyValidationEventHandler;
 import com.example.utils.NSPrefixMapper;
@@ -30,6 +37,8 @@ public class NaucniRadService {
 
 	@Autowired
 	protected NaucniRadRepositoryXML nrRepositoryXML;
+	@Autowired
+	protected Korisnici2Service korisnici2Service;
 
 	public void add(String file) throws JAXBException, SAXException {
 		NaucniRad nr = unmarshalling(file);
@@ -52,8 +61,61 @@ public class NaucniRadService {
 		return nrRepositoryXML.findAll();
 	}
 
-	public String findByStatus(String status) throws IOException {
-		return nrRepositoryXML.findByStatus(status);
+	public List<Work> findByStatus(String status) throws IOException, JAXBException {
+		List<NaucniRad> radovi = nrRepositoryXML.findByStatus(status);
+		List<Work> works = new ArrayList<>();
+		for (NaucniRad naucniRad : radovi) {
+			for (Revizija revizija : naucniRad.getRevizija()) {
+				// if (revizija.getStatus().equals(TStatus.ODOBRODENO)) {
+				works.add(new Work(naucniRad.getId(), revizija.getNaslov()));
+				// break;
+				// }
+			}
+		}
+		return works;
+	}
+
+	public List<Work> findMy(String username) throws IOException, JAXBException {
+		List<NaucniRad> radovi = nrRepositoryXML.findMy(username);
+		List<Work> works = new ArrayList<>();
+		for (NaucniRad naucniRad : radovi) {
+			for (Revizija revizija : naucniRad.getRevizija()) {
+				works.add(new Work(naucniRad.getId(), revizija.getNaslov(), revizija.getStatus().toString()));
+			}
+		}
+		return works;
+	}
+
+	public void addReview(String id, String username1, String username2) throws JAXBException, IOException {
+		NaucniRad naucniRad = findById(id);
+		String korisnikStr1 = korisnici2Service.pronadjiKorisnickoIme(username1);
+		Korisnik korisnik1 = korisnici2Service.unmarshalling(korisnikStr1);
+		Recenzent recenzent1 = new Recenzent();
+		recenzent1.setEmail(korisnik1.getEmail());
+		recenzent1.setIme(korisnik1.getIme());
+		recenzent1.setPrezime(korisnik1.getPrezime());
+
+		String korisnikStr2 = korisnici2Service.pronadjiKorisnickoIme(username2);
+		Korisnik korisnik2 = korisnici2Service.unmarshalling(korisnikStr2);
+		Recenzent recenzent2 = new Recenzent();
+		recenzent2.setEmail(korisnik2.getEmail());
+		recenzent2.setIme(korisnik2.getIme());
+		recenzent2.setPrezime(korisnik2.getPrezime());
+
+		Recenzija recenzija1 = new Recenzija();
+		recenzija1.setRecenzent(recenzent1);
+		Recenzija recenzija2 = new Recenzija();
+		recenzija2.setRecenzent(recenzent2);
+		for (Revizija revizija : naucniRad.getRevizija()) {
+			if (revizija.getStatus().equals(TStatus.POSLAT)) {
+				revizija.setStatus(TStatus.U_OBRADI);
+				revizija.getRecenzija().add(recenzija1);
+				revizija.getRecenzija().add(recenzija2);
+				break;
+			}
+		}
+		nrRepositoryXML.add(naucniRad);
+
 	}
 
 	public Long count() {

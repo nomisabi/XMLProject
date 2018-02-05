@@ -1,14 +1,28 @@
 package com.example.repository;
 
 import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.korisnici.Korisnici;
+import com.example.korisnici.Korisnik;
+import com.example.model.naucni_rad.NaucniRad;
 import com.example.utils.Utils;
+import com.marklogic.client.DatabaseClient;
 import com.marklogic.client.document.DocumentPatchBuilder;
 import com.marklogic.client.document.XMLDocumentManager;
 import com.marklogic.client.document.DocumentPatchBuilder.Position;
+import com.marklogic.client.eval.EvalResult;
+import com.marklogic.client.eval.EvalResultIterator;
+import com.marklogic.client.eval.ServerEvaluationCall;
 import com.marklogic.client.io.marker.DocumentPatchHandle;
 import com.marklogic.client.util.EditableNamespaceContext;
 
@@ -22,6 +36,9 @@ public class Korisnik2RepositoryXML implements Korisnik2Repository {
 
 	@Autowired
 	private Utils utils;
+	
+	@Autowired
+	protected DatabaseClient client;
 
 	@Override
 	public void dodaj(String korisnik) {
@@ -58,6 +75,40 @@ public class Korisnik2RepositoryXML implements Korisnik2Repository {
 		String queryName = "retrieveCollection.xqy";
 		String query = utils.readQuery(queryName);
 		return utils.getResponse(query);
+	}
+
+	@Override
+	public Korisnici pronadjiSveRecenzente() throws IOException, JAXBException {
+		String queryName = "findReviews.xqy";
+		String query = utils.readQuery(queryName);
+		return getResponse(query);
+	}
+	
+	public Korisnici getResponse(String query) throws JAXBException {
+		ServerEvaluationCall invoker = client.newServerEval();
+		invoker.xquery(query);
+		EvalResultIterator response = invoker.eval();
+
+		Korisnici korisnici = new Korisnici();
+		if (response.hasNext()) {
+			for (EvalResult result : response) {
+				Korisnik korisnik = unmarshalling(result.getString());
+				korisnici.getKorisnik().add(korisnik);
+			}
+		} else {
+			System.out.println("your query returned an empty sequence.");
+		}
+		return korisnici;
+	}
+	
+	public Korisnik unmarshalling(String korisnik) throws JAXBException {
+		Unmarshaller unmarshaller = this.getKorisnikContext().createUnmarshaller();
+		StringReader reader = new StringReader(korisnik);
+		return (Korisnik) unmarshaller.unmarshal(reader);
+	}
+	
+	private JAXBContext getKorisnikContext() throws JAXBException {
+		return JAXBContext.newInstance(Korisnik.class);
 	}
 
 }

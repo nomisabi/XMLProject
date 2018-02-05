@@ -7,6 +7,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ToastModule, ToastOptions } from 'ng2-toastr/ng2-toastr';
 import { DropdownModule } from 'ngx-dropdown';
 
+import { UserService } from './work-detail/user.service';
+import { WorkService } from './works/work.service';
 import { UploadFileService } from './add-work/upload-file.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthService } from './login/auth.service';
@@ -19,6 +21,11 @@ import { HomeAuthorComponent } from './home-author/home-author.component';
 import { HomeEditorComponent } from './home-editor/home-editor.component';
 import { HomeReviewerComponent } from './home-reviewer/home-reviewer.component';
 import { AddWorkComponent } from './add-work/add-work.component';
+import { WorksComponent } from './works/works.component';
+import { MyWorksComponent } from './my-works/my-works.component';
+import { NewWorksComponent } from './new-works/new-works.component';
+import { ProgressWorkComponent } from './progress-work/progress-work.component';
+import { WorkDetailComponent } from './work-detail/work-detail.component';
 
 
 export class CustomOption extends ToastOptions {
@@ -37,7 +44,12 @@ export class CustomOption extends ToastOptions {
     HomeAuthorComponent,
     HomeEditorComponent,
     HomeReviewerComponent,
-    AddWorkComponent
+    AddWorkComponent,
+    WorksComponent,
+    MyWorksComponent,
+    NewWorksComponent,
+    ProgressWorkComponent,
+    WorkDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +64,8 @@ export class CustomOption extends ToastOptions {
   providers: [
     AuthService,
     UploadFileService,
+    WorkService,
+    UserService,
     { provide: ToastOptions, useClass: CustomOption },
     {
       provide: HTTP_INTERCEPTORS,

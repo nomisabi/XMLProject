@@ -1,13 +1,14 @@
 package com.example.controller;
 
 import java.io.IOException;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.UriComponentsBuilder;
-import org.xml.sax.SAXException;
 
+import com.example.dto.Work;
 import com.example.model.naucni_rad.NaucniRad;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
-import com.example.model.naucni_radovi.search.Product;
-import com.example.model.naucni_radovi.search.ProductSearchResult;
-import com.example.repository.NaucniRadRepositoryXML;
-import com.example.repository.ProductRepositoryXML;
+import com.example.security.TokenUtils;
 import com.example.service.NaucniRadService;
 import com.example.service.StorageService;
 
@@ -42,7 +39,9 @@ public class NaucniRadController {
 	protected NaucniRadService naucniRadService;
 	@Autowired
 	StorageService storageService;
-	
+	@Autowired
+	TokenUtils tokenUtils;
+
 	@PostMapping("/api/naucni_radovi")
 	public ResponseEntity<String> createNaucniRad(@RequestParam("file") MultipartFile file) {
 		String message = "";
@@ -53,10 +52,10 @@ public class NaucniRadController {
 
 			message = "You successfully uploaded " + file.getOriginalFilename() + "!";
 			System.out.println(message);
-			
+
 			naucniRadService.add(file.getOriginalFilename());
 			storageService.deleteAll();
-			
+
 			return ResponseEntity.status(HttpStatus.OK).body(message);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -65,21 +64,21 @@ public class NaucniRadController {
 		}
 	}
 
-	/*@RequestMapping(value = "/naucni_radovi", method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity<String> createNaucniRad(@RequestBody String nr, UriComponentsBuilder builder) {
-		try {
-			naucniRadService.add(nr);
-			//HttpHeaders headers = new HttpHeaders();
-			// headers.setLocation(builder.path("/naucni_radovi/{id}.xml").buildAndExpand(nr.getId()).toUri());
-
-			return new ResponseEntity<>(HttpStatus.CREATED);
-		} catch (JAXBException | SAXException e) {
-			logger.info(e.getMessage());
-			return new ResponseEntity<>("Xml dokument nije validan", HttpStatus.BAD_REQUEST);
-		}
-
-	}
-	*/
+	/*
+	 * @RequestMapping(value = "/naucni_radovi", method = RequestMethod.POST,
+	 * consumes = MediaType.APPLICATION_XML_VALUE) public ResponseEntity<String>
+	 * createNaucniRad(@RequestBody String nr, UriComponentsBuilder builder) {
+	 * try { naucniRadService.add(nr); //HttpHeaders headers = new
+	 * HttpHeaders(); //
+	 * headers.setLocation(builder.path("/naucni_radovi/{id}.xml").
+	 * buildAndExpand(nr.getId()).toUri());
+	 * 
+	 * return new ResponseEntity<>(HttpStatus.CREATED); } catch (JAXBException |
+	 * SAXException e) { logger.info(e.getMessage()); return new
+	 * ResponseEntity<>("Xml dokument nije validan", HttpStatus.BAD_REQUEST); }
+	 * 
+	 * }
+	 */
 
 	@RequestMapping(value = "/naucni_radovi/{id}.xml", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -103,16 +102,69 @@ public class NaucniRadController {
 		}
 	}
 
-	@RequestMapping(value = "/naucni_radovi/odobreno", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity<String> findByStatus() {
-		String naucniRadovi;
+	@RequestMapping(value = "/api/naucni_radovi/odobreno", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Work>> findByStatusOdobreno() {
 		try {
-			naucniRadovi = naucniRadService.findByStatus("Odobrodeno");
-			return new ResponseEntity<>(naucniRadovi, HttpStatus.OK);
-		} catch (IOException e) {
+			List<Work> works = naucniRadService.findByStatus("Odobrodeno");
+			return new ResponseEntity<>(works, HttpStatus.OK);
+		} catch (IOException | JAXBException e) {
 			logger.info(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
 	}
+
+	@RequestMapping(value = "/api/naucni_radovi/poslati", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Work>> findByStatusPoslato() {
+		try {
+			List<Work> works = naucniRadService.findByStatus("Poslat");
+			return new ResponseEntity<>(works, HttpStatus.OK);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/u_proceduri", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Work>> findByStatusUproceduri() {
+		try {
+			List<Work> works = naucniRadService.findByStatus("U obradi");
+			return new ResponseEntity<>(works, HttpStatus.OK);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/moji", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Work>> findMy(HttpServletRequest request) {
+		String token = request.getHeader("X-Auth-Token");
+		String username = tokenUtils.getUsernameFromToken(token);
+		try {
+			List<Work> works = naucniRadService.findMy(username);
+			return new ResponseEntity<>(works, HttpStatus.OK);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/recenzent", method = RequestMethod.POST)
+	public ResponseEntity<Void> addReview(@RequestBody Work work) {
+		System.out.println(work.getReview1());
+		System.out.println(work.getReview2());
+		System.out.println(work.getId());
+
+		try {
+			naucniRadService.addReview(work.getId(), work.getReview1(), work.getReview2());
+			return new ResponseEntity<Void>(HttpStatus.OK);
+
+		} catch (JAXBException | IOException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
 }

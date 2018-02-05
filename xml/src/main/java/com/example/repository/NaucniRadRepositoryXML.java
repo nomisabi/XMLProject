@@ -1,11 +1,13 @@
 package com.example.repository;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +17,11 @@ import org.springframework.stereotype.Component;
 import com.example.model.naucni_rad.NaucniRad;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
 import com.example.utils.Utils;
+import com.marklogic.client.DatabaseClient;
 import com.marklogic.client.document.XMLDocumentManager;
+import com.marklogic.client.eval.EvalResult;
+import com.marklogic.client.eval.EvalResultIterator;
+import com.marklogic.client.eval.ServerEvaluationCall;
 import com.marklogic.client.io.DocumentMetadataHandle;
 import com.marklogic.client.io.JAXBHandle;
 import com.marklogic.client.io.SearchHandle;
@@ -41,6 +47,9 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 
 	@Autowired
 	private Utils utils;
+
+	@Autowired
+	protected DatabaseClient client;
 
 	@Override
 	public void add(NaucniRad nr) {
@@ -91,11 +100,48 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 	}
 
 	@Override
-	public String findByStatus(String status) throws IOException {
+	public List<NaucniRad> findByStatus(String status) throws IOException, JAXBException {
 		String queryName = "findByStatus.xqy";
 		String query = utils.readQuery(queryName);
 		query = query.replace("param", status);
-		return utils.getResponse(query);
+		return getResponse(query);
+	}
+
+	@Override
+	public List<NaucniRad> findMy(String username) throws IOException, JAXBException {
+		String queryName = "findMyWorks.xqy";
+		String query = utils.readQuery(queryName);
+		query = query.replace("param", username);
+		return getResponse(query);
+
+	}
+
+	private List<NaucniRad> getResponse(String query) throws JAXBException {
+		ServerEvaluationCall invoker = client.newServerEval();
+		invoker.xquery(query);
+		EvalResultIterator response = invoker.eval();
+
+		List<NaucniRad> radovi = new ArrayList<>();
+
+		if (response.hasNext()) {
+			for (EvalResult result : response) {
+				NaucniRad revizija = unmarshalling(result.getString());
+				radovi.add(revizija);
+			}
+		} else {
+			System.out.println("your query returned an empty sequence.");
+		}
+		return radovi;
+	}
+
+	private JAXBContext getNaucniRadContext() throws JAXBException {
+		return JAXBContext.newInstance(NaucniRad.class);
+	}
+
+	public NaucniRad unmarshalling(String revizija) throws JAXBException {
+		Unmarshaller unmarshaller = this.getNaucniRadContext().createUnmarshaller();
+		StringReader reader = new StringReader(revizija);
+		return (NaucniRad) unmarshaller.unmarshal(reader);
 	}
 
 	// ~~

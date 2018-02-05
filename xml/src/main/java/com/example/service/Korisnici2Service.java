@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
+import com.example.korisnici.Korisnici;
 import com.example.korisnici.Korisnik;
 import com.example.repository.Korisnik2RepositoryXML;
 import com.example.utils.MyValidationEventHandler;
@@ -46,6 +47,10 @@ public class Korisnici2Service {
 
 	public String pronadjiSve() throws IOException {
 		return korisnik2RepositoryXML.pronadjiSve();
+	}
+	
+	public Korisnici pronadjiSveRecenzente() throws IOException, JAXBException{
+		return korisnik2RepositoryXML.pronadjiSveRecenzente();
 	}
 
 	private String setId() {
