@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.marklogic.client.DatabaseClient;
+import com.marklogic.client.eval.EvalResult;
+import com.marklogic.client.eval.EvalResultIterator;
+import com.marklogic.client.eval.ServerEvaluationCall;
 
 @Component
 public class Utils {
@@ -24,7 +27,20 @@ public class Utils {
 	}
 
 	public String getResponse(String query) {
-		return client.newServerEval().xquery(query).evalAs(String.class);
+		StringBuilder bld = new StringBuilder();
+
+		ServerEvaluationCall invoker = client.newServerEval();
+		invoker.xquery(query);
+		EvalResultIterator response = invoker.eval();
+
+		if (response.hasNext()) {
+			for (EvalResult result : response) {
+				bld.append("\n" + result.getString());
+			}
+		} else {
+			System.out.println("your query returned an empty sequence.");
+		}
+		return bld.toString();
 	}
 
 	public String readFile(String path, Charset encoding) throws IOException {

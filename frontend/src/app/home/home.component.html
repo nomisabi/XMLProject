@@ -1,3 +1,53 @@
-<p>
-  home works!
-</p>
+<header class="header black-bg">
+  <div class="sidebar-toggle-box">
+      <img src="http://www.freeiconspng.com/uploads/home-house-silhouette-icon-building--public-domain-pictures--20.png" style="height: 30px;">
+  </div>
+  <a class="logo"><b>Naucni radovi</b></a>
+  <div class="nav notify-row" id="top_menu" style="margin-left: 40%;">
+      <ul class="nav pull-right top-menu">
+          <a class="logo2"></a>
+      </ul>
+      <ul class="nav pull-right top-menu">
+          <a class="logo2"> 
+              <i class="fa fa-home" aria-hidden="true"  style="font-size: 30px; margin-right: 5px;"></i>
+          </a>
+      </ul>
+  </div>
+  <div class="top-menu">
+      <ul class="nav pull-right top-menu">
+          <button (click)="gotoLogin()">Prijava</button>
+          <button (click)="gotoRegister()">Registracija</button>
+      </ul>
+      
+  </div>
+</header>
+
+<aside>
+  <div id="sidebar"  class="nav-collapse ">
+      <ul class="sidebar-menu" id="nav-accordion">
+          <nav>
+              <li class="mt">
+                  <a [routerLink]="['']">
+                      <i class="fa fa-building"></i>
+                      <span>Naucni radovi</span>
+                  </a>
+              </li>
+              <li class="sub-menu">
+                  <a [routerLink]="['/users']">
+                      <i class="fa fa-users"></i>
+                      <span>Pretraga</span>
+                  </a>
+              </li>
+          </nav>
+      </ul>
+  </div>
+</aside>
+
+
+<section id="container">
+  <section id="main-content">
+      <section class="wrapper">
+          <router-outlet></router-outlet>
+      </section>
+  </section>
+</section>

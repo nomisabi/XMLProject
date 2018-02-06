@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../login/auth.service';
 
 @Component({
   selector: 'app-home-author',
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-author.component.css']
 })
 export class HomeAuthorComponent implements OnInit {
+  username: string = '';
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.username = this.authService.getCurrentUser();
+  }
+
+  logout(){
+    this.authService.logout();
   }
 
 }

@@ -1,0 +1,23 @@
+<br><br><br>
+<div class="row">
+  <div class="col-lg-1"></div>
+  <div class="col-lg-10">
+        <table class="table table-hover">
+              <thead>
+              <tr>
+                  <th>#</th>
+                  <th></th>
+                  <th>Naslov</th>   
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let work of works">
+                  <td style="width: 100px;">{{work.id}}</td>
+                  <td><button (click)="gotoWorkDetail(work.id)">Dodaj recenzenta</button></td>
+                  <td style="width: 200px;">{{work.title | slice: 0: 200}}</td>
+              </tr>
+              </tbody>
+          </table>
+      <br>
+  </div>   
+</div>

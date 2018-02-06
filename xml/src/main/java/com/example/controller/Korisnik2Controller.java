@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
 
+import com.example.korisnici.Korisnici;
 import com.example.service.Korisnici2Service;
 
 @RestController
@@ -93,5 +93,20 @@ public class Korisnik2Controller {
 		}
 
 	}
+	
+	@RequestMapping(value = "/korisnici/recenzenti", method = RequestMethod.GET)
+	public ResponseEntity<Korisnici> pronadjiSveRecenzente() {
+		try {
+			Korisnici korisnici = korisnici2Service.pronadjiSveRecenzente();
+			if (korisnici != null) {
+				return new ResponseEntity<>(korisnici, HttpStatus.OK);
 
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 }
