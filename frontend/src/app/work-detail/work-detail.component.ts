@@ -22,11 +22,8 @@ export class WorkDetailComponent implements OnInit {
 
   ngOnInit() {
     this.work = {
-      id: 'ID955565',
-      title: 'Blaa',
-      status: '',
-      review1: '',
-      review2: ''
+      id: '',
+      revisions: null
     }
     this.userService.getReviews()
     .then(reviews => {

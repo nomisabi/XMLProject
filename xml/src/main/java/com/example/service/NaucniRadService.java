@@ -95,14 +95,21 @@ public class NaucniRadService {
 		return nrRepositoryXML.findAll();
 	}
 
-	/*
-	 * public List<Work> findByStatus(String status) throws IOException,
-	 * JAXBException { List<NaucniRad> radovi =
-	 * nrRepositoryXML.findByStatus(status); List<Work> works = new
-	 * ArrayList<>(); for (NaucniRad naucniRad : radovi) { for (Revizija
-	 * revizija : naucniRad.getRevizija()) { works.add(new
-	 * Work(naucniRad.getId(), revizija.getNaslov())); } } return works; }
-	 */
+	public List<Work> findByStatus(TStatus status, String statusStr) throws IOException, JAXBException {
+		List<NaucniRad> radovi = nrRepositoryXML.findByStatus(statusStr);
+		List<Work> works = new ArrayList<>();
+		for (NaucniRad naucniRad : radovi) {
+			List<Revision> revisions = new ArrayList<>();
+			for (Revizija revizija : naucniRad.getRevizija()) {
+				if (revizija.getStatus().equals(status)) {
+					revisions
+							.add(new Revision(revizija.getId(), revizija.getNaslov(), revizija.getStatus().toString()));
+				}
+				works.add(new Work(naucniRad.getId(), revisions));
+			}
+		}
+		return works;
+	}
 
 	public List<Work> findMy(String username) throws IOException, JAXBException {
 		List<NaucniRad> radovi = nrRepositoryXML.findMy(username);
@@ -118,7 +125,7 @@ public class NaucniRadService {
 		return works;
 	}
 
-	public void addReview(String id, String username1, String username2)
+	public void addReview(String id, String idRevision, String username1, String username2)
 			throws JAXBException, IOException, MailException, InterruptedException {
 		NaucniRad naucniRad = findById(id);
 		String korisnikStr1 = korisnici2Service.pronadjiKorisnickoIme(username1);
@@ -143,7 +150,7 @@ public class NaucniRadService {
 		emailService.sendMail(korisnik2.getEmail());
 
 		for (Revizija revizija : naucniRad.getRevizija()) {
-			if (revizija.getStatus().equals(TStatus.POSLAT)) {
+			if (revizija.getId().equals(idRevision)) {
 				revizija.setStatus(TStatus.U_OBRADI);
 				revizija.getRecenzija().add(recenzija1);
 				revizija.getRecenzija().add(recenzija2);

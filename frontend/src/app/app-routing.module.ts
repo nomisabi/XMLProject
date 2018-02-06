@@ -54,7 +54,7 @@ const routers: Routes = [
         component: ProgressWorkComponent
       },
       {
-        path:'naucniRadovi/:id/recenzent',
+        path:'naucniRadovi/:id/revizije/:idRevizije/recenzent',
         component: AddReviewComponent
       },
       

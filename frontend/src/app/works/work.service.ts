@@ -42,10 +42,10 @@ export class WorkService {
           .catch(this.handleError);
   }
 
-  addReview(work: WorkInterface): Promise<any>{
-    const url = '/api/naucni_radovi/recenzent';
+  addReview(id: string, idRevision: string, revision: RevisionInterface): Promise<any>{
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/recenzent`;
     return this.http
-          .post(url, work)
+          .post(url, revision)
           .toPromise()
           .then(res => res)
           .catch(this.handleError);

@@ -10,8 +10,6 @@ import { WorkService } from '../works/work.service';
   styleUrls: ['./new-works.component.css']
 })
 export class NewWorksComponent implements OnInit {
-
-
   works: WorkInterface[];
 
   constructor(private workService: WorkService,
@@ -26,8 +24,8 @@ export class NewWorksComponent implements OnInit {
         .then(works => this.works = works);
   }
 
-  gotoWorkDetail(id: string){
-    this.router.navigate([`/urednik/naucniRadovi/${id}/recenzent`]);
+  gotoWorkDetail(id: string, idRevizije: string){
+    this.router.navigate([`/urednik/naucniRadovi/${id}/revizije/${idRevizije}/recenzent`]);
 
   }
 

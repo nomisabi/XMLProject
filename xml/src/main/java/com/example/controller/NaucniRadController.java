@@ -29,8 +29,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.dto.Revision;
 import com.example.dto.Work;
 import com.example.model.naucni_rad.NaucniRad;
+import com.example.model.naucni_rad.TStatus;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
 import com.example.model.naucni_radovi.search.Product;
 import com.example.model.naucni_radovi.search.ProductSearchResult;
@@ -167,37 +169,37 @@ public class NaucniRadController {
 
 	@RequestMapping(value = "/api/naucni_radovi/odobreno", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Work>> findByStatusOdobreno() {
-		// try {
-		// List<Work> works = naucniRadService.findByStatus("Odobrodeno");
-		return new ResponseEntity<>(HttpStatus.OK);
-		// } catch (IOException | JAXBException e) {
-		// logger.info(e.getMessage());
-		// return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		// }
+		try {
+			List<Work> works = naucniRadService.findByStatus(TStatus.ODOBRODENO, "Odobrodeno");
+			return new ResponseEntity<>(works, HttpStatus.OK);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 
 	}
 
 	@RequestMapping(value = "/api/naucni_radovi/poslati", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Work>> findByStatusPoslato() {
-		// try {
-		// List<Work> works = naucniRadService.findByStatus("Poslat");
-		// return new ResponseEntity<>(works, HttpStatus.OK);
-		// } catch (IOException | JAXBException e) {
-		// logger.info(e.getMessage());
-		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		// }
+		try {
+			List<Work> works = naucniRadService.findByStatus(TStatus.POSLAT, "Poslat");
+			return new ResponseEntity<>(works, HttpStatus.OK);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 
 	}
 
 	@RequestMapping(value = "/api/naucni_radovi/u_proceduri", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Work>> findByStatusUproceduri() {
-		// try {
-		// List<Work> works = naucniRadService.findByStatus("U obradi");
-		// return new ResponseEntity<>(works, HttpStatus.OK);
-		// } catch (IOException | JAXBException e) {
-		// logger.info(e.getMessage());
-		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		// }
+		try {
+			List<Work> works = naucniRadService.findByStatus(TStatus.U_OBRADI, "U obradi");
+			return new ResponseEntity<>(works, HttpStatus.OK);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 
 	}
 
@@ -214,21 +216,25 @@ public class NaucniRadController {
 		}
 	}
 
-	/*
-	 * 
-	 * @RequestMapping(value = "/api/naucni_radovi/recenzent", method =
-	 * RequestMethod.POST) public ResponseEntity<Void> addReview(@RequestBody
-	 * Work work) { System.out.println(work.getReview1());
-	 * System.out.println(work.getReview2()); System.out.println(work.getId());
-	 * 
-	 * try { naucniRadService.addReview(work.getId(), work.getReview1(),
-	 * work.getReview2()); return new ResponseEntity<Void>(HttpStatus.OK);
-	 * 
-	 * } catch (JAXBException | IOException e) { logger.info(e.getMessage());
-	 * return new ResponseEntity<>(HttpStatus.BAD_REQUEST); } catch
-	 * (MailException | InterruptedException e) { logger.info(e.getMessage());
-	 * return new ResponseEntity<>(HttpStatus.OK); } }
-	 */
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/recenzent", method = RequestMethod.POST)
+	public ResponseEntity<Void> addReview(@PathVariable("id") String id, @PathVariable("id_revizija") String idRevision,
+			@RequestBody Revision revision) {
+		System.out.println(revision.getReview1());
+		System.out.println(revision.getReview2());
+		System.out.println(revision.getId());
+
+		try {
+			naucniRadService.addReview(id, idRevision, revision.getReview1(), revision.getReview2());
+			return new ResponseEntity<Void>(HttpStatus.OK);
+
+		} catch (JAXBException | IOException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch (MailException | InterruptedException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+	}
 
 	public static final String XSL_FILE = "data/xsl/naucni_rad.xsl";
 

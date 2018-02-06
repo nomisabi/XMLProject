@@ -10,7 +10,7 @@
           <div class="col-lg-1"></div>
           <div class="col-lg-10 border">
             <div class="border-title">naslov</div>
-            <div class="border-desc">{{work.title}}</div>
+            <div class="border-desc">{{revision.title}}</div>
           </div>
         </div>
         <form name="form" (ngSubmit)="save()">
@@ -19,7 +19,7 @@
             <div class="col-lg-5 border">
               <div class="border-title">recenzent 1</div>
               <div class="form-group">
-                  <select class="form-control" [(ngModel)]="work.review1" [ngModelOptions]="{standalone: true}">
+                  <select class="form-control" [(ngModel)]="revision.review1" [ngModelOptions]="{standalone: true}">
                       <option selected="selected" disabled>Recenzent...</option>
                       <option *ngFor="let user of users" [value]="user.korisnickoIme">{{user.ime}}  {{user.prezime}}  ( {{user.korisnickoIme}} )</option>
                 </select>
@@ -28,7 +28,7 @@
             <div class="col-lg-5 border">
               <div class="border-title">recenzent 2</div>
               <div class="form-group">
-                  <select class="form-control" [(ngModel)]="work.review2" [ngModelOptions]="{standalone: true}">
+                  <select class="form-control" [(ngModel)]="revision.review2" [ngModelOptions]="{standalone: true}">
                       <option selected="selected" disabled>Recenzent...</option>
                       <option *ngFor="let user of users" [value]="user.korisnickoIme">{{user.ime}}  {{user.prezime}}  ( {{user.korisnickoIme}} )</option>
                 </select>
