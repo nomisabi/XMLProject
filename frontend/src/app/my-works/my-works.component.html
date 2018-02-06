@@ -6,15 +6,35 @@
               <thead>
               <tr>
                   <th>#</th>
-                  <th>Status</th>
-                  <th>Naslov</th>
+                  <th>&nbsp;</th>
+                  <th>Revizije</th>
               </tr>
               </thead>
               <tbody>
               <tr *ngFor="let work of works">
                   <td style="width: 100px;">{{work.id}}</td>
-                  <td style="width: 100px;">{{work.status}}</td>
-                  <td>{{work.title}}</td>
+                  <td style="width: 100px;"><button (click)="gotoWorkDetail(work.id)">Prikazi</button></td>
+                  <td>
+                       <table class="table table-hover">
+                           <thead>
+                               <tr>
+                                   <th>#</th>
+                                   <th>Status</th>
+                                   <th>Naslov</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr *ngFor="let revision of work.revisions">
+                                        <td style="width: 80px;">{{revision.id}}</td>
+                                        <td style="width: 100px;">{{revision.status}}</td>
+                                        <td>{{revision.title| slice: 0:80}}</td>
+                                    </tr>
+
+                            </tbody>
+                       </table>
+
+
+                  </td>
               </tr>
               </tbody>
           </table>

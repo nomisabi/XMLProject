@@ -51,6 +51,16 @@ export class WorkService {
           .catch(this.handleError);
   }
 
+  getWork(id: string):Promise<any>{
+    const url = `/api/naucni_radovi/${id}`;
+    return this.http
+          .get(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+
+  }
+
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);

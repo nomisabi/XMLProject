@@ -27,7 +27,7 @@ export class NewWorksComponent implements OnInit {
   }
 
   gotoWorkDetail(id: string){
-    this.router.navigate([`/urednik/naucniRadovi/${id}`]);
+    this.router.navigate([`/urednik/naucniRadovi/${id}/recenzent`]);
 
   }
 

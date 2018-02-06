@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { UserService } from './user.service';
+import { UserService } from '../work-detail/user.service';
 import { WorkService } from '../works/work.service';
 
-
 @Component({
-  selector: 'app-work-detail',
-  templateUrl: './work-detail.component.html',
-  styleUrls: ['./work-detail.component.css']
+  selector: 'app-add-review',
+  templateUrl: './add-review.component.html',
+  styleUrls: ['./add-review.component.css']
 })
-export class WorkDetailComponent implements OnInit {
+export class AddReviewComponent implements OnInit {
+
   work: WorkInterface;
   users: any;
 
@@ -37,13 +37,14 @@ export class WorkDetailComponent implements OnInit {
     });
   }
 
-
-  gotoGetPDF(){
-
+  save(){
+    console.log(this.work.review1);
+    this.workService.addReview(this.work)
+        .then(res => this.router.navigate(['/urednik/naucniRadovi/uObradi']));
   }
 
-  gotoGetXHTML(){
-    
+  cancel(){
+    this.location.back();
   }
 
 }

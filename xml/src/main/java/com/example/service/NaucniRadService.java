@@ -21,17 +21,21 @@ import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
+import com.example.dto.Revision;
 import com.example.dto.Work;
 import com.example.korisnici.Korisnik;
 import com.example.model.naucni_rad.NaucniRad;
 import com.example.model.naucni_rad.Revizija;
 import com.example.model.naucni_rad.TStatus;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
+import com.example.model.propratnopismo.ProptatnoPismo;
 import com.example.model.recenzija.Recenzija;
 import com.example.model.uloge.Recenzent;
 import com.example.repository.NaucniRadRepositoryXML;
 import com.example.utils.MyValidationEventHandler;
 import com.example.utils.NSPrefixMapper;
+import com.example.utils.NaucniRadUtils;
+import com.example.utils.PropratnoPismoUtils;
 
 @Service
 public class NaucniRadService {
@@ -42,54 +46,80 @@ public class NaucniRadService {
 	protected Korisnici2Service korisnici2Service;
 	@Autowired
 	EmailService emailService;
+	@Autowired
+	NaucniRadUtils naucniRadUtils;
+	@Autowired
+	PropratnoPismoUtils propratnoPismoUtils;
 
-	public void add(String file) throws JAXBException, SAXException {
-		NaucniRad nr = unmarshalling(file);
-		nr.setId(setId());
-		nr.getRevizija().get(0).setStatus(TStatus.POSLAT);
-		// String nrStr = marshalling(nr);
-		// validation(nrStr);
-		nrRepositoryXML.add(nr);
+	public String add(String file) throws JAXBException, SAXException, IOException {
+		NaucniRad nr = naucniRadUtils.unmarshalling(file);
+		nr.setId(setIdNR());
+		if (nr.getRevizija().size() == 1) {
+			nr.getRevizija().get(0).setStatus(TStatus.POSLAT);
+			nr.getRevizija().get(0).setId("RV1");
+
+			String nrStr = naucniRadUtils.marshalling(nr);
+			naucniRadUtils.validation(nrStr);
+
+			nrRepositoryXML.add(nr);
+			return nr.getId();
+		} else {
+			return null;
+		}
 	}
 
 	public void remove(String id) {
 		nrRepositoryXML.remove(id);
 	}
 
-	public NaucniRad findById(String id) {
+	public NaucniRad findById(String id) throws IOException, JAXBException {
 		return nrRepositoryXML.findById(id);
+	}
+
+	public Work findByIdPoslat(String id) throws IOException, JAXBException {
+		NaucniRad naucniRad = nrRepositoryXML.findById(id);
+		List<Revision> revisions = new ArrayList<>();
+		for (Revizija revizija : naucniRad.getRevizija()) {
+			Revision revision = new Revision(revizija.getId(), revizija.getNaslov(), revizija.getStatus().toString());
+			ProptatnoPismo pismo = revizija.getProptatnoPismo();
+			if (pismo != null) {
+				revision.setHasLetter(true);
+			}
+			revisions.add(revision);
+		}
+
+		return new Work(naucniRad.getId(), revisions);
 	}
 
 	public NaucniRadSearchResult findAll() {
 		return nrRepositoryXML.findAll();
 	}
 
-	public List<Work> findByStatus(String status) throws IOException, JAXBException {
-		List<NaucniRad> radovi = nrRepositoryXML.findByStatus(status);
-		List<Work> works = new ArrayList<>();
-		for (NaucniRad naucniRad : radovi) {
-			for (Revizija revizija : naucniRad.getRevizija()) {
-				// if (revizija.getStatus().equals(TStatus.ODOBRODENO)) {
-				works.add(new Work(naucniRad.getId(), revizija.getNaslov()));
-				// break;
-				// }
-			}
-		}
-		return works;
-	}
+	/*
+	 * public List<Work> findByStatus(String status) throws IOException,
+	 * JAXBException { List<NaucniRad> radovi =
+	 * nrRepositoryXML.findByStatus(status); List<Work> works = new
+	 * ArrayList<>(); for (NaucniRad naucniRad : radovi) { for (Revizija
+	 * revizija : naucniRad.getRevizija()) { works.add(new
+	 * Work(naucniRad.getId(), revizija.getNaslov())); } } return works; }
+	 */
 
 	public List<Work> findMy(String username) throws IOException, JAXBException {
 		List<NaucniRad> radovi = nrRepositoryXML.findMy(username);
 		List<Work> works = new ArrayList<>();
+
 		for (NaucniRad naucniRad : radovi) {
+			List<Revision> revisions = new ArrayList<>();
 			for (Revizija revizija : naucniRad.getRevizija()) {
-				works.add(new Work(naucniRad.getId(), revizija.getNaslov(), revizija.getStatus().toString()));
+				revisions.add(new Revision(naucniRad.getId(), revizija.getNaslov(), revizija.getStatus().toString()));
 			}
+			works.add(new Work(naucniRad.getId(), revisions));
 		}
 		return works;
 	}
 
-	public void addReview(String id, String username1, String username2) throws JAXBException, IOException, MailException, InterruptedException {
+	public void addReview(String id, String username1, String username2)
+			throws JAXBException, IOException, MailException, InterruptedException {
 		NaucniRad naucniRad = findById(id);
 		String korisnikStr1 = korisnici2Service.pronadjiKorisnickoIme(username1);
 		Korisnik korisnik1 = korisnici2Service.unmarshalling(korisnikStr1);
@@ -111,7 +141,7 @@ public class NaucniRadService {
 		Recenzija recenzija2 = new Recenzija();
 		recenzija2.setRecenzent(recenzent2);
 		emailService.sendMail(korisnik2.getEmail());
-		
+
 		for (Revizija revizija : naucniRad.getRevizija()) {
 			if (revizija.getStatus().equals(TStatus.POSLAT)) {
 				revizija.setStatus(TStatus.U_OBRADI);
@@ -124,56 +154,41 @@ public class NaucniRadService {
 
 	}
 
+	public void addLetter(String id, String idRevision, String file) throws IOException, JAXBException, SAXException {
+		NaucniRad naucniRad = findById(id);
+		ProptatnoPismo pismo = propratnoPismoUtils.unmarshalling(file);
+
+		String pismoStr = propratnoPismoUtils.marshalling(pismo);
+		// propratnoPismoUtils.validation(pismoStr);
+
+		for (Revizija revizija : naucniRad.getRevizija()) {
+			if (revizija.getId().equals(idRevision)) {
+				if (revizija.getProptatnoPismo() == null) {
+					pismo.setId("PP" + revizija.getId().substring(2, revizija.getId().length()));
+					revizija.setProptatnoPismo(pismo);
+					break;
+				}
+			}
+		}
+		nrRepositoryXML.add(naucniRad);
+
+	}
+
 	public Long count() {
 		return nrRepositoryXML.count();
 	}
 
-	private String setId() {
+	private String setIdNR() throws IOException, JAXBException {
 		Random r = new Random();
 		String id = "";
 		int random = 0;
 		while (true) {
 			random = r.nextInt(1000000);
-			id = "ID" + random;
+			id = "NR" + random;
 			if (findById(id) == null) {
 				return id;
 			}
 		}
-	}
-
-	private JAXBContext getNaucniRadContext() throws JAXBException {
-		return JAXBContext.newInstance(NaucniRad.class);
-	}
-
-	public NaucniRad unmarshalling(String file) throws JAXBException {
-		Unmarshaller unmarshaller = this.getNaucniRadContext().createUnmarshaller();
-		return (NaucniRad) unmarshaller.unmarshal(new File("./upload-dir/" + file));
-	}
-
-	private String marshalling(NaucniRad naucniRad) throws JAXBException {
-		Marshaller marshaller = this.getNaucniRadContext().createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper",
-				new NSPrefixMapper("http://www.ftn.uns.ac.rs/naucni_rad", "nr"));
-		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper",
-				new NSPrefixMapper("http://www.ftn.uns.ac.rs/uloge", "ulog"));
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
-		StringWriter sw = new StringWriter();
-		marshaller.marshal(naucniRad, sw);
-		return sw.toString();
-	}
-
-	private void validation(String naucniRad) throws JAXBException, SAXException {
-		Unmarshaller unmarshaller = this.getNaucniRadContext().createUnmarshaller();
-		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		Schema schema = schemaFactory.newSchema(new File("data/xsd/naucni_rad.xsd"));
-
-		unmarshaller.setSchema(schema);
-		unmarshaller.setEventHandler(new MyValidationEventHandler());
-
-		StringReader reader = new StringReader(naucniRad);
-		unmarshaller.unmarshal(reader);
 	}
 
 }

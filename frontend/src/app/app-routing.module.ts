@@ -13,6 +13,8 @@ import { MyWorksComponent } from './my-works/my-works.component';
 import { NewWorksComponent } from './new-works/new-works.component';
 import { WorkDetailComponent } from './work-detail/work-detail.component';
 import { ProgressWorkComponent } from './progress-work/progress-work.component';
+import { AddReviewComponent } from './add-review/add-review.component';
+import { WorkDetailAuthorComponent } from './work-detail-author/work-detail-author.component';
 
 const routers: Routes = [
   { path: 'prijava', component: LoginComponent },
@@ -33,6 +35,10 @@ const routers: Routes = [
     {
       path:'naucniRadovi/moji',
       component: MyWorksComponent
+    },
+    {
+      path: 'naucniRadovi/:id',
+      component: WorkDetailAuthorComponent
     }
   ]},
   { path: 'recenzent', component: HomeReviewerComponent},
@@ -48,8 +54,8 @@ const routers: Routes = [
         component: ProgressWorkComponent
       },
       {
-        path:'naucniRadovi/:id',
-        component: WorkDetailComponent
+        path:'naucniRadovi/:id/recenzent',
+        component: AddReviewComponent
       },
       
     ]
