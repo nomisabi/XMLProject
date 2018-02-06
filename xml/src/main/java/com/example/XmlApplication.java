@@ -17,6 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import javax.xml.bind.JAXBException;
 
@@ -24,6 +25,7 @@ import javax.xml.bind.JAXBException;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
+@EnableAsync
 public class XmlApplication {
 	@Value("${marklogic.host}")
 	private String host;

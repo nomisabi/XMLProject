@@ -17,6 +17,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
@@ -39,6 +40,8 @@ public class NaucniRadService {
 	protected NaucniRadRepositoryXML nrRepositoryXML;
 	@Autowired
 	protected Korisnici2Service korisnici2Service;
+	@Autowired
+	EmailService emailService;
 
 	public void add(String file) throws JAXBException, SAXException {
 		NaucniRad nr = unmarshalling(file);
@@ -86,7 +89,7 @@ public class NaucniRadService {
 		return works;
 	}
 
-	public void addReview(String id, String username1, String username2) throws JAXBException, IOException {
+	public void addReview(String id, String username1, String username2) throws JAXBException, IOException, MailException, InterruptedException {
 		NaucniRad naucniRad = findById(id);
 		String korisnikStr1 = korisnici2Service.pronadjiKorisnickoIme(username1);
 		Korisnik korisnik1 = korisnici2Service.unmarshalling(korisnikStr1);
@@ -101,11 +104,14 @@ public class NaucniRadService {
 		recenzent2.setEmail(korisnik2.getEmail());
 		recenzent2.setIme(korisnik2.getIme());
 		recenzent2.setPrezime(korisnik2.getPrezime());
+		emailService.sendMail(korisnik1.getEmail());
 
 		Recenzija recenzija1 = new Recenzija();
 		recenzija1.setRecenzent(recenzent1);
 		Recenzija recenzija2 = new Recenzija();
 		recenzija2.setRecenzent(recenzent2);
+		emailService.sendMail(korisnik2.getEmail());
+		
 		for (Revizija revizija : naucniRad.getRevizija()) {
 			if (revizija.getStatus().equals(TStatus.POSLAT)) {
 				revizija.setStatus(TStatus.U_OBRADI);

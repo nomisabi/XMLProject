@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ import com.example.dto.Work;
 import com.example.model.naucni_rad.NaucniRad;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
 import com.example.security.TokenUtils;
+import com.example.service.EmailService;
 import com.example.service.NaucniRadService;
 import com.example.service.StorageService;
 
@@ -49,7 +51,7 @@ public class NaucniRadController {
 			storageService.deleteAll();
 			storageService.init();
 			storageService.store(file);
-
+			
 			message = "You successfully uploaded " + file.getOriginalFilename() + "!";
 			System.out.println(message);
 
@@ -164,7 +166,10 @@ public class NaucniRadController {
 		} catch (JAXBException | IOException e) {
 			logger.info(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+		} catch (MailException | InterruptedException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.OK);
+		} 
 	}
 
 }
