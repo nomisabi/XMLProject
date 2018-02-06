@@ -89,8 +89,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 })
 @XmlSeeAlso({
     Urednik.class,
-    Recenzent.class,
-    Autor.class
+    Autor.class,
+    Recenzent.class
 })
 public class TKorisnik {
 
