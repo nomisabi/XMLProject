@@ -138,10 +138,15 @@ public class NaucniRadController {
 		}
 	}
 
-	@RequestMapping(value = "/naucni_radovi/{id}.xml", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteNaucniRad(@PathVariable("id") String id) {
-		naucniRadService.remove(id);
+	public void deleteNaucniRad(@PathVariable("id") String id, @PathVariable("id_revizija") String idRevision) {
+		try {
+			naucniRadService.remove(id, idRevision);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+
+		}
 	}
 
 	@RequestMapping(value = "/api/naucni_radovi/{id}", method = RequestMethod.GET)

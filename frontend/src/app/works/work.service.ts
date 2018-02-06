@@ -58,6 +58,15 @@ export class WorkService {
           .toPromise()
           .then(res => res)
           .catch(this.handleError);
+  }
+
+  deleteWork(id: string, idRevision: string):Promise<any>{
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}`;
+    return this.http
+          .delete(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
 
   }
 

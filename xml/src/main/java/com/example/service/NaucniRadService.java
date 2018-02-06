@@ -68,8 +68,20 @@ public class NaucniRadService {
 		}
 	}
 
-	public void remove(String id) {
-		nrRepositoryXML.remove(id);
+	public void remove(String id, String idRevision) throws IOException, JAXBException {
+		NaucniRad naucniRad = nrRepositoryXML.findById(id);
+		System.out.println(id);
+		System.out.println(idRevision);
+
+		for (Revizija revizija : naucniRad.getRevizija()) {
+			System.out.println(revizija.getNaslov());
+			if (revizija.getId() != null && revizija.getId().equals(idRevision)) {
+				revizija.setStatus(TStatus.OBRISAN);
+			}
+		}
+
+		nrRepositoryXML.add(naucniRad);
+
 	}
 
 	public NaucniRad findById(String id) throws IOException, JAXBException {
@@ -118,9 +130,14 @@ public class NaucniRadService {
 		for (NaucniRad naucniRad : radovi) {
 			List<Revision> revisions = new ArrayList<>();
 			for (Revizija revizija : naucniRad.getRevizija()) {
-				revisions.add(new Revision(naucniRad.getId(), revizija.getNaslov(), revizija.getStatus().toString()));
+				if (revizija.getStatus().equals(TStatus.OBRISAN)) {
+					continue;
+				}
+				revisions.add(new Revision(revizija.getId(), revizija.getNaslov(), revizija.getStatus().toString()));
 			}
-			works.add(new Work(naucniRad.getId(), revisions));
+			if (!revisions.isEmpty()) {
+				works.add(new Work(naucniRad.getId(), revisions));
+			}
 		}
 		return works;
 	}

@@ -19,6 +19,7 @@
                            <thead>
                                <tr>
                                    <th>#</th>
+                                   <th>&nbsp;</th>
                                    <th>Status</th>
                                    <th>Naslov</th>
                                 </tr>
@@ -26,6 +27,10 @@
                             <tbody>
                                     <tr *ngFor="let revision of work.revisions">
                                         <td style="width: 80px;">{{revision.id}}</td>
+                                        <td style="width: 80px;" *ngIf="revision.status === 'POSLAT'">
+                                            <button (click)="gotoDelete(work.id, revision.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                        </td>
+                                        <td style="width: 80px;" *ngIf="revision.status !== 'POSLAT'"></td>
                                         <td style="width: 100px;">{{revision.status}}</td>
                                         <td>{{revision.title| slice: 0:80}}</td>
                                     </tr>

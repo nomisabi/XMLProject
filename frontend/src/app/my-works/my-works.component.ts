@@ -27,6 +27,11 @@ export class MyWorksComponent implements OnInit {
 
   gotoWorkDetail(id: string){
     this.router.navigate([`/autor/naucniRadovi/${id}`]);
+  }
+
+  gotoDelete(id: string, revisionID: string){
+    this.workService.deleteWork(id, revisionID)
+        .then(() => this.getWorks());
 
   }
 
