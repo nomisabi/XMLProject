@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { WorkService } from '../works/work.service';
+import { WorkService } from '../../works/work.service';
 
 
 @Component({

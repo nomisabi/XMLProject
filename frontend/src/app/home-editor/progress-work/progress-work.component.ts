@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WorkService } from '../works/work.service';
+import { WorkService } from '../../works/work.service';
 
 @Component({
   selector: 'app-progress-work',

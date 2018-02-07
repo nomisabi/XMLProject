@@ -11,25 +11,22 @@
               </thead>
               <tbody>
                   <tr *ngFor="let work of works">
-                    <td style="width: 100px;">{{work.id}}</td>
+                    <td (click)="gotoWorkDetail(work.id)" style="width: 100px;">{{work.id}}</td>
                         <td>
                         <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        
-                                        <th>Naslov</th>
-                                     </tr>
-                                 </thead>
-                                 <tbody>
-                                         <tr *ngFor="let revision of work.revisions">
-                                             <td style="width: 80px;">{{revision.id}}</td>
-                                            
-                                             <td>{{revision.title| slice: 0:80}}</td>
-                                         </tr>
-     
-                                 </tbody>
-                            </table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Naslov</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let revision of work.revisions">
+                                        <td style="width: 80px;">{{revision.id}}</td>
+                                        <td>{{revision.title| slice: 0:80}}</td>
+                                    </tr>
+                                </tbody>
+                        </table>
                   </td>
                 </tr>
             </tbody>

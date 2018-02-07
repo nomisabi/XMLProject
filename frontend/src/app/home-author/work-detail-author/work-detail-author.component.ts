@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
-import { WorkService } from '../works/work.service';
+import { WorkService } from '../../works/work.service';
 import { UploadFileService } from '../add-work/upload-file.service';
 
 

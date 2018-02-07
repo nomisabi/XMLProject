@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
-import { UserService } from '../work-detail/user.service';
-import { WorkService } from '../works/work.service';
+import { UserService } from '../../work-detail/user.service';
+import { WorkService } from '../../works/work.service';
 
 
 @Component({

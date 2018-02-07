@@ -9,7 +9,7 @@ import { DropdownModule } from 'ngx-dropdown';
 
 import { UserService } from './work-detail/user.service';
 import { WorkService } from './works/work.service';
-import { UploadFileService } from './add-work/upload-file.service';
+import { UploadFileService } from './home-author/add-work/upload-file.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthService } from './login/auth.service';
 import { AppComponent } from './app.component';
@@ -20,14 +20,14 @@ import { HomeComponent } from './home/home.component';
 import { HomeAuthorComponent } from './home-author/home-author.component';
 import { HomeEditorComponent } from './home-editor/home-editor.component';
 import { HomeReviewerComponent } from './home-reviewer/home-reviewer.component';
-import { AddWorkComponent } from './add-work/add-work.component';
+import { AddWorkComponent } from './home-author/add-work/add-work.component';
 import { WorksComponent } from './works/works.component';
-import { MyWorksComponent } from './my-works/my-works.component';
-import { NewWorksComponent } from './new-works/new-works.component';
-import { ProgressWorkComponent } from './progress-work/progress-work.component';
+import { MyWorksComponent } from './home-author/my-works/my-works.component';
+import { NewWorksComponent } from './home-editor/new-works/new-works.component';
+import { ProgressWorkComponent } from './home-editor/progress-work/progress-work.component';
 import { WorkDetailComponent } from './work-detail/work-detail.component';
-import { AddReviewComponent } from './add-review/add-review.component';
-import { WorkDetailAuthorComponent } from './work-detail-author/work-detail-author.component';
+import { AddReviewComponent } from './home-editor/add-review/add-review.component';
+import { WorkDetailAuthorComponent } from './home-author/work-detail-author/work-detail-author.component';
 
 
 export class CustomOption extends ToastOptions {
