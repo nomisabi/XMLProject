@@ -4,13 +4,13 @@ import { WorkService } from '../../works/work.service';
 import * as FileSaver from 'file-saver'; 
 
 @Component({
-  selector: 'app-show-xhtml',
-  templateUrl: './show-xhtml.component.html',
-  styleUrls: ['./show-xhtml.component.css']
+  selector: 'app-show-xml',
+  templateUrl: './show-xml.component.html',
+  styleUrls: ['./show-xml.component.css']
 })
-export class ShowXhtmlComponent implements OnInit {
+export class ShowXmlComponent implements OnInit {
 
-  new_temp:string;
+  xml:string;
   constructor(
     private workService: WorkService,
     private router: Router,
@@ -18,14 +18,13 @@ export class ShowXhtmlComponent implements OnInit {
       
     }
   ngOnInit() {
-    this.workService.getHtml(this.route.snapshot.params['id']).then(
-      res =>{this.new_temp=res;
+    this.workService.getXml(this.route.snapshot.params['id']).then(
+      res =>{this.xml=res;
       console.log(res)});
   }
 
   download(){
-    var blob = new Blob([this.new_temp], {type: "text/html;charset=utf-8"});
-    FileSaver.saveAs(blob, "naucniRad.html");
+    var blob = new Blob([this.xml], {type: "application/xml;charset=utf-8"});
+    FileSaver.saveAs(blob, "naucniRad.xml");
   }
-
 }

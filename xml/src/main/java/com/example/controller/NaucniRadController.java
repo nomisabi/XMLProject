@@ -327,10 +327,7 @@ public class NaucniRadController {
 	 * deleteNaucniRad(@PathVariable("id") String id) {
 	 * naucniRadService.remove(id); }
 	 * 
-	 * @RequestMapping(value = "/naucni_radovi/{id}.xml", method =
-	 * RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE) public
-	 * NaucniRad readNaucniRad(@PathVariable("id") String id) { return
-	 * naucniRadService.findById(id); }
+	 *
 	 * 
 	 * @RequestMapping(value = "/naucni_radovi.xml", method = RequestMethod.GET,
 	 * produces = MediaType.APPLICATION_XML_VALUE) public NaucniRadSearchResult
@@ -340,6 +337,13 @@ public class NaucniRadController {
 	 * return naucniRadService.findAll(); } else {
 	 * logger.info("Lookup products by name: {}", name); return null; } }
 	 */
+	
+	 @RequestMapping(value = "/api/naucni_radovi/{id}.xml", method =
+			  RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE) 
+	 public NaucniRad getNaucniRad(@PathVariable("id") String id) throws IOException, JAXBException 
+	 { 
+		return naucniRadService.findById(id); 
+	 }
 
 	@RequestMapping(value = "/api/naucni_radovi/{id}/download", method = RequestMethod.GET, produces = "application/pdf")
 	public ResponseEntity<InputStreamResource> downloadPDFFile(@PathVariable("id") String id)

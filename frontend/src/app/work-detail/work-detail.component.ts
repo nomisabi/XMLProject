@@ -46,7 +46,6 @@ export class WorkDetailComponent implements OnInit {
 
 
   gotoGetPDF(){
-    console.log('pdf');
     this.workService.getPdf(this.route.snapshot.params['id']).then(
         response=>{
         let blob = new Blob([response], { 
@@ -62,9 +61,11 @@ export class WorkDetailComponent implements OnInit {
   }
 
   gotoGetXHTML(){
-    console.log('html');
     this.router.navigate(['naucniRadovi/'+this.route.snapshot.params['id']+'/xhtml']);
 
   }
 
+  gotoGetXML(){
+    this.router.navigate(['naucniRadovi/'+this.route.snapshot.params['id']+'/xml']);
+  }
 }
