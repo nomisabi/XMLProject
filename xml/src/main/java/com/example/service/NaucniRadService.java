@@ -129,6 +129,27 @@ public class NaucniRadService {
 		return nrRepositoryXML.findById(id);
 	}
 
+	public Work findByIdForReview(String id, String idRevision, String username) throws IOException, JAXBException {
+		NaucniRad naucniRad = nrRepositoryXML.findById(id);
+
+		String korisnikStr = korisnici2Service.pronadjiKorisnickoIme(username);
+		Korisnik korisnik = korisnici2Service.unmarshalling(korisnikStr);
+
+		List<Revision> revisions = new ArrayList<>();
+		for (Revizija revizija : naucniRad.getRevizija()) {
+			Revision revision = new Revision(revizija.getId(), revizija.getNaslov(), revizija.getStatus().toString());
+			for (Recenzija recenzija : revizija.getRecenzija()) {
+				if (recenzija.getRecenzent().getEmail().equals(korisnik.getEmail())) {
+					revision.setReview(new Review(recenzija.getId(), recenzija.getStatus().toString()));
+				}
+			}
+			revisions.add(revision);
+		}
+
+		return new Work(naucniRad.getId(), revisions);
+
+	}
+
 	public Work findByIdPoslat(String id) throws IOException, JAXBException {
 		NaucniRad naucniRad = nrRepositoryXML.findById(id);
 		List<Revision> revisions = new ArrayList<>();
@@ -242,7 +263,8 @@ public class NaucniRadService {
 
 	}
 
-	public List<Work> getWorkForReviewer(String statusStr, String username) throws IOException, JAXBException {
+	public List<Work> getWorksForReviewer(TStatusRecenzija status, String statusStr, String username)
+			throws IOException, JAXBException {
 		String korisnikStr = korisnici2Service.pronadjiKorisnickoIme(username);
 
 		if (korisnikStr == null) {
@@ -263,16 +285,20 @@ public class NaucniRadService {
 				Revision revision = new Revision(revizija.getId(), revizija.getNaslov(),
 						revizija.getStatus().toString());
 				for (Recenzija recenzija : revizija.getRecenzija()) {
-					if (recenzija.getRecenzent().getEmail().equals(korisnik.getEmail())
-							&& recenzija.getRecenzent().equals(korisnik.getIme())) {
-						revision.setReview(new Review(recenzija.getId(), recenzija.getStatus().toString()));
-
+					if (recenzija.getRecenzent().getEmail().equals(korisnik.getEmail())) {
+						if (recenzija.getStatus().equals(status)) {
+							revision.setReview(new Review(recenzija.getId(), recenzija.getStatus().toString()));
+						}
 					}
 
 				}
-				revisions.add(revision);
+				if (revision.getReview() != null) {
+					revisions.add(revision);
+				}
 			}
-			works.add(new Work(naucniRad.getId(), revisions));
+			if (!revisions.isEmpty()) {
+				works.add(new Work(naucniRad.getId(), revisions));
+			}
 		}
 		return works;
 

@@ -23,8 +23,8 @@ export class WorksForMeComponent implements OnInit {
       .then(works => this.works = works);
   }
 
-  gotoWorkDetail(id: string){
-    this.router.navigate([`/recenzent/naucniRadovi/${id}`]);
+  gotoWorkDetail(id: string, idRevision: string){
+    this.router.navigate([`/recenzent/naucniRadovi/${id}/revizije/${idRevision}`]);
 
   }
 }

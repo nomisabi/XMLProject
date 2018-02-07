@@ -173,6 +173,21 @@ public class NaucniRadController {
 		}
 	}
 
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}", method = RequestMethod.GET)
+	public ResponseEntity<Work> getNaucniRad(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision, HttpServletRequest request) {
+		String token = request.getHeader("X-Auth-Token");
+		String username = tokenUtils.getUsernameFromToken(token);
+
+		try {
+			Work work = naucniRadService.findByIdForReview(id, idRevision, username);
+			return new ResponseEntity<>(work, HttpStatus.OK);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
 	@RequestMapping(value = "/naucni_radovi.xml", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
 	public NaucniRadSearchResult searchNaucniRad(@RequestParam(required = false, value = "name") String name) {
 		if (StringUtils.isEmpty(name)) {
@@ -259,7 +274,7 @@ public class NaucniRadController {
 		String username = tokenUtils.getUsernameFromToken(token);
 
 		try {
-			List<Work> works = naucniRadService.getWorkForReviewer("Ceka se", username);
+			List<Work> works = naucniRadService.getWorksForReviewer(TStatusRecenzija.CEKA_SE, "Ceka se", username);
 			if (works == null) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			} else {

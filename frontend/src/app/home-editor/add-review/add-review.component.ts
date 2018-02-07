@@ -30,7 +30,8 @@ export class AddReviewComponent implements OnInit {
       status: '',
       review1: '',
       review2: '',
-      hasLetter: false
+      hasLetter: false,
+      review: null
     }
     this.userService.getReviews()
     .then(reviews => {

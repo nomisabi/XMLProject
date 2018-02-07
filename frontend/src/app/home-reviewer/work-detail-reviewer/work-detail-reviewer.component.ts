@@ -22,7 +22,7 @@ export class WorkDetailReviewerComponent implements OnInit {
   }
 
   getWork(){
-    this.workService.getWork(this.route.snapshot.params['id'])
+    this.workService.getWorkForReview(this.route.snapshot.params['id'],this.route.snapshot.params['idRevizije'] )
         .then(work => {
           console.log(work);
           this.work = work;

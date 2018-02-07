@@ -60,6 +60,15 @@ export class WorkService {
           .catch(this.handleError);
   }
 
+  getWorkForReview(id: string, idRevision: string):Promise<any>{
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}`;
+    return this.http
+          .get(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
   deleteWork(id: string, idRevision: string):Promise<any>{
     const url = `/api/naucni_radovi/${id}/revizija/${idRevision}`;
     return this.http
