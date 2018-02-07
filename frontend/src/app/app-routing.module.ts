@@ -15,6 +15,7 @@ import { WorkDetailComponent } from './work-detail/work-detail.component';
 import { ProgressWorkComponent } from './home-editor/progress-work/progress-work.component';
 import { AddReviewComponent } from './home-editor/add-review/add-review.component';
 import { WorkDetailAuthorComponent } from './home-author/work-detail-author/work-detail-author.component';
+import { ShowXhtmlComponent } from './work-detail/show-xhtml/show-xhtml.component';
 
 const routers: Routes = [
   { path: 'prijava', component: LoginComponent },
@@ -26,6 +27,10 @@ const routers: Routes = [
       {
         path:'naucniRadovi/:id',
         component: WorkDetailComponent
+      },
+      {
+        path:'naucniRadovi/:id/xhtml',
+        component: ShowXhtmlComponent
       }
 
   ]},

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from './user.service';
 import { WorkService } from '../works/work.service';
+import * as FileSaver from 'file-saver'; 
 
 
 @Component({
@@ -15,6 +16,7 @@ import { WorkService } from '../works/work.service';
 export class WorkDetailComponent implements OnInit {
   work: WorkInterface;
   users: any;
+  
 
   constructor(private userService: UserService,
               private workService: WorkService,
@@ -44,11 +46,25 @@ export class WorkDetailComponent implements OnInit {
 
 
   gotoGetPDF(){
+    console.log('pdf');
+    this.workService.getPdf(this.route.snapshot.params['id']).then(
+        response=>{
+        let blob = new Blob([response], { 
+          type: 'application/pdf' // must match the Accept type
+        });
 
+        var filename = 'mypdf.pdf';
+        console.log(blob);
+        console.log(response);
+        FileSaver.saveAs(blob, filename);
+        }
+    )
   }
 
   gotoGetXHTML(){
-    
+    console.log('html');
+    this.router.navigate(['naucniRadovi/'+this.route.snapshot.params['id']+'/xhtml']);
+
   }
 
 }

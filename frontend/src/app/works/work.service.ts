@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Response, RequestOptions, ResponseContentType } from '@angular/http';
+import { Headers } from '@angular/http/src/headers';
 
 @Injectable()
 export class WorkService {
+  headers: HttpHeaders = new HttpHeaders({'X-Auth-Token': localStorage.getItem('token')});
 
   constructor(private http: HttpClient) { }
 
@@ -70,6 +73,28 @@ export class WorkService {
 
   }
 
+  getPdf(id: string):Promise<any>{
+    let httpHeaders:HttpHeaders = new HttpHeaders({"Accept": 'application/pdf','Content-Type':'application/pdf'});
+    
+    const url = `/api/naucni_radovi/${id}/download`;
+    return this.http
+          .get(url, {headers:httpHeaders, responseType:'blob' })
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+
+          
+  }
+
+  getHtml(id: string):Promise<any>{
+    let httpHeaders:HttpHeaders = new HttpHeaders({"Accept": 'text/html;charset=UTF-8','Content-Type':'text/html;charset=UTF-8'});
+    const url = `/api/naucni_radovi/${id}/html`;
+    return this.http
+          .get(url, {headers:httpHeaders, responseType: 'text'})
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);

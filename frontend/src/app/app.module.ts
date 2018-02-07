@@ -28,6 +28,7 @@ import { ProgressWorkComponent } from './home-editor/progress-work/progress-work
 import { WorkDetailComponent } from './work-detail/work-detail.component';
 import { AddReviewComponent } from './home-editor/add-review/add-review.component';
 import { WorkDetailAuthorComponent } from './home-author/work-detail-author/work-detail-author.component';
+import { ShowXhtmlComponent } from './work-detail/show-xhtml/show-xhtml.component';
 
 
 export class CustomOption extends ToastOptions {
@@ -53,7 +54,8 @@ export class CustomOption extends ToastOptions {
     ProgressWorkComponent,
     WorkDetailComponent,
     AddReviewComponent,
-    WorkDetailAuthorComponent
+    WorkDetailAuthorComponent,
+    ShowXhtmlComponent
   ],
   imports: [
     BrowserModule,

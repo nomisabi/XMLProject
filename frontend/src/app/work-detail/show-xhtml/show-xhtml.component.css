@@ -1,0 +1,17 @@
+body{
+    font-size: 12px;
+    }
+    
+.poglavlja{
+    font-size: 14px;
+}
+    
+.autor{
+    text-align: center;
+    font-size: 12px;
+}
+    
+.naslov{
+    text-align: center;
+    font-size: 20px;
+}

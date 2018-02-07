@@ -38,9 +38,7 @@ public class BootstrapDataPopulator implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         logger.info("~~~ Load bootstrap data");
-        if (productRepositoryJSON.count() == 0) {
-            importJSONProducts();
-        }
+        
         if (productRepositoryXML.count() == 0) {
             //importXMLProducts();
         }

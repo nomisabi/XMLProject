@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<na:Naucni_rad xmlns:au="http://www.ftn.uns.ac.rs/uloge"
+ xmlns:na="http://www.ftn.uns.ac.rs/naucni_rad"
+ xmlns:rc="http://www.ftn.uns.ac.rs/recenzija"
+ xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo"
+ xmlns:nr="http://www.ftn.uns.ac.rs/naucni_radovi"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.ftn.uns.ac.rs/naucni_rad file:/Users/sabinomi/Documents/Docs/XML/uj/naucni_rad.xsd" Verzija="50" Id="ID111">
+    <na:Revizija Status="Poslat" Duzina="0" Id="ID001">
+        <na:Naslov>Naslov0</na:Naslov>
+        <au:Autor Id="ID002">
+            <au:Ime>Ime0</au:Ime>
+            <au:Prezime>Prezime0</au:Prezime>
+            <au:Email>Email11</au:Email>
+            <au:Biography>Biography0</au:Biography>
+            <au:Institucija>
+                <au:Naziv>Naziv0</au:Naziv>
+                <au:Adresa>
+                    <au:Mesto>Mesto0</au:Mesto>
+                    <au:Postanski_broj>Postanski_</au:Postanski_broj>
+                    <au:Ulica>Ulica0</au:Ulica>
+                    <au:Broj>d</au:Broj>
+                </au:Adresa>
+            </au:Institucija>
+        </au:Autor>
+        <au:Autor Id="ID003">
+            <au:Ime>Ime1</au:Ime>
+            <au:Prezime>Prezime1</au:Prezime>
+            <au:Email>Email33</au:Email>
+            <au:Biography>Biography1</au:Biography>
+            <au:Institucija>
+                <au:Naziv>Naziv1</au:Naziv>
+                <au:Adresa>
+                    <au:Mesto>Mesto1</au:Mesto>
+                    <au:Postanski_broj>Postanski_</au:Postanski_broj>
+                    <au:Ulica>Ulica1</au:Ulica>
+                    <au:Broj>d</au:Broj>
+                </au:Adresa>
+            </au:Institucija>
+        </au:Autor>
+        <na:Abstrakt>
+            <na:StukturiranAbstakt>
+                <na:Purpose>Purpose1111111111111111111111111111111111111111111</na:Purpose>
+                <na:DesignMethodologyApproach>DesignMethodologyApproach1111111111111111111111111</na:DesignMethodologyApproach>
+                <na:Findings>Findings111111111111111111111111111111111111111111</na:Findings>
+                <na:OriginalityValue>OriginalityValue1111111111111111111111111111111111</na:OriginalityValue>
+                <na:ResearchLimitationsImplications>ResearchLimitationsImplications1111111111111111111</na:ResearchLimitationsImplications>
+                <na:PracticalImplications>PracticalImplications11111111111111111111111111111</na:PracticalImplications>
+                <na:SocialImplications>SocialImplications11111111111111111111111111111111</na:SocialImplications>
+            </na:StukturiranAbstakt>
+        </na:Abstrakt>
+        <na:Kljucna_rec>Kljucna_rec0</na:Kljucna_rec>
+        <na:Kljucna_rec>Kljucna_rec1</na:Kljucna_rec>
+        <na:Sadrzaj>
+            <na:Poglavlje Id="ID0000000004">
+                <na:Naziv>Naziv0</na:Naziv>
+                <na:Paragraf>
+                    <na:Tabela>
+                        <na:Red>
+                            <na:Celija>Celija0</na:Celija>
+                            <na:Celija>Celija1</na:Celija>
+                        </na:Red>
+                        <na:Red>
+                            <na:Celija>Celija2</na:Celija>
+                            <na:Celija>Celija3</na:Celija>
+                        </na:Red>
+                    </na:Tabela>
+                </na:Paragraf>
+                <na:Paragraf>
+                    <na:Tabela>
+                        <na:Red>
+                            <na:Celija>Celija4</na:Celija>
+                            <na:Celija>Celija5</na:Celija>
+                        </na:Red>
+                        <na:Red>
+                            <na:Celija>Celija6</na:Celija>
+                            <na:Celija>Celija7</na:Celija>
+                        </na:Red>
+                    </na:Tabela>
+                </na:Paragraf>
+            </na:Poglavlje>
+            <na:Poglavlje Id="ID00000005">
+                <na:Naziv>Naziv1</na:Naziv>
+                <na:Paragraf>
+                    <na:Lista Tip="neuređena">
+                        <na:Stavke Labela="Labela0" Id="Id0"/>
+                        <na:Stavke Labela="Labela1" Id="Id1"/>
+                    </na:Lista>
+                </na:Paragraf>
+                <na:Paragraf>
+                    <na:Tekst>
+                        <na:Highlight BojaPozadine="BojaPozadine0">
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj0</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:Highlight>
+                        <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                            <na:Tekstualni_sadzaj>Tekstualni_sadzaj1</na:Tekstualni_sadzaj>
+                        </na:ObicanTekst>
+                    </na:Tekst>
+                </na:Paragraf>
+            </na:Poglavlje>
+        </na:Sadrzaj>
+        <na:Referenca>
+            <na:ReferencaKnjiga Strana="50">
+                <na:Naziv>
+                </na:Naziv>
+                <na:Autor>
+                </na:Autor>
+                <na:Izdavac>
+                    <na:Naziv>Naziv2</na:Naziv>
+                    <au:Adresa>
+                        <au:Mesto>Mesto2</au:Mesto>
+                        <au:Postanski_broj>Postanski_</au:Postanski_broj>
+                        <au:Ulica>Ulica2</au:Ulica>
+                        <au:Broj>d</au:Broj>
+                    </au:Adresa>
+                </na:Izdavac>
+                <na:Godina>
+                </na:Godina>
+            </na:ReferencaKnjiga>
+        </na:Referenca>
+        <na:Referenca>
+            <na:ReferencaClanak Strana="50">
+                <na:Naziv>
+                </na:Naziv>
+                <na:Oznak>
+                </na:Oznak>
+                <na:Izdavac>
+                    <na:Naziv>Naziv3</na:Naziv>
+                    <au:Adresa>
+                        <au:Mesto>Mesto3</au:Mesto>
+                        <au:Postanski_broj>Postanski_</au:Postanski_broj>
+                        <au:Ulica>Ulica3</au:Ulica>
+                        <au:Broj>d</au:Broj>
+                    </au:Adresa>
+                </na:Izdavac>
+                <na:Godina>
+                </na:Godina>
+            </na:ReferencaClanak>
+        </na:Referenca>
+        <rc:Recenzija Id="ID006">
+            <au:Recenzent Id="ID007">
+                <au:Ime>Ime2</au:Ime>
+                <au:Prezime>Prezime2</au:Prezime>
+                <au:Email>Email55</au:Email>
+                <au:Naucni_radovi>ID003</au:Naucni_radovi>
+                <au:Naucni_radovi>ID111</au:Naucni_radovi>
+            </au:Recenzent>
+            <rc:Sadrzaj>
+                <rc:Preporuka>Prihvaten</rc:Preporuka>
+                <rc:Pitanja>
+                    <rc:TekstPitanja>TekstPitanja0</rc:TekstPitanja>
+                    <rc:Odgovor>Odgovor0</rc:Odgovor>
+                </rc:Pitanja>
+                <rc:Pitanja>
+                    <rc:TekstPitanja>TekstPitanja1</rc:TekstPitanja>
+                    <rc:Odgovor>Odgovor1</rc:Odgovor>
+                </rc:Pitanja>
+                <rc:KommentarZaAutore>
+                    <na:Tekst>
+                        <na:Highlight BojaPozadine="BojaPozadine1">
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj2</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:Highlight>
+                        <na:MatematickaForma>
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj3</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:MatematickaForma>
+                    </na:Tekst>
+                </rc:KommentarZaAutore>
+                <rc:KommentarZaUrednika>
+                    <na:Tekst>
+                        <na:Citat>
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj4</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:Citat>
+                        <na:Highlight BojaPozadine="BojaPozadine2">
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj5</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:Highlight>
+                    </na:Tekst>
+                </rc:KommentarZaUrednika>
+                <rc:Dodatak>Dodatak111</rc:Dodatak>
+            </rc:Sadrzaj>
+            <rc:Revizija>ID007</rc:Revizija>
+        </rc:Recenzija>
+        <rc:Recenzija Id="ID008">
+            <au:Recenzent Id="ID009">
+                <au:Ime>Ime3</au:Ime>
+                <au:Prezime>Prezime3</au:Prezime>
+                <au:Email>Email77</au:Email>
+                <au:Naucni_radovi>ID006</au:Naucni_radovi>
+                <au:Naucni_radovi>ID003</au:Naucni_radovi>
+            </au:Recenzent>
+            <rc:Sadrzaj>
+                <rc:Preporuka>Prihvaten</rc:Preporuka>
+                <rc:Pitanja>
+                    <rc:TekstPitanja>TekstPitanja2</rc:TekstPitanja>
+                    <rc:Odgovor>Odgovor2</rc:Odgovor>
+                </rc:Pitanja>
+                <rc:Pitanja>
+                    <rc:TekstPitanja>TekstPitanja3</rc:TekstPitanja>
+                    <rc:Odgovor>Odgovor3</rc:Odgovor>
+                </rc:Pitanja>
+                <rc:KommentarZaAutore>
+                    <na:Tekst>
+                        <na:Footnote Broj="500">
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj6</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:Footnote>
+                        <na:MatematickaForma>
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj7</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:MatematickaForma>
+                    </na:Tekst>
+                </rc:KommentarZaAutore>
+                <rc:KommentarZaUrednika>
+                    <na:Tekst>
+                        <na:Citat>
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj8</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:Citat>
+                        <na:Footnote Broj="500">
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj9</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:Footnote>
+                    </na:Tekst>
+                </rc:KommentarZaUrednika>
+                <rc:Dodatak>Dodatak333</rc:Dodatak>
+            </rc:Sadrzaj>
+            <rc:Revizija>ID006</rc:Revizija>
+        </rc:Recenzija>
+        <pp:ProptatnoPismo Id="ID010">
+            <pp:Autor>ID001</pp:Autor>
+            <pp:Urednik>ID001</pp:Urednik>
+            <pp:Datum>2006-05-04</pp:Datum>
+            <pp:Sadrzaj>
+                <pp:Recenzent>ID006</pp:Recenzent>
+                <pp:Recenzent>ID006</pp:Recenzent>
+            </pp:Sadrzaj>
+            <pp:Potpis>Potpis0</pp:Potpis>
+            <pp:Revizija>ID009</pp:Revizija>
+        </pp:ProptatnoPismo>
+    </na:Revizija>
+    <na:Revizija Status="Poslat" Duzina="0" Id="ID011">
+        <na:Naslov>Naslov1</na:Naslov>
+        <au:Autor Id="ID012">
+            <au:Ime>Ime4</au:Ime>
+            <au:Prezime>Prezime4</au:Prezime>
+            <au:Email>Email99</au:Email>
+            <au:Biography>Biography2</au:Biography>
+            <au:Institucija>
+                <au:Naziv>Naziv2</au:Naziv>
+                <au:Adresa>
+                    <au:Mesto>Mesto4</au:Mesto>
+                    <au:Postanski_broj>Postanski_</au:Postanski_broj>
+                    <au:Ulica>Ulica4</au:Ulica>
+                    <au:Broj>d</au:Broj>
+                </au:Adresa>
+            </au:Institucija>
+        </au:Autor>
+        <au:Autor Id="ID013">
+            <au:Ime>Ime5</au:Ime>
+            <au:Prezime>Prezime5</au:Prezime>
+            <au:Email>Email10</au:Email>
+            <au:Biography>Biography3</au:Biography>
+            <au:Institucija>
+                <au:Naziv>Naziv3</au:Naziv>
+                <au:Adresa>
+                    <au:Mesto>Mesto5</au:Mesto>
+                    <au:Postanski_broj>Postanski_</au:Postanski_broj>
+                    <au:Ulica>Ulica5</au:Ulica>
+                    <au:Broj>d</au:Broj>
+                </au:Adresa>
+            </au:Institucija>
+        </au:Autor>
+        <na:Abstrakt>
+            <na:StukturiranAbstakt>
+                <na:Purpose>Purpose3333333333333333333333333333333333333333333</na:Purpose>
+                <na:DesignMethodologyApproach>DesignMethodologyApproach3333333333333333333333333</na:DesignMethodologyApproach>
+                <na:Findings>Findings333333333333333333333333333333333333333333</na:Findings>
+                <na:OriginalityValue>OriginalityValue3333333333333333333333333333333333</na:OriginalityValue>
+                <na:ResearchLimitationsImplications>ResearchLimitationsImplications3333333333333333333</na:ResearchLimitationsImplications>
+                <na:PracticalImplications>PracticalImplications33333333333333333333333333333</na:PracticalImplications>
+                <na:SocialImplications>SocialImplications33333333333333333333333333333333</na:SocialImplications>
+            </na:StukturiranAbstakt>
+        </na:Abstrakt>
+        <na:Kljucna_rec>Kljucna_rec2</na:Kljucna_rec>
+        <na:Kljucna_rec>Kljucna_rec3</na:Kljucna_rec>
+        <na:Sadrzaj>
+            <na:Poglavlje Id="ID00000000000014">
+                <na:Naziv>Naziv4</na:Naziv>
+                <na:Paragraf>
+                    <na:Figura Natpis="Natpis0" Url="Url0"/>
+                </na:Paragraf>
+                <na:Paragraf>
+                    <na:Lista Tip="neuređena">
+                        <na:Stavke Labela="Labela2" Id="Id2"/>
+                        <na:Stavke Labela="Labela3" Id="Id3"/>
+                    </na:Lista>
+                </na:Paragraf>
+            </na:Poglavlje>
+            <na:Poglavlje Id="ID0000000000015">
+                <na:Naziv>Naziv5</na:Naziv>
+                <na:Paragraf>
+                    <na:Tabela>
+                        <na:Red>
+                            <na:Celija>Celija8</na:Celija>
+                            <na:Celija>Celija9</na:Celija>
+                        </na:Red>
+                        <na:Red>
+                            <na:Celija>Celija10</na:Celija>
+                            <na:Celija>Celija11</na:Celija>
+                        </na:Red>
+                    </na:Tabela>
+                </na:Paragraf>
+                <na:Paragraf>
+                    <na:Tabela>
+                        <na:Red>
+                            <na:Celija>Celija12</na:Celija>
+                            <na:Celija>Celija13</na:Celija>
+                        </na:Red>
+                        <na:Red>
+                            <na:Celija>Celija14</na:Celija>
+                            <na:Celija>Celija15</na:Celija>
+                        </na:Red>
+                    </na:Tabela>
+                </na:Paragraf>
+            </na:Poglavlje>
+        </na:Sadrzaj>
+        <na:Referenca>
+            <na:ReferencaClanak Strana="50">
+                <na:Naziv>
+                </na:Naziv>
+                <na:Oznak>
+                </na:Oznak>
+                <na:Izdavac>
+                    <na:Naziv>Naziv6</na:Naziv>
+                    <au:Adresa>
+                        <au:Mesto>Mesto6</au:Mesto>
+                        <au:Postanski_broj>Postanski_</au:Postanski_broj>
+                        <au:Ulica>Ulica6</au:Ulica>
+                        <au:Broj>d</au:Broj>
+                    </au:Adresa>
+                </na:Izdavac>
+                <na:Godina>
+                </na:Godina>
+            </na:ReferencaClanak>
+        </na:Referenca>
+        <na:Referenca>
+            <na:ReferencaWeb>
+                <na:Naziv>Naziv7</na:Naziv>
+                <na:Link>http://A</na:Link>
+                <na:Datum>2006-05-04</na:Datum>
+            </na:ReferencaWeb>
+        </na:Referenca>
+        <rc:Recenzija Id="ID016">
+            <au:Recenzent Id="ID017">
+                <au:Ime>Ime6</au:Ime>
+                <au:Prezime>Prezime6</au:Prezime>
+                <au:Email>Email11</au:Email>
+                <au:Naucni_radovi>ID011</au:Naucni_radovi>
+                <au:Naucni_radovi>ID008</au:Naucni_radovi>
+            </au:Recenzent>
+            <rc:Sadrzaj>
+                <rc:Preporuka>Prihvaten</rc:Preporuka>
+                <rc:Pitanja>
+                    <rc:TekstPitanja>TekstPitanja4</rc:TekstPitanja>
+                    <rc:Odgovor>Odgovor4</rc:Odgovor>
+                </rc:Pitanja>
+                <rc:Pitanja>
+                    <rc:TekstPitanja>TekstPitanja5</rc:TekstPitanja>
+                    <rc:Odgovor>Odgovor5</rc:Odgovor>
+                </rc:Pitanja>
+                <rc:KommentarZaAutore>
+                    <na:Tekst>
+                        <na:MatematickaForma>
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj10</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:MatematickaForma>
+                        <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                            <na:Tekstualni_sadzaj>Tekstualni_sadzaj11</na:Tekstualni_sadzaj>
+                        </na:ObicanTekst>
+                    </na:Tekst>
+                </rc:KommentarZaAutore>
+                <rc:KommentarZaUrednika>
+                    <na:Tekst>
+                        <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                            <na:Tekstualni_sadzaj>Tekstualni_sadzaj12</na:Tekstualni_sadzaj>
+                        </na:ObicanTekst>
+                        <na:MatematickaForma>
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj13</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:MatematickaForma>
+                    </na:Tekst>
+                </rc:KommentarZaUrednika>
+                <rc:Dodatak>Dodatak555</rc:Dodatak>
+            </rc:Sadrzaj>
+            <rc:Revizija>ID001</rc:Revizija>
+        </rc:Recenzija>
+        <rc:Recenzija Id="ID018">
+            <au:Recenzent Id="ID019">
+                <au:Ime>Ime7</au:Ime>
+                <au:Prezime>Prezime7</au:Prezime>
+                <au:Email>Email12</au:Email>
+                <au:Naucni_radovi>ID002</au:Naucni_radovi>
+                <au:Naucni_radovi>ID002</au:Naucni_radovi>
+            </au:Recenzent>
+            <rc:Sadrzaj>
+                <rc:Preporuka>Prihvaten</rc:Preporuka>
+                <rc:Pitanja>
+                    <rc:TekstPitanja>TekstPitanja6</rc:TekstPitanja>
+                    <rc:Odgovor>Odgovor6</rc:Odgovor>
+                </rc:Pitanja>
+                <rc:Pitanja>
+                    <rc:TekstPitanja>TekstPitanja7</rc:TekstPitanja>
+                    <rc:Odgovor>Odgovor7</rc:Odgovor>
+                </rc:Pitanja>
+                <rc:KommentarZaAutore>
+                    <na:Tekst>
+                        <na:Highlight BojaPozadine="BojaPozadine3">
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj14</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:Highlight>
+                        <na:Footnote Broj="500">
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj15</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:Footnote>
+                    </na:Tekst>
+                </rc:KommentarZaAutore>
+                <rc:KommentarZaUrednika>
+                    <na:Tekst>
+                        <na:MatematickaForma>
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj16</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:MatematickaForma>
+                        <na:Citat>
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj17</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:Citat>
+                    </na:Tekst>
+                </rc:KommentarZaUrednika>
+                <rc:Dodatak>Dodatak777</rc:Dodatak>
+            </rc:Sadrzaj>
+            <rc:Revizija>ID018</rc:Revizija>
+        </rc:Recenzija>
+        <pp:ProptatnoPismo Id="ID020">
+            <pp:Autor>ID018</pp:Autor>
+            <pp:Urednik>ID019</pp:Urednik>
+            <pp:Datum>2006-05-04</pp:Datum>
+            <pp:Sadrzaj>
+                <pp:Rezultat>
+                    <na:Tekst>
+                        <na:Link>
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj18</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                            <na:Referenca>
+                                <na:ReferencaPoglavlja>
+                                    <na:Poglavlje>ID011</na:Poglavlje>
+                                </na:ReferencaPoglavlja>
+                            </na:Referenca>
+                        </na:Link>
+                        <na:Footnote Broj="500">
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj19</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:Footnote>
+                    </na:Tekst>
+                </pp:Rezultat>
+                <pp:Rezultat>
+                    <na:Tekst>
+                        <na:Highlight BojaPozadine="BojaPozadine4">
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj20</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:Highlight>
+                        <na:MatematickaForma>
+                            <na:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <na:Tekstualni_sadzaj>Tekstualni_sadzaj21</na:Tekstualni_sadzaj>
+                            </na:ObicanTekst>
+                        </na:MatematickaForma>
+                    </na:Tekst>
+                </pp:Rezultat>
+            </pp:Sadrzaj>
+            <pp:Potpis>Potpis1</pp:Potpis>
+            <pp:Revizija>ID006</pp:Revizija>
+        </pp:ProptatnoPismo>
+    </na:Revizija>
+</na:Naucni_rad>

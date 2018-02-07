@@ -90,11 +90,10 @@
                                 
                             </xsl:if>
                             <xsl:if test="nr:Naucni_rad/nr:Revizija[last()]/nr:Abstrakt/nr:NeStrukturiranAbstrakt">
+                              
+                                <xsl:value-of select="nr:Naucni_rad/nr:Revizija[last()]/nr:Abstrakt/nr:NeStrukturiranAbstrakt/nr:Tekst"/>
                                 
-                                <xsl:value-of select="nr:Naucni_rad/nr:Revizija[last()]/nr:Abstrakt/nr:NeStukturiranAbstakt/nr:Tekst"/>
-                                <br></br>
-                            </xsl:if>
-                        
+                            </xsl:if>                    
                         
                     </fo:block>
                     <fo:block font-family="sans-serif" font-size="12px">  &#160;</fo:block>
