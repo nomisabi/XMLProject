@@ -62,6 +62,7 @@
                 </xs:element>
             </xs:sequence>
             <xs:attribute name="Id" type="xs:ID"/>
+            <xs:attribute name="Status" type="rc:TStatusRecenzija" default="Ceka se"/>
         </xs:complexType>
     </xs:element>
     <xs:simpleType name="TPreporuka">
@@ -70,6 +71,13 @@
             <xs:enumeration value="Odbijen"/>
             <xs:enumeration value="PotrebnoVecaispravka"/>
             <xs:enumeration value="PotrebnoManjaispravka"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TStatusRecenzija">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Ceka se"/>
+            <xs:enumeration value="Prihvacen"/>
+            <xs:enumeration value="Odbijen"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

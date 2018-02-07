@@ -7,6 +7,7 @@ public class Revision {
 	private String review1;
 	private String review2;
 	private boolean hasLetter;
+	private Review review;
 
 	public Revision() {
 
@@ -66,6 +67,14 @@ public class Revision {
 
 	public void setHasLetter(boolean hasLetter) {
 		this.hasLetter = hasLetter;
+	}
+
+	public Review getReview() {
+		return review;
+	}
+
+	public void setReview(Review review) {
+		this.review = review;
 	}
 
 }
