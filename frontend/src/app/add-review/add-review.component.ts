@@ -25,8 +25,8 @@ export class AddReviewComponent implements OnInit {
 
   ngOnInit() {
     this.revision = {
-      id: 'ID955565',
-      title: 'Blaa',
+      id: '',
+      title: '',
       status: '',
       review1: '',
       review2: '',

@@ -24,9 +24,12 @@ export class NewWorksComponent implements OnInit {
         .then(works => this.works = works);
   }
 
-  gotoWorkDetail(id: string, idRevizije: string){
+  gotoAddReview(id: string, idRevizije: string){
     this.router.navigate([`/urednik/naucniRadovi/${id}/revizije/${idRevizije}/recenzent`]);
+  }
 
+  gotoWorkDetail(id: string){
+    this.router.navigate([`/urednik/naucniRadovi/${id}`]);
   }
 
 }

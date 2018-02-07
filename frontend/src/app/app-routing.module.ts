@@ -57,6 +57,10 @@ const routers: Routes = [
         path:'naucniRadovi/:id/revizije/:idRevizije/recenzent',
         component: AddReviewComponent
       },
+      {
+        path:'naucniRadovi/:id',
+        component: WorkDetailComponent
+      }
       
     ]
   },

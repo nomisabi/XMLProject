@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from './user.service';
 import { WorkService } from '../works/work.service';
@@ -18,6 +19,7 @@ export class WorkDetailComponent implements OnInit {
   constructor(private userService: UserService,
               private workService: WorkService,
               private router: Router,
+              private route: ActivatedRoute,
               private location: Location) {  }
 
   ngOnInit() {
@@ -30,8 +32,14 @@ export class WorkDetailComponent implements OnInit {
       console.log(reviews);
       this.users = reviews.korisnik;
       console.log(this.users);
+      this.getWork();
      
     });
+  }
+
+  getWork(){
+    this.workService.getWork(this.route.snapshot.params['id'])
+        .then(work => this.work = work);
   }
 
 

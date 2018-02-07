@@ -10,52 +10,24 @@
           <a (click)="gotoGetXHTML()" class="small-btn">XHTML</a>
         </div>   
       </div>
-    <div class="row">
-      <div class="col-lg-9 main-chart">
+      <div *ngFor="let revision of work.revisions; let i=index">
         <div class="row">
-          <div class="col-lg-1"></div>
-          <div class="col-lg-10 border">
-            <div class="border-title">naslov</div>
-            <div class="border-desc">{{work.title}}</div>
+          <div class="col-lg-9 main-chart pFont">
+            <p class="title">REVIZIJA {{i+1}}</p>
           </div>
         </div>
-       <!--  <form name="form" (ngSubmit)="save()">
         <div class="row">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-5 border">
-              <div class="border-title">recenzent 1</div>
-              <div class="form-group">
-                  <select class="form-control" [(ngModel)]="work.review1" [ngModelOptions]="{standalone: true}">
-                      <option selected="selected" disabled>Recenzent...</option>
-                      <option *ngFor="let user of users" [value]="user.korisnickoIme">{{user.ime}}  {{user.prezime}}  ( {{user.korisnickoIme}} )</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-lg-5 border">
-              <div class="border-title">recenzent 2</div>
-              <div class="form-group">
-                  <select class="form-control" [(ngModel)]="work.review2" [ngModelOptions]="{standalone: true}">
-                      <option selected="selected" disabled>Recenzent...</option>
-                      <option *ngFor="let user of users" [value]="user.korisnickoIme">{{user.ime}}  {{user.prezime}}  ( {{user.korisnickoIme}} )</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="row">
+          <div class="col-lg-9 main-chart">
+            <div class="row">
               <div class="col-lg-1"></div>
-              <div class="col-lg-5">
-                <div class="full-button cancel" >
-                  <a class="full-button-text" (click)="cancel()">Odustani
-                  </a>
+              <div class="col-lg-10">
+                <div class="notification">
+                  <p> <br> {{revision.title}} <br> &nbsp; </p>
                 </div>
-              </div>
-              <div class="col-lg-5">
-                <div class="full-button">
-                    <button type="submit" class="save-button-text">Dodaj recenzente</button>
-              </div>
-              </div>
+              </div>   
+            </div>    
           </div>
-        </form> -->
+        </div>   
+        <br>
       </div>
-    </div>
   </section>
