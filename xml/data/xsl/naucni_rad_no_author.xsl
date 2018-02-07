@@ -18,29 +18,7 @@
                     </p>
                 </div>
                 <br></br>
-                <div style="text-align: center; font-size: 12px;">
-                    <p>
-                        <xsl:for-each select="nr:Naucni_rad/nr:Revizija[last()]/ulog:Autor">
-                            <xsl:value-of select="ulog:Ime"/> &#160;  <xsl:value-of select="ulog:Prezime"/>  &#160;  &#160; 
-                        </xsl:for-each>
-                        <br></br>
-                        <xsl:for-each select="nr:Naucni_rad/nr:Revizija[last()]/ulog:Autor">
-                            <xsl:value-of select="ulog:Institucija/ulog:Naziv"/>  &#160;  &#160; 
-                        </xsl:for-each>
-                        <br></br>
-                        <xsl:for-each select="nr:Naucni_rad/nr:Revizija[last()]/ulog:Autor">
-                            <xsl:value-of select="ulog:Institucija/ulog:Adresa/ulog:Broj"/>  &#160;  <xsl:value-of select="ulog:Institucija/ulog:Adresa/ulog:Ulica"/>&#160;  &#160; 
-                        </xsl:for-each>
-                        <br></br>
-                        <xsl:for-each select="nr:Naucni_rad/nr:Revizija[last()]/ulog:Autor">
-                            <xsl:value-of select="ulog:Institucija/ulog:Adresa/ulog:Mesto"/>  &#160;  <xsl:value-of select="ulog:Institucija/ulog:Adresa/ulog:Postanski_broj"/>&#160;  &#160; 
-                        </xsl:for-each>
-                        <br></br>
-                        <xsl:for-each select="nr:Naucni_rad/nr:Revizija[last()]/ulog:Autor">
-                            <xsl:value-of select="ulog:Email"/> &#160;  &#160; 
-                        </xsl:for-each>
-                    </p>
-                </div>
+                
                 <div style="font-size: 14px;">
                     <p>
                         Abstract

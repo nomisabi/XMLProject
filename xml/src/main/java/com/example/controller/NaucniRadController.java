@@ -26,7 +26,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.w3c.dom.Document;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
 
 import com.example.dto.Work;
 import com.example.model.naucni_rad.NaucniRad;
@@ -52,18 +56,25 @@ import java.io.StringWriter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXResult;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import net.sf.saxon.TransformerFactoryImpl;
@@ -102,21 +113,21 @@ public class NaucniRadController {
 		}
 	}
 
-	/*
-	 * @RequestMapping(value = "/naucni_radovi", method = RequestMethod.POST,
-	 * consumes = MediaType.APPLICATION_XML_VALUE) public ResponseEntity<String>
-	 * createNaucniRad(@RequestBody String nr, UriComponentsBuilder builder) {
-	 * try { naucniRadService.add(nr); //HttpHeaders headers = new
-	 * HttpHeaders(); //
-	 * headers.setLocation(builder.path("/naucni_radovi/{id}.xml").
-	 * buildAndExpand(nr.getId()).toUri());
-	 * 
-	 * return new ResponseEntity<>(HttpStatus.CREATED); } catch (JAXBException |
-	 * SAXException e) { logger.info(e.getMessage()); return new
-	 * ResponseEntity<>("Xml dokument nije validan", HttpStatus.BAD_REQUEST); }
-	 * 
-	 * }
-	 */
+  @RequestMapping(
+          value = "/naucni_radovi",
+          method = RequestMethod.POST,
+          consumes = MediaType.APPLICATION_XML_VALUE
+  )
+  public ResponseEntity<String> createNaucniRad(@RequestBody NaucniRad nr, UriComponentsBuilder builder) {
+      naucniRadService.add(nr);
+
+      HttpHeaders headers = new HttpHeaders();
+      headers.setLocation(
+              builder.path("/naucni_radovi/{id}.xml")
+                      .buildAndExpand(nr.getId()).toUri());
+
+      return new ResponseEntity<>("", headers, HttpStatus.CREATED);
+  }
 
 	@RequestMapping(value = "/naucni_radovi/{id}.xml", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -205,75 +216,14 @@ public class NaucniRadController {
 		}
 	}
 	
-	public static final String XSL_FILE = "data/xsl/naucni_rad.xsl";
+
 	
-	public static final String OUTPUT_FILE = "gen/xsl/naucni_rad.pdf";
-	
-    @RequestMapping(value = "/naucni_radovi/{id}/download", method = RequestMethod.GET, produces = "application/pdf")
+    @RequestMapping(value = "/api/naucni_radovi/{id}/download", method = RequestMethod.GET, produces = "application/pdf")
     public ResponseEntity<InputStreamResource> downloadPDFFile(@PathVariable("id") String id)
-            throws IOException, JAXBException, SAXException, TransformerException {
+            throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {
     	
-    	NaucniRad nr= naucniRadService.findById(id);
-
-    	// Initialize FOP factory object
-    	FopFactory fopFactory = FopFactory.newInstance(new File("src/main/java/fop.xconf"));
-    	
-    	// Setup the XSLT transformer factory
-    	TransformerFactory transformerFactory = new TransformerFactoryImpl();
-		
-		// Point to the XSL-FO file
-		File xslFile = new File(XSL_FILE);
-
-		// Create transformation source
-		StreamSource transformSource = new StreamSource(xslFile);		
-		
-		JAXBContext jaxbContext = JAXBContext.newInstance(NaucniRad.class);
-		Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-
-		// output pretty printed
-		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-		StringWriter sw = new StringWriter();
-		jaxbMarshaller.marshal(nr, sw);
-		String xmlString = sw.toString();
-		
-		// Initialize the transformation subject
-		StreamSource source = new StreamSource(new StringReader(xmlString));
-
-		// Initialize user agent needed for the transformation
-		FOUserAgent userAgent = fopFactory.newFOUserAgent();
-		
-		// Create the output stream to store the results
-		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-
-		// Initialize the XSL-FO transformer object
-		Transformer xslFoTransformer = transformerFactory.newTransformer(transformSource);
-		
-		// Construct FOP instance with desired output format
-		Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, userAgent, outStream);
-
-		// Resulting SAX events 
-		Result res = new SAXResult(fop.getDefaultHandler());
-
-		// Start XSLT transformation and FOP processing
-		xslFoTransformer.transform(source, res);
-
-		// Generate PDF file
-		File pdfFile = new File(OUTPUT_FILE);
-		if (!pdfFile.getParentFile().exists()) {
-			System.out.println("[INFO] A new directory is created: " + pdfFile.getParentFile().getAbsolutePath() + ".");
-			pdfFile.getParentFile().mkdir();
-		}
-		
-		OutputStream out = new BufferedOutputStream(new FileOutputStream(pdfFile));
-		out.write(outStream.toByteArray());
-
-		System.out.println("[INFO] File \"" + pdfFile.getCanonicalPath() + "\" generated successfully.");
-		out.close();
-		
-		System.out.println("[INFO] End.");
-		InputStreamResource resource = new InputStreamResource(new FileInputStream(pdfFile));
-
+    	File pdfFile=naucniRadService.createFile();
+    	InputStreamResource resource = naucniRadService.generatePDF(id, pdfFile);
         return ResponseEntity
                 .ok()
                 .contentLength(pdfFile.length())
@@ -281,7 +231,13 @@ public class NaucniRadController {
                 .body(resource);
     }
     
-	
+
+    
+    @RequestMapping(value = "/api/naucni_radovi/{id}/html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String downloadHTML(@PathVariable("id") String id)
+            throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {  	  
+        return naucniRadService.generateHTML(id);
+    }	
 	
 }
 
