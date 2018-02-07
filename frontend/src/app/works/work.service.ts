@@ -63,6 +63,15 @@ export class WorkService {
           .catch(this.handleError);
   }
 
+  getWorkForReview(id: string, idRevision: string):Promise<any>{
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}`;
+    return this.http
+          .get(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
   deleteWork(id: string, idRevision: string):Promise<any>{
     const url = `/api/naucni_radovi/${id}/revizija/${idRevision}`;
     return this.http
@@ -70,7 +79,33 @@ export class WorkService {
           .toPromise()
           .then(res => res)
           .catch(this.handleError);
+  }
 
+  getWorksForReviewer(): Promise<any>{
+    const url = `/api/naucni_radovi/dodeljeni`;
+    return this.http
+          .get(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
+  acceptReview(id: string, idRevision: string): Promise<any>{
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/prihvati`;
+    return this.http
+          .get(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
+  disardReview(id: string, idRevision: string): Promise<any>{
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/odbi`;
+    return this.http
+          .get(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
   }
 
   getPdf(id: string):Promise<any>{

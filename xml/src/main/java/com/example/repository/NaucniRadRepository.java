@@ -22,6 +22,9 @@ public interface NaucniRadRepository {
 
 	List<NaucniRad> findMy(String username) throws IOException, JAXBException;
 
+	List<NaucniRad> findByReviewer(String status, String firstName, String lastName, String email)
+			throws IOException, JAXBException;
+
 	// ProductSearchResult findByName(String name);
 
 	// ProductSearchResult findByYear(int year);

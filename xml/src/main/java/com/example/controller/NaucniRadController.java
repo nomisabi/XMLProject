@@ -40,6 +40,7 @@ import com.example.model.naucni_rad.TStatus;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
 import com.example.model.naucni_radovi.search.Product;
 import com.example.model.naucni_radovi.search.ProductSearchResult;
+import com.example.model.recenzija.TStatusRecenzija;
 import com.example.repository.NaucniRadRepositoryXML;
 import com.example.repository.ProductRepositoryXML;
 import com.example.security.TokenUtils;
@@ -89,15 +90,14 @@ import net.sf.saxon.TransformerFactoryImpl;
 @RestController
 public class NaucniRadController {
 
-    private static final Logger logger = LoggerFactory.getLogger(NaucniRadController.class);
-    
-    @Autowired
-    protected NaucniRadService naucniRadService;
+	private static final Logger logger = LoggerFactory.getLogger(NaucniRadController.class);
+
+	@Autowired
+	protected NaucniRadService naucniRadService;
 	@Autowired
 	StorageService storageService;
 	@Autowired
 	TokenUtils tokenUtils;
-
 
 	@PostMapping("/api/naucni_radovi")
 	public ResponseEntity<String> createNaucniRad(@RequestParam("file") MultipartFile file) {
@@ -166,6 +166,21 @@ public class NaucniRadController {
 
 		try {
 			Work work = naucniRadService.findByIdPoslat(id);
+			return new ResponseEntity<>(work, HttpStatus.OK);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}", method = RequestMethod.GET)
+	public ResponseEntity<Work> getNaucniRad(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision, HttpServletRequest request) {
+		String token = request.getHeader("X-Auth-Token");
+		String username = tokenUtils.getUsernameFromToken(token);
+
+		try {
+			Work work = naucniRadService.findByIdForReview(id, idRevision, username);
 			return new ResponseEntity<>(work, HttpStatus.OK);
 		} catch (IOException | JAXBException e) {
 			logger.info(e.getMessage());
@@ -242,7 +257,7 @@ public class NaucniRadController {
 
 		try {
 			naucniRadService.addReview(id, idRevision, revision.getReview1(), revision.getReview2());
-			return new ResponseEntity<Void>(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
 
 		} catch (JAXBException | IOException e) {
 			logger.info(e.getMessage());
@@ -253,53 +268,93 @@ public class NaucniRadController {
 		}
 	}
 
+	@RequestMapping(value = "/api/naucni_radovi/dodeljeni", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Work>> getWorksForReviewer(HttpServletRequest request) {
+		String token = request.getHeader("X-Auth-Token");
+		String username = tokenUtils.getUsernameFromToken(token);
 
-
-	/*@RequestMapping(value = "/naucni_radovi/{id}.xml", method = RequestMethod.DELETE)
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteNaucniRad(@PathVariable("id") String id) {
-		naucniRadService.remove(id);
-	}
-
-	@RequestMapping(value = "/naucni_radovi/{id}.xml", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
-	public NaucniRad readNaucniRad(@PathVariable("id") String id) {
-		return naucniRadService.findById(id);
-	}
-
-	@RequestMapping(value = "/naucni_radovi.xml", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
-	public NaucniRadSearchResult searchNaucniRad(@RequestParam(required = false, value = "name") String name) {
-		if (StringUtils.isEmpty(name)) {
-			logger.info("Lookup all {} naucni rad...", naucniRadService.count());
-			return naucniRadService.findAll();
-		} else {
-			logger.info("Lookup products by name: {}", name);
-			return null;
+		try {
+			List<Work> works = naucniRadService.getWorksForReviewer(TStatusRecenzija.CEKA_SE, "Ceka se", username);
+			if (works == null) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			} else {
+				return new ResponseEntity<>(works, HttpStatus.OK);
+			}
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+
 	}
-*/
 
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/prihvati", method = RequestMethod.GET)
+	public ResponseEntity<Void> yesReviwer(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision, HttpServletRequest request) {
+		String token = request.getHeader("X-Auth-Token");
+		String username = tokenUtils.getUsernameFromToken(token);
 
-	
-    @RequestMapping(value = "/api/naucni_radovi/{id}/download", method = RequestMethod.GET, produces = "application/pdf")
-    public ResponseEntity<InputStreamResource> downloadPDFFile(@PathVariable("id") String id)
-            throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {
-    	
-    	File pdfFile=naucniRadService.createFile();
-    	InputStreamResource resource = naucniRadService.generatePDF(id, pdfFile);
-        return ResponseEntity
-                .ok()
-                .contentLength(pdfFile.length())
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(resource);
-    }
-    
+		try {
+			naucniRadService.acceptReview(id, idRevision, username, TStatusRecenzija.PRIHVACEN);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (JAXBException | IOException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 
-    
-    @RequestMapping(value = "/api/naucni_radovi/{id}/html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String downloadHTML(@PathVariable("id") String id)
-            throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {  	  
-        return naucniRadService.generateHTML(id);
-    }	
-	
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/odbi", method = RequestMethod.GET)
+	public ResponseEntity<Void> noReviwer(@PathVariable("id") String id, @PathVariable("id_revizija") String idRevision,
+			HttpServletRequest request) {
+		String token = request.getHeader("X-Auth-Token");
+		String username = tokenUtils.getUsernameFromToken(token);
+
+		try {
+			naucniRadService.acceptReview(id, idRevision, username, TStatusRecenzija.ODBIJEN);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (JAXBException | IOException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	/*
+	 * @RequestMapping(value = "/naucni_radovi/{id}.xml", method =
+	 * RequestMethod.DELETE)
+	 * 
+	 * @ResponseStatus(HttpStatus.NO_CONTENT) public void
+	 * deleteNaucniRad(@PathVariable("id") String id) {
+	 * naucniRadService.remove(id); }
+	 * 
+	 * @RequestMapping(value = "/naucni_radovi/{id}.xml", method =
+	 * RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE) public
+	 * NaucniRad readNaucniRad(@PathVariable("id") String id) { return
+	 * naucniRadService.findById(id); }
+	 * 
+	 * @RequestMapping(value = "/naucni_radovi.xml", method = RequestMethod.GET,
+	 * produces = MediaType.APPLICATION_XML_VALUE) public NaucniRadSearchResult
+	 * searchNaucniRad(@RequestParam(required = false, value = "name") String
+	 * name) { if (StringUtils.isEmpty(name)) {
+	 * logger.info("Lookup all {} naucni rad...", naucniRadService.count());
+	 * return naucniRadService.findAll(); } else {
+	 * logger.info("Lookup products by name: {}", name); return null; } }
+	 */
+
+	@RequestMapping(value = "/api/naucni_radovi/{id}/download", method = RequestMethod.GET, produces = "application/pdf")
+	public ResponseEntity<InputStreamResource> downloadPDFFile(@PathVariable("id") String id)
+			throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {
+
+		File pdfFile = naucniRadService.createFile();
+		InputStreamResource resource = naucniRadService.generatePDF(id, pdfFile);
+		return ResponseEntity.ok().contentLength(pdfFile.length()).contentType(MediaType.APPLICATION_PDF)
+				.body(resource);
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/{id}/html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+	public String downloadHTML(@PathVariable("id") String id)
+			throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {
+		return naucniRadService.generateHTML(id);
+	}
+
 }
-

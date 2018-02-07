@@ -1,0 +1,51 @@
+<div *ngIf="currentFileUpload" class="progress">
+  <div class="progress-bar progress-bar-info progress-bar-striped"
+    role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+    aria-valuemin="0" aria-valuemax="100"
+    [ngStyle]="{width:progress.percentage+'%'}">
+    {{progress.percentage}}%</div>
+</div>
+<section>
+  <div class="row">
+    <div class="col-lg-9 main-chart">
+      <p class="title">NAUCNI RAD</p>
+    </div>
+  </div>
+  <div *ngFor="let revision of work.revisions; let i=index">
+      <div class="row">
+        <div class="col-lg-9 main-chart pFont">
+          <p class="title">REVIZIJA {{i+1}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-9 main-chart">
+          <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+              <div class="notification">
+                <p> <br> {{revision.title}} <br> &nbsp; </p>
+              </div>
+            </div>   
+          </div>  
+          <div class="row" *ngIf="revision.review.status ==='CEKA_SE'">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-5 border">
+              <div class="border-title"></div>
+              <div class="form-group">
+                <button class="btn btn-success"
+                (click)="yes(revision.id)">Prihvati rad</button>
+              </div>
+            </div>
+            <div class="col-lg-5 border">
+              <div class="border-title"></div>
+              <div class="form-group">
+                  <button class="btn btn-default"
+                  (click)="no(revision.id)">Odbi rad</button>
+              </div>
+            </div>
+        </div>   
+        </div>
+        </div>   
+      <br>
+    </div>
+</section>

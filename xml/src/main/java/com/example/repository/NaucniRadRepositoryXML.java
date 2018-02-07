@@ -115,6 +115,18 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 		String query = utils.readQuery(queryName);
 		query = query.replace("param", username);
 		return getResponse(query);
+	}
+
+	@Override
+	public List<NaucniRad> findByReviewer(String status, String firstName, String lastName, String email)
+			throws IOException, JAXBException {
+		String queryName = "findByRewiever.xqy";
+		String query = utils.readQuery(queryName);
+		query = query.replace("status", status);
+		query = query.replace("ime", firstName);
+		query = query.replace("prezime", lastName);
+		query = query.replace("email", email);
+		return getResponse(query);
 
 	}
 

@@ -6,7 +6,7 @@
 //
 
 
-package rs.ac.uns.ftn.recenzija;
+package com.example.model.recenzija;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
@@ -14,37 +14,34 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for TPreporuka.
+ * <p>Java class for TStatusRecenzija.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="TPreporuka">
+ * &lt;simpleType name="TStatusRecenzija">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="Prihvaten"/>
+ *     &lt;enumeration value="Ceka se"/>
+ *     &lt;enumeration value="Prihvacen"/>
  *     &lt;enumeration value="Odbijen"/>
- *     &lt;enumeration value="PotrebnoVecaispravka"/>
- *     &lt;enumeration value="PotrebnoManjaispravka"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "TPreporuka")
+@XmlType(name = "TStatusRecenzija")
 @XmlEnum
-public enum TPreporuka {
+public enum TStatusRecenzija {
 
-    @XmlEnumValue("Prihvaten")
-    PRIHVATEN("Prihvaten"),
+    @XmlEnumValue("Ceka se")
+    CEKA_SE("Ceka se"),
+    @XmlEnumValue("Prihvacen")
+    PRIHVACEN("Prihvacen"),
     @XmlEnumValue("Odbijen")
-    ODBIJEN("Odbijen"),
-    @XmlEnumValue("PotrebnoVecaispravka")
-    POTREBNO_VECAISPRAVKA("PotrebnoVecaispravka"),
-    @XmlEnumValue("PotrebnoManjaispravka")
-    POTREBNO_MANJAISPRAVKA("PotrebnoManjaispravka");
+    ODBIJEN("Odbijen");
     private final String value;
 
-    TPreporuka(String v) {
+    TStatusRecenzija(String v) {
         value = v;
     }
 
@@ -52,8 +49,8 @@ public enum TPreporuka {
         return value;
     }
 
-    public static TPreporuka fromValue(String v) {
-        for (TPreporuka c: TPreporuka.values()) {
+    public static TStatusRecenzija fromValue(String v) {
+        for (TStatusRecenzija c: TStatusRecenzija.values()) {
             if (c.value.equals(v)) {
                 return c;
             }
