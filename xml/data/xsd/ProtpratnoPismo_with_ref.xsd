@@ -10,8 +10,8 @@
     <xs:element name="ProptatnoPismo">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="au:Autor"/>
-                <xs:element ref="au:Urednik"/>
+                <xs:element name="Autor" type="xs:IDREF"/>
+                <xs:element name="Urednik" type="xs:IDREF"/>
                 <xs:element name="Datum" type="xs:date"/>
                 <xs:element name="Sadrzaj">
                     <xs:complexType>
@@ -37,7 +37,7 @@
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element maxOccurs="unbounded" minOccurs="0" ref="au:Recenzent"/>
+                            <xs:element maxOccurs="unbounded" name="Recenzent" type="xs:IDREF"/>
                         </xs:choice>
                     </xs:complexType>
                 </xs:element>

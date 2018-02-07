@@ -26,6 +26,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.example.model.naucni_rad.Tekst;
+import com.example.model.uloge.Autor;
+import com.example.model.uloge.Recenzent;
+import com.example.model.uloge.Urednik;
 
 
 /**
@@ -38,8 +41,8 @@ import com.example.model.naucni_rad.Tekst;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Autor" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
- *         &lt;element name="Urednik" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
+ *         &lt;element ref="{http://www.ftn.uns.ac.rs/uloge}Autor"/>
+ *         &lt;element ref="{http://www.ftn.uns.ac.rs/uloge}Urednik"/>
  *         &lt;element name="Datum" type="{http://www.w3.org/2001/XMLSchema}date"/>
  *         &lt;element name="Sadrzaj">
  *           &lt;complexType>
@@ -79,7 +82,7 @@ import com.example.model.naucni_rad.Tekst;
  *                       &lt;/complexContent>
  *                     &lt;/complexType>
  *                   &lt;/element>
- *                   &lt;element name="Recenzent" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded"/>
+ *                   &lt;element ref="{http://www.ftn.uns.ac.rs/uloge}Recenzent" maxOccurs="unbounded" minOccurs="0"/>
  *                 &lt;/choice>
  *               &lt;/restriction>
  *             &lt;/complexContent>
@@ -113,14 +116,10 @@ import com.example.model.naucni_rad.Tekst;
 @XmlRootElement(name = "ProptatnoPismo")
 public class ProptatnoPismo {
 
-    @XmlElement(name = "Autor", required = true)
-    @XmlIDREF
-    @XmlSchemaType(name = "IDREF")
-    protected Object autor;
-    @XmlElement(name = "Urednik", required = true)
-    @XmlIDREF
-    @XmlSchemaType(name = "IDREF")
-    protected Object urednik;
+    @XmlElement(name = "Autor", namespace = "http://www.ftn.uns.ac.rs/uloge", required = true)
+    protected Autor autor;
+    @XmlElement(name = "Urednik", namespace = "http://www.ftn.uns.ac.rs/uloge", required = true)
+    protected Urednik urednik;
     @XmlElement(name = "Datum", required = true)
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar datum;
@@ -139,10 +138,10 @@ public class ProptatnoPismo {
      * 
      * @return
      *     possible object is
-     *     {@link Object }
+     *     {@link Autor }
      *     
      */
-    public Object getAutor() {
+    public Autor getAutor() {
         return autor;
     }
 
@@ -151,10 +150,10 @@ public class ProptatnoPismo {
      * 
      * @param value
      *     allowed object is
-     *     {@link Object }
+     *     {@link Autor }
      *     
      */
-    public void setAutor(Object value) {
+    public void setAutor(Autor value) {
         this.autor = value;
     }
 
@@ -163,10 +162,10 @@ public class ProptatnoPismo {
      * 
      * @return
      *     possible object is
-     *     {@link Object }
+     *     {@link Urednik }
      *     
      */
-    public Object getUrednik() {
+    public Urednik getUrednik() {
         return urednik;
     }
 
@@ -175,10 +174,10 @@ public class ProptatnoPismo {
      * 
      * @param value
      *     allowed object is
-     *     {@link Object }
+     *     {@link Urednik }
      *     
      */
-    public void setUrednik(Object value) {
+    public void setUrednik(Urednik value) {
         this.urednik = value;
     }
 
@@ -322,7 +321,7 @@ public class ProptatnoPismo {
      *             &lt;/complexContent>
      *           &lt;/complexType>
      *         &lt;/element>
-     *         &lt;element name="Recenzent" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded"/>
+     *         &lt;element ref="{http://www.ftn.uns.ac.rs/uloge}Recenzent" maxOccurs="unbounded" minOccurs="0"/>
      *       &lt;/choice>
      *     &lt;/restriction>
      *   &lt;/complexContent>
@@ -346,8 +345,8 @@ public class ProptatnoPismo {
         protected List<ProptatnoPismo.Sadrzaj.Rezultat> rezultat;
         @XmlElement(name = "Razlog")
         protected List<ProptatnoPismo.Sadrzaj.Razlog> razlog;
-        @XmlElementRef(name = "Recenzent", namespace = "http://www.ftn.uns.ac.rs/propratnoPismo", type = JAXBElement.class, required = false)
-        protected List<JAXBElement<Object>> recenzent;
+        @XmlElement(name = "Recenzent", namespace = "http://www.ftn.uns.ac.rs/uloge")
+        protected List<Recenzent> recenzent;
 
         /**
          * Gets the value of the rad property.
@@ -449,13 +448,13 @@ public class ProptatnoPismo {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link JAXBElement }{@code <}{@link Object }{@code >}
+         * {@link Recenzent }
          * 
          * 
          */
-        public List<JAXBElement<Object>> getRecenzent() {
+        public List<Recenzent> getRecenzent() {
             if (recenzent == null) {
-                recenzent = new ArrayList<JAXBElement<Object>>();
+                recenzent = new ArrayList<Recenzent>();
             }
             return this.recenzent;
         }
@@ -631,5 +630,5 @@ public class ProptatnoPismo {
         }
 
     }
-
+    
 }
