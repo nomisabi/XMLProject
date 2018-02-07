@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,14 +33,20 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
+import com.example.dto.Revision;
 import com.example.dto.Work;
 import com.example.model.naucni_rad.NaucniRad;
+import com.example.model.naucni_rad.TStatus;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
 import com.example.model.naucni_radovi.search.Product;
 import com.example.model.naucni_radovi.search.ProductSearchResult;
 import com.example.repository.NaucniRadRepositoryXML;
 import com.example.repository.ProductRepositoryXML;
 import com.example.security.TokenUtils;
+
+import com.example.service.EmailService;
+import com.example.service.NaucniRadService;
+
 import com.example.service.StorageService;
 import com.example.service.NaucniRadService;
 
@@ -91,7 +98,8 @@ public class NaucniRadController {
 	@Autowired
 	TokenUtils tokenUtils;
 
-  @PostMapping("/api/naucni_radovi")
+
+	@PostMapping("/api/naucni_radovi")
 	public ResponseEntity<String> createNaucniRad(@RequestParam("file") MultipartFile file) {
 		String message = "";
 		try {
@@ -102,42 +110,67 @@ public class NaucniRadController {
 			message = "You successfully uploaded " + file.getOriginalFilename() + "!";
 			System.out.println(message);
 
-			naucniRadService.add(file.getOriginalFilename());
+			String id = naucniRadService.add(file.getOriginalFilename());
+			storageService.deleteAll();
+
+			if (id != null) {
+				return ResponseEntity.status(HttpStatus.OK).body(id);
+			} else {
+				message = "Naucni rad " + file.getOriginalFilename() + " nije ispravan!";
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			message = "Naucni rad " + file.getOriginalFilename() + " nije ispravan!";
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+		}
+	}
+
+	@PostMapping("/api/naucni_radovi/{id}/revizija/{id_revizija}/propratno_pismo")
+	public ResponseEntity<String> addPropratnoPismo(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision, @RequestParam("file") MultipartFile file) {
+		String message = "";
+		try {
+			storageService.deleteAll();
+			storageService.init();
+			storageService.store(file);
+
+			message = "You successfully uploaded " + file.getOriginalFilename() + "!";
+			System.out.println(message);
+
+			naucniRadService.addLetter(id, idRevision, file.getOriginalFilename());
 			storageService.deleteAll();
 
 			return ResponseEntity.status(HttpStatus.OK).body(message);
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			message = "FAIL to upload " + file.getOriginalFilename() + "!";
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
 		}
 	}
 
-  @RequestMapping(
-          value = "/naucni_radovi",
-          method = RequestMethod.POST,
-          consumes = MediaType.APPLICATION_XML_VALUE
-  )
-  public ResponseEntity<String> createNaucniRad(@RequestBody NaucniRad nr, UriComponentsBuilder builder) {
-      naucniRadService.add(nr);
-
-      HttpHeaders headers = new HttpHeaders();
-      headers.setLocation(
-              builder.path("/naucni_radovi/{id}.xml")
-                      .buildAndExpand(nr.getId()).toUri());
-
-      return new ResponseEntity<>("", headers, HttpStatus.CREATED);
-  }
-
-	@RequestMapping(value = "/naucni_radovi/{id}.xml", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteNaucniRad(@PathVariable("id") String id) {
-		naucniRadService.remove(id);
+	public void deleteNaucniRad(@PathVariable("id") String id, @PathVariable("id_revizija") String idRevision) {
+		try {
+			naucniRadService.remove(id, idRevision);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+
+		}
 	}
 
-	@RequestMapping(value = "/naucni_radovi/{id}.xml", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
-	public NaucniRad readNaucniRad(@PathVariable("id") String id) {
-		return naucniRadService.findById(id);
+	@RequestMapping(value = "/api/naucni_radovi/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Work> readNaucniRad(@PathVariable("id") String id) {
+
+		try {
+			Work work = naucniRadService.findByIdPoslat(id);
+			return new ResponseEntity<>(work, HttpStatus.OK);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@RequestMapping(value = "/naucni_radovi.xml", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
@@ -154,7 +187,7 @@ public class NaucniRadController {
 	@RequestMapping(value = "/api/naucni_radovi/odobreno", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Work>> findByStatusOdobreno() {
 		try {
-			List<Work> works = naucniRadService.findByStatus("Odobrodeno");
+			List<Work> works = naucniRadService.findByStatus(TStatus.ODOBRODENO, "Odobrodeno");
 			return new ResponseEntity<>(works, HttpStatus.OK);
 		} catch (IOException | JAXBException e) {
 			logger.info(e.getMessage());
@@ -166,7 +199,7 @@ public class NaucniRadController {
 	@RequestMapping(value = "/api/naucni_radovi/poslati", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Work>> findByStatusPoslato() {
 		try {
-			List<Work> works = naucniRadService.findByStatus("Poslat");
+			List<Work> works = naucniRadService.findByStatus(TStatus.POSLAT, "Poslat");
 			return new ResponseEntity<>(works, HttpStatus.OK);
 		} catch (IOException | JAXBException e) {
 			logger.info(e.getMessage());
@@ -178,7 +211,7 @@ public class NaucniRadController {
 	@RequestMapping(value = "/api/naucni_radovi/u_proceduri", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Work>> findByStatusUproceduri() {
 		try {
-			List<Work> works = naucniRadService.findByStatus("U obradi");
+			List<Work> works = naucniRadService.findByStatus(TStatus.U_OBRADI, "U obradi");
 			return new ResponseEntity<>(works, HttpStatus.OK);
 		} catch (IOException | JAXBException e) {
 			logger.info(e.getMessage());
@@ -200,22 +233,51 @@ public class NaucniRadController {
 		}
 	}
 
-	@RequestMapping(value = "/api/naucni_radovi/recenzent", method = RequestMethod.POST)
-	public ResponseEntity<Void> addReview(@RequestBody Work work) {
-		System.out.println(work.getReview1());
-		System.out.println(work.getReview2());
-		System.out.println(work.getId());
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/recenzent", method = RequestMethod.POST)
+	public ResponseEntity<Void> addReview(@PathVariable("id") String id, @PathVariable("id_revizija") String idRevision,
+			@RequestBody Revision revision) {
+		System.out.println(revision.getReview1());
+		System.out.println(revision.getReview2());
+		System.out.println(revision.getId());
 
 		try {
-			naucniRadService.addReview(work.getId(), work.getReview1(), work.getReview2());
+			naucniRadService.addReview(id, idRevision, revision.getReview1(), revision.getReview2());
 			return new ResponseEntity<Void>(HttpStatus.OK);
 
 		} catch (JAXBException | IOException e) {
 			logger.info(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch (MailException | InterruptedException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
-	
+
+
+
+	/*@RequestMapping(value = "/naucni_radovi/{id}.xml", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deleteNaucniRad(@PathVariable("id") String id) {
+		naucniRadService.remove(id);
+	}
+
+	@RequestMapping(value = "/naucni_radovi/{id}.xml", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
+	public NaucniRad readNaucniRad(@PathVariable("id") String id) {
+		return naucniRadService.findById(id);
+	}
+
+	@RequestMapping(value = "/naucni_radovi.xml", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
+	public NaucniRadSearchResult searchNaucniRad(@RequestParam(required = false, value = "name") String name) {
+		if (StringUtils.isEmpty(name)) {
+			logger.info("Lookup all {} naucni rad...", naucniRadService.count());
+			return naucniRadService.findAll();
+		} else {
+			logger.info("Lookup products by name: {}", name);
+			return null;
+		}
+	}
+*/
+
 
 	
     @RequestMapping(value = "/api/naucni_radovi/{id}/download", method = RequestMethod.GET, produces = "application/pdf")

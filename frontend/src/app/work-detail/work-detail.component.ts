@@ -22,11 +22,8 @@ export class WorkDetailComponent implements OnInit {
 
   ngOnInit() {
     this.work = {
-      id: 'ID955565',
-      title: 'Blaa',
-      status: '',
-      review1: '',
-      review2: ''
+      id: '',
+      revisions: null
     }
     this.userService.getReviews()
     .then(reviews => {
@@ -37,14 +34,13 @@ export class WorkDetailComponent implements OnInit {
     });
   }
 
-  save(){
-    console.log(this.work.review1);
-    this.workService.addReview(this.work)
-        .then(res => this.router.navigate(['/urednik/naucniRadovi/uObradi']));
+
+  gotoGetPDF(){
+
   }
 
-  cancel(){
-    this.location.back();
+  gotoGetXHTML(){
+    
   }
 
 }

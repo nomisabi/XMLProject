@@ -5,6 +5,12 @@
       </div>
     </div>
     <div class="row">
+        <div class="col-lg-10">
+          <a (click)="gotoGetPDF()" class="small-btn">PDF</a>
+          <a (click)="gotoGetXHTML()" class="small-btn">XHTML</a>
+        </div>   
+      </div>
+    <div class="row">
       <div class="col-lg-9 main-chart">
         <div class="row">
           <div class="col-lg-1"></div>
@@ -13,7 +19,7 @@
             <div class="border-desc">{{work.title}}</div>
           </div>
         </div>
-        <form name="form" (ngSubmit)="save()">
+       <!--  <form name="form" (ngSubmit)="save()">
         <div class="row">
             <div class="col-lg-1"></div>
             <div class="col-lg-5 border">
@@ -49,7 +55,7 @@
               </div>
               </div>
           </div>
-        </form>
+        </form> -->
       </div>
     </div>
   </section>

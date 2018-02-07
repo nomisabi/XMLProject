@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="U obradi"/>
  *     &lt;enumeration value="Odobrodeno"/>
  *     &lt;enumeration value="Odbijen"/>
+ *     &lt;enumeration value="Obrisan"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -40,7 +41,9 @@ public enum TStatus {
     @XmlEnumValue("Odobrodeno")
     ODOBRODENO("Odobrodeno"),
     @XmlEnumValue("Odbijen")
-    ODBIJEN("Odbijen");
+    ODBIJEN("Odbijen"),
+    @XmlEnumValue("Obrisan")
+    OBRISAN("Obrisan");
     private final String value;
 
     TStatus(String v) {

@@ -26,6 +26,8 @@ import { MyWorksComponent } from './my-works/my-works.component';
 import { NewWorksComponent } from './new-works/new-works.component';
 import { ProgressWorkComponent } from './progress-work/progress-work.component';
 import { WorkDetailComponent } from './work-detail/work-detail.component';
+import { AddReviewComponent } from './add-review/add-review.component';
+import { WorkDetailAuthorComponent } from './work-detail-author/work-detail-author.component';
 
 
 export class CustomOption extends ToastOptions {
@@ -49,7 +51,9 @@ export class CustomOption extends ToastOptions {
     MyWorksComponent,
     NewWorksComponent,
     ProgressWorkComponent,
-    WorkDetailComponent
+    WorkDetailComponent,
+    AddReviewComponent,
+    WorkDetailAuthorComponent
   ],
   imports: [
     BrowserModule,

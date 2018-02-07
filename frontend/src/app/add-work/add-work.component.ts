@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
-import { UploadFileService } from './upload-file.service';
+import { Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+
+import { UploadFileService } from './upload-file.service';
+
 
 @Component({
   selector: 'app-add-work',
@@ -15,7 +18,8 @@ export class AddWorkComponent implements OnInit {
  
   constructor(private uploadService: UploadFileService,
               private toastr: ToastsManager, 
-              private vcr: ViewContainerRef) {
+              private vcr: ViewContainerRef,
+              private router: Router) {
     this.toastr.setRootViewContainerRef(vcr);
    }
  
@@ -36,8 +40,10 @@ export class AddWorkComponent implements OnInit {
         this.progress.percentage = Math.round(100 * event.loaded / event.total);
       } else if (event instanceof HttpResponse) {
         if (event.status === 200){
-          console.log('File is completely uploaded!');
+         console.log(event.body);
           this.toastr.success('Naucni rad uspesno poslat.');
+          this.router.navigate([`/autor/naucniRadovi/${event.body}`]);
+
         }else if (event.status === 417){
           this.toastr.error('Greska prilikom slanja naucnog rada.')
         }

@@ -14,7 +14,7 @@ public interface NaucniRadRepository {
 
 	void remove(String id);
 
-	NaucniRad findById(String id);
+	NaucniRad findById(String id) throws IOException, JAXBException;
 
 	NaucniRadSearchResult findAll();
 

@@ -69,11 +69,13 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 	}
 
 	@Override
-	public NaucniRad findById(String id) {
-		JAXBHandle<NaucniRad> contentHandle = getNaucniRadHandle();
-		if (xmlDocumentManager.exists(getDocId(id)) != null) {
-			JAXBHandle<?> result = xmlDocumentManager.read(getDocId(id), contentHandle);
-			return result.get(NaucniRad.class);
+	public NaucniRad findById(String id) throws IOException, JAXBException {
+		String queryName = "getWorkById.xqy";
+		String query = utils.readQuery(queryName);
+		query = query.replace("param", id);
+		List<NaucniRad> radovi = getResponse(query);
+		if (radovi.size() == 1) {
+			return radovi.get(0);
 		}
 		return null;
 
