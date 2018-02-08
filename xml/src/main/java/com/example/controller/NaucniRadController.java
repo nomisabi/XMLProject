@@ -36,10 +36,14 @@ import com.google.common.io.Files;
 import com.example.dto.Revision;
 import com.example.dto.Work;
 import com.example.model.naucni_rad.NaucniRad;
+import com.example.model.naucni_rad.ObicanTekst;
 import com.example.model.naucni_rad.TStatus;
+import com.example.model.naucni_rad.Tekst;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
 import com.example.model.naucni_radovi.search.Product;
 import com.example.model.naucni_radovi.search.ProductSearchResult;
+import com.example.model.recenzija.Recenzija;
+import com.example.model.recenzija.TPreporuka;
 import com.example.model.recenzija.TStatusRecenzija;
 import com.example.repository.NaucniRadRepositoryXML;
 import com.example.repository.ProductRepositoryXML;
@@ -287,6 +291,105 @@ public class NaucniRadController {
 
 	}
 
+	@RequestMapping(value = "/api/naucni_radovi/prihvaceni", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Work>> getMyWorksForReviewer(HttpServletRequest request) {
+		String token = request.getHeader("X-Auth-Token");
+		String username = tokenUtils.getUsernameFromToken(token);
+
+		try {
+			List<Work> works = naucniRadService.getWorksForReviewer(TStatusRecenzija.PRIHVACEN, "Prihvacen", username);
+			if (works == null) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			} else {
+				return new ResponseEntity<>(works, HttpStatus.OK);
+			}
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/recenzije", method = RequestMethod.GET)
+	public ResponseEntity<Recenzija> getRecenzija(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision, HttpServletRequest request) {
+		String token = request.getHeader("X-Auth-Token");
+		String username = tokenUtils.getUsernameFromToken(token);
+		Recenzija recenzija;
+		try {
+			recenzija = naucniRadService.getReview(id, idRevision, username);
+			recenzija.setStatus(TStatusRecenzija.PRIHVACEN);
+			Recenzija.Sadrzaj sadrzaj = new Recenzija.Sadrzaj();
+
+			sadrzaj.setPreporuka(TPreporuka.POTREBNO_MANJAISPRAVKA);
+
+			Recenzija.Sadrzaj.KommentarZaAutore kommentarZaAutore = new Recenzija.Sadrzaj.KommentarZaAutore();
+
+			ObicanTekst obicanTekst = new ObicanTekst();
+			obicanTekst.setTekstualniSadzaj("tekst");
+			Tekst.Highlight teHighlight = new Tekst.Highlight();
+			teHighlight.setObicanTekst(obicanTekst);
+			Tekst tekst = new Tekst();
+			tekst.getObicanTekstOrHighlightOrCitat().add(teHighlight);
+
+			Recenzija.Sadrzaj.KommentarZaUrednika kommentarZaUrednika = new Recenzija.Sadrzaj.KommentarZaUrednika();
+			kommentarZaUrednika.setTekst(tekst);
+			kommentarZaAutore.setTekst(tekst);
+
+			sadrzaj.setKommentarZaUrednika(kommentarZaUrednika);
+			sadrzaj.setKommentarZaAutore(kommentarZaAutore);
+
+			Recenzija.Sadrzaj.Pitanja pitanja = new Recenzija.Sadrzaj.Pitanja();
+			pitanja.setTekstPitanja("Tema ovog rada je vredna istrage");
+			pitanja.setOdgovor("Neopredeljen");
+			sadrzaj.getPitanja().add(pitanja);
+
+			pitanja = new Recenzija.Sadrzaj.Pitanja();
+			pitanja.setTekstPitanja("U ovom radu prezentovane su nove informacije");
+			pitanja.setOdgovor("Neopredeljen");
+			sadrzaj.getPitanja().add(pitanja);
+
+			pitanja = new Recenzija.Sadrzaj.Pitanja();
+			pitanja.setTekstPitanja("Zakljucak ovog rada podrzan je odgovarajucim cinjenicama");
+			pitanja.setOdgovor("Neopredeljen");
+			sadrzaj.getPitanja().add(pitanja);
+
+			recenzija.setSadrzaj(sadrzaj);
+
+			return new ResponseEntity<>(recenzija, HttpStatus.OK);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/recenzije", method = RequestMethod.POST)
+	public ResponseEntity<Void> addRecenzija(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision, HttpServletRequest request,
+			@RequestBody Recenzija recenzija) {
+		String token = request.getHeader("X-Auth-Token");
+		String username = tokenUtils.getUsernameFromToken(token);
+
+		System.out.println(recenzija.getStatus());
+		System.out.println(recenzija.getSadrzaj().getPitanja().get(0).getTekstPitanja());
+		System.out.println(recenzija.getSadrzaj().getPitanja().get(0).getOdgovor());
+		System.out.println(recenzija.getSadrzaj().getPreporuka().toString());
+		System.out.println(recenzija.getSadrzaj().getPitanja().get(3).getTekstPitanja());
+		System.out.println(recenzija.getSadrzaj().getPitanja().get(4).getTekstPitanja());
+		
+
+		
+		try {
+			naucniRadService.addReview(recenzija, id, idRevision, username);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
 	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/prihvati", method = RequestMethod.GET)
 	public ResponseEntity<Void> yesReviwer(@PathVariable("id") String id,
 			@PathVariable("id_revizija") String idRevision, HttpServletRequest request) {
@@ -337,13 +440,11 @@ public class NaucniRadController {
 	 * return naucniRadService.findAll(); } else {
 	 * logger.info("Lookup products by name: {}", name); return null; } }
 	 */
-	
-	 @RequestMapping(value = "/api/naucni_radovi/{id}.xml", method =
-			  RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE) 
-	 public NaucniRad getNaucniRad(@PathVariable("id") String id) throws IOException, JAXBException 
-	 { 
-		return naucniRadService.findById(id); 
-	 }
+
+	@RequestMapping(value = "/api/naucni_radovi/{id}.xml", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
+	public NaucniRad getNaucniRad(@PathVariable("id") String id) throws IOException, JAXBException {
+		return naucniRadService.findById(id);
+	}
 
 	@RequestMapping(value = "/api/naucni_radovi/{id}/download", method = RequestMethod.GET, produces = "application/pdf")
 	public ResponseEntity<InputStreamResource> downloadPDFFile(@PathVariable("id") String id)

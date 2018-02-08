@@ -56,6 +56,7 @@ import com.example.model.naucni_rad.TStatus;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
 import com.example.model.propratnopismo.ProptatnoPismo;
 import com.example.model.recenzija.Recenzija;
+import com.example.model.recenzija.TPreporuka;
 import com.example.model.recenzija.TStatusRecenzija;
 import com.example.model.uloge.Recenzent;
 import com.example.repository.NaucniRadRepositoryXML;
@@ -137,16 +138,70 @@ public class NaucniRadService {
 
 		List<Revision> revisions = new ArrayList<>();
 		for (Revizija revizija : naucniRad.getRevizija()) {
-			Revision revision = new Revision(revizija.getId(), revizija.getNaslov(), revizija.getStatus().toString());
-			for (Recenzija recenzija : revizija.getRecenzija()) {
-				if (recenzija.getRecenzent().getEmail().equals(korisnik.getEmail())) {
-					revision.setReview(new Review(recenzija.getId(), recenzija.getStatus().toString()));
+			if (revizija.getId().equals(idRevision)) {
+				Revision revision = new Revision(revizija.getId(), revizija.getNaslov(),
+						revizija.getStatus().toString());
+				for (Recenzija recenzija : revizija.getRecenzija()) {
+					if (recenzija.getRecenzent().getEmail().equals(korisnik.getEmail())) {
+						revision.setReview(new Review(recenzija.getId(), recenzija.getStatus().toString()));
+					}
 				}
+				revisions.add(revision);
 			}
-			revisions.add(revision);
 		}
 
 		return new Work(naucniRad.getId(), revisions);
+
+	}
+
+	public Recenzija getReview(String id, String idRevision, String username) throws IOException, JAXBException {
+		NaucniRad naucniRad = nrRepositoryXML.findById(id);
+
+		String korisnikStr = korisnici2Service.pronadjiKorisnickoIme(username);
+		Korisnik korisnik = korisnici2Service.unmarshalling(korisnikStr);
+
+		for (Revizija revizija : naucniRad.getRevizija()) {
+			if (revizija.getId().equals(idRevision)) {
+				for (Recenzija recenzija : revizija.getRecenzija()) {
+					if (recenzija.getRecenzent().getEmail().equals(korisnik.getEmail())) {
+						return recenzija;
+
+					}
+				}
+
+			}
+		}
+
+		return null;
+
+	}
+
+	public void addReview(Recenzija rec, String id, String idRevision, String username)
+			throws IOException, JAXBException {
+		String korisnikStr = korisnici2Service.pronadjiKorisnickoIme(username);
+		Korisnik korisnik = korisnici2Service.unmarshalling(korisnikStr);
+
+		NaucniRad naucniRad = nrRepositoryXML.findByReviewerAndID("Prihvacen", korisnik.getEmail(), id, idRevision)
+				.get(0);
+
+		for (Revizija revizija : naucniRad.getRevizija()) {
+			if (revizija.getId().equals(idRevision)) {
+				for (Recenzija recenzija : revizija.getRecenzija()) {
+					if (recenzija.getRecenzent().getEmail().equals(korisnik.getEmail())
+							&& recenzija.getStatus().equals(TStatusRecenzija.PRIHVACEN)) {
+						Recenzija.Sadrzaj sadrzaj = new Recenzija.Sadrzaj();
+						sadrzaj.getPitanja().add(rec.getSadrzaj().getPitanja().get(0));
+						sadrzaj.getPitanja().add(rec.getSadrzaj().getPitanja().get(1));
+						sadrzaj.getPitanja().add(rec.getSadrzaj().getPitanja().get(2));
+						sadrzaj.setPreporuka(rec.getSadrzaj().getPreporuka());
+						recenzija.setSadrzaj(sadrzaj);
+					}
+				}
+			}
+
+		}
+
+		nrRepositoryXML.add(naucniRad);
 
 	}
 

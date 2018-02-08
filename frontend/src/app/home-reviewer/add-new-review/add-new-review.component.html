@@ -1,0 +1,233 @@
+<form name="form" (ngSubmit)="save()">
+  <div class="row" *ngIf="recenzija.status ==='PRIHVACEN'">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+      <div class="border-title"></div>
+      <div class="form-group">
+        <p style="font-size: 20px;"><b>Moja preporuka: </b></p>
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="recenzija.sadrzaj.preporuka" [ngModelOptions]="{standalone: true}">
+            <option selected="selected" disabled>Izaberite...</option>
+            <option [value]="'ODBIJEN'">Odbiti</option>
+            <option [value]="'PRIHVATEN'">Prihvatiti</option>
+            <option [value]="'POTREBNO_MANJAISPRAVKA'">Manje izmene</option>
+            <option [value]="'POTREBNO_VECAISPRAVKA'">Vece izmene</option>
+          </select>
+        </div> 
+      </div>
+    </div>  
+  </div> 
+  <div class="row" *ngIf="recenzija.status ==='PRIHVACEN'">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+      <div class="border-title"></div>
+      <div class="form-group">
+        <p style="font-size: 20px;"><b>{{recenzija.sadrzaj.pitanja[0].tekstPitanja}}</b></p>
+        <div class="container">
+          <div class="check">
+            <input id="check" type="radio" name="gender" (change)="onSelectionChange(0, 'Potpuno netacno')"/>
+            <label for="check">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Potpuno netacno</div>
+            </label>
+          </div>
+          <div class="check">
+            <input id="check1" type="radio" name="gender" (change)="onSelectionChange(0, 'Netacno')"/>
+            <label for="check1">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Netacno</div>
+            </label>
+          </div>
+          <div class="check">
+            <input checked id="check2" type="radio" name="gender" (change)="onSelectionChange(0, 'Neopredeljen')"/>
+            <label for="check2">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Neopredeljen</div>
+            </label>
+          </div>
+          <div class="check">
+            <input id="check3" type="radio" name="gender" (change)="onSelectionChange(0, 'Tacno')"/>
+            <label for="check3">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Tacno</div>
+            </label>
+          </div>
+          <div class="check">
+            <input id="check4" type="radio" name="gender" (change)="onSelectionChange(0, 'Potpuno tacno')"/>
+            <label for="check4">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Potpuno tacno</div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>   
+  <div class="row" *ngIf="recenzija.status ==='PRIHVACEN'">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+      <div class="border-title"></div>
+      <div class="form-group">
+        <p style="font-size: 20px;"><b>{{recenzija.sadrzaj.pitanja[1].tekstPitanja}}</b></p>
+        <div class="container">
+          <div class="check">
+            <input id="check5" type="radio" name="gender1"  (change)="onSelectionChange(1, 'Potpuno netacno')"/>
+            <label for="check5">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Potpuno netacno</div>
+            </label>
+          </div>
+          <div class="check">
+            <input id="check6" type="radio" name="gender1"  (change)="onSelectionChange(1, 'Netacno')"/>
+            <label for="check6">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Netacno</div>
+            </label>
+          </div>
+          <div class="check">
+            <input checked id="check7" type="radio" name="gender1"  (change)="onSelectionChange(1, 'Neopredeljen')"/>
+            <label for="check7">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Neopredeljen</div>
+            </label>
+          </div>
+          <div class="check">
+            <input id="check8" type="radio" name="gender1"  (change)="onSelectionChange(1, 'Tacno')"/>
+            <label for="check8">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Tacno</div>
+            </label>
+          </div>
+          <div class="check">
+            <input id="check9" type="radio" name="gender1"  (change)="onSelectionChange(1, 'Potpuno tacno')"/>
+            <label for="check9">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Potpuno tacno</div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>  
+  <div class="row" *ngIf="recenzija.status ==='PRIHVACEN'">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+      <div class="border-title"></div>
+      <div class="form-group">
+        <p style="font-size: 20px;"><b>{{recenzija.sadrzaj.pitanja[2].tekstPitanja}}</b></p>
+        <div class="container">
+          <div class="check">
+            <input id="check10" type="radio" name="gender2" (change)="onSelectionChange(2, 'Potpuno netacno')"/>
+            <label for="check10">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Potpuno netacno</div>
+            </label>
+          </div>
+          <div class="check">
+            <input id="check11" type="radio" name="gender2" (change)="onSelectionChange(2, 'Netacno')"/>
+            <label for="check11">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Netacno</div>
+            </label>
+          </div>
+          <div class="check">
+            <input checked id="check12" type="radio" name="gender2" (change)="onSelectionChange(2, 'Neopredeljen')"/>
+            <label for="check12">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Neopredeljen</div>
+            </label>
+          </div>
+          <div class="check">
+            <input id="check13" type="radio" name="gender2" (change)="onSelectionChange(2, 'Tacno')"/>
+            <label for="check13">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Tacno</div>
+            </label>
+          </div>
+          <div class="check">
+            <input id="check14" type="radio" name="gender2" (change)="onSelectionChange(2, 'Potpuno tacno')"/>
+            <label for="check14">
+              <div class="box"><i class="fa fa-check"></i></div>
+              <div class="text">Potpuno tacno</div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>  
+  <div class="row" *ngIf="recenzija.status ==='PRIHVACEN'">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+      <div class="border-title"></div>
+      <div class="form-group">
+        <p style="font-size: 20px;"><b>Komentar za autora</b></p>
+        <quill-editor placeholder="Unesite komentar..."  [style]="{height: '200px'}" [(ngModel)]="titleAuthor" [maxLength]="5" [minLength]="3" [required]="true" [ngModelOptions]="{standalone: true}">
+          <div quill-editor-toolbar>
+            <span class="ql-formats">
+                <button class="ql-bold" [title]="'Bold'"></button>
+                <button class="ql-italic" [title]="'Italic'"></button>
+                <button class="ql-underline" [title]="'Underline'"></button>
+            </span>
+            <span class="ql-formats">
+                <button class="ql-blockquote" [title]="'Blockquote'"></button>
+            </span>
+            <span class="ql-formats">
+              <select class="ql-color" [title]="'Color'"></select>
+              <select class="ql-background" [title]="'Background'"></select>
+            </span>
+            <span class="ql-formats">
+                <select class="ql-size" [title]="'Size'"></select>
+            </span>
+            <span class="ql-formats">
+                <div class="ql-link" [title]="'Size'"></div>
+            </span>
+          </div>
+        </quill-editor>
+      </div>
+    </div>  
+  </div>  
+  <div class="row" *ngIf="recenzija.status ==='PRIHVACEN'">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10">
+        <div class="border-title"></div>
+        <div class="form-group">
+          <p style="font-size: 20px;"><b>Komentar za urednika</b></p>
+          <quill-editor placeholder="Unesite komentar..."  [style]="{height: '200px'}" [(ngModel)]="titleEditor" [maxLength]="5" [minLength]="3" [required]="true" [ngModelOptions]="{standalone: true}">
+              <div quill-editor-toolbar>
+                <span class="ql-formats">
+                    <button class="ql-bold" [title]="'Bold'"></button>
+                    <button class="ql-italic" [title]="'Italic'"></button>
+                    <button class="ql-underline" [title]="'Underline'"></button>
+                </span>
+                <span class="ql-formats">
+                    <button class="ql-blockquote" [title]="'Blockquote'"></button>
+                </span>
+                <span class="ql-formats">
+                  <select class="ql-color" [title]="'Color'"></select>
+                  <select class="ql-background" [title]="'Background'"></select>
+                </span>
+                <span class="ql-formats">
+                    <select class="ql-size" [title]="'Size'"></select>
+                </span>
+                <span class="ql-formats">
+                    <div class="ql-link" [title]="'Size'"></div>
+                </span>
+              </div>
+            </quill-editor>
+        </div>
+      </div>  
+    </div> 
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-5">
+        <div class="full-button cancel" >
+          <a class="full-button-text" (click)="cancel()">Odustani</a>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="full-button">
+          <button type="submit" class="save-button-text">Posalji recenziju</button>
+        </div>
+      </div>
+  </div>
+</form>

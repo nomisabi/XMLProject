@@ -130,6 +130,19 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 
 	}
 
+	@Override
+	public List<NaucniRad> findByReviewerAndID(String status, String email, String id, String idRevision)
+			throws IOException, JAXBException {
+		String queryName = "findByIdAndReviewer.xqy";
+		String query = utils.readQuery(queryName);
+		query = query.replace("status", status);
+		query = query.replace("email", email);
+		query = query.replace("id", id);
+		query = query.replace("revizija", idRevision);
+		return getResponse(query);
+
+	}
+
 	private List<NaucniRad> getResponse(String query) throws JAXBException {
 		ServerEvaluationCall invoker = client.newServerEval();
 		invoker.xquery(query);

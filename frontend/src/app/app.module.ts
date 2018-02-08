@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ToastModule, ToastOptions } from 'ng2-toastr/ng2-toastr';
 import { DropdownModule } from 'ngx-dropdown';
+import { QuillModule } from 'ngx-quill';
 
 import { UserService } from './work-detail/user.service';
 import { WorkService } from './works/work.service';
@@ -32,6 +33,8 @@ import { ShowXhtmlComponent } from './work-detail/show-xhtml/show-xhtml.componen
 import { WorksForMeComponent } from './home-reviewer/works-for-me/works-for-me.component';
 import { WorkDetailReviewerComponent } from './home-reviewer/work-detail-reviewer/work-detail-reviewer.component';
 import { ShowXmlComponent } from './work-detail/show-xml/show-xml.component';
+import { MyWorksReviewerComponent } from './home-reviewer/my-works-reviewer/my-works-reviewer.component';
+import { AddNewReviewComponent } from './home-reviewer/add-new-review/add-new-review.component';
 
 export class CustomOption extends ToastOptions {
   animate = 'flyRight'; // you can override any options available
@@ -60,7 +63,9 @@ export class CustomOption extends ToastOptions {
     ShowXhtmlComponent,
     WorksForMeComponent,
     WorkDetailReviewerComponent,
-    ShowXmlComponent
+    ShowXmlComponent,
+    MyWorksReviewerComponent,
+    AddNewReviewComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +75,9 @@ export class CustomOption extends ToastOptions {
     AngularFontAwesomeModule,
     ToastModule.forRoot(),
     DropdownModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    QuillModule
   ],
   providers: [
     AuthService,

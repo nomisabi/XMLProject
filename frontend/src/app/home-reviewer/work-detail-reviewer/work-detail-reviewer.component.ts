@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WorkService } from '../../works/work.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-work-detail-reviewer',
@@ -12,13 +13,13 @@ export class WorkDetailReviewerComponent implements OnInit {
   work: WorkInterface;
 
   constructor(private workService:WorkService,
-              private route: ActivatedRoute) { 
+              private route: ActivatedRoute,
+              private router: Router) { 
     
   }
 
   ngOnInit() {
     this.getWork();
-
   }
 
   getWork(){
@@ -39,6 +40,10 @@ export class WorkDetailReviewerComponent implements OnInit {
     this.workService.disardReview(this.work.id,id)
         .then(() => this.getWork());
 
+  }
+
+  gotoAddReview(id: string){
+    this.router.navigate([`/recenzent/naucniRadovi/${this.work.id}/revizije/${id}/recenzija`]);
   }
 
   

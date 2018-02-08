@@ -19,6 +19,8 @@ import { ShowXhtmlComponent } from './work-detail/show-xhtml/show-xhtml.componen
 import { WorksForMeComponent } from './home-reviewer/works-for-me/works-for-me.component';
 import { WorkDetailReviewerComponent } from './home-reviewer/work-detail-reviewer/work-detail-reviewer.component';
 import { ShowXmlComponent } from './work-detail/show-xml/show-xml.component';
+import { MyWorksReviewerComponent } from './home-reviewer/my-works-reviewer/my-works-reviewer.component';
+import { AddNewReviewComponent } from './home-reviewer/add-new-review/add-new-review.component';
 
 const routers: Routes = [
   { path: 'prijava', component: LoginComponent },
@@ -63,6 +65,14 @@ const routers: Routes = [
       { 
         path:'naucniRadovi/dodeljeni',
         component: WorksForMeComponent
+      },
+      { 
+        path:'naucniRadovi/prihvaceni',
+        component: MyWorksReviewerComponent
+      },
+      {
+        path: 'naucniRadovi/:id/revizije/:idRevizije/recenzija',
+        component: AddNewReviewComponent
       },
       {
         path: 'naucniRadovi/:id/revizije/:idRevizije',

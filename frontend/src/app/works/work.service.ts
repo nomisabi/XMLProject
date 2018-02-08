@@ -90,6 +90,34 @@ export class WorkService {
           .catch(this.handleError);
   }
 
+  getMyWorksForReviewer(): Promise<any>{
+    const url = `/api/naucni_radovi/prihvaceni`;
+    return this.http
+          .get(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
+  getMyREc(id: string, idRevision: string): Promise<any>{
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/recenzije`;
+    return this.http
+          .get(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
+  addRec(recenzija: any, id: string, idRevision): Promise<any>{
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/recenzije`;
+    return this.http
+          .post(url, recenzija)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+
+  }
+
   acceptReview(id: string, idRevision: string): Promise<any>{
     const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/prihvati`;
     return this.http
