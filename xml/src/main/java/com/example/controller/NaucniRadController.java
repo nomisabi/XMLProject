@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.List;
 
@@ -12,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,70 +24,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
-import org.w3c.dom.Document;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
 
 import com.example.dto.Revision;
 import com.example.dto.Work;
 import com.example.model.naucni_rad.NaucniRad;
-import com.example.model.naucni_rad.ObicanTekst;
 import com.example.model.naucni_rad.TStatus;
-import com.example.model.naucni_rad.Tekst;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
-import com.example.model.naucni_radovi.search.Product;
-import com.example.model.naucni_radovi.search.ProductSearchResult;
 import com.example.model.recenzija.Recenzija;
 import com.example.model.recenzija.TPreporuka;
 import com.example.model.recenzija.TStatusRecenzija;
-import com.example.repository.NaucniRadRepositoryXML;
-import com.example.repository.ProductRepositoryXML;
 import com.example.security.TokenUtils;
 
-import com.example.service.EmailService;
 import com.example.service.NaucniRadService;
 
 import com.example.service.StorageService;
-import com.example.service.NaucniRadService;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Result;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.sax.SAXResult;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
-import org.apache.fop.apps.FOUserAgent;
-import org.apache.fop.apps.Fop;
-import org.apache.fop.apps.FopFactory;
-import org.apache.fop.apps.MimeConstants;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import net.sf.saxon.TransformerFactoryImpl;
 
 @RestController
 public class NaucniRadController {
@@ -111,9 +67,6 @@ public class NaucniRadController {
 			storageService.init();
 			storageService.store(file);
 
-			message = "You successfully uploaded " + file.getOriginalFilename() + "!";
-			System.out.println(message);
-
 			String id = naucniRadService.add(file.getOriginalFilename());
 			storageService.deleteAll();
 
@@ -124,7 +77,7 @@ public class NaucniRadController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
 			}
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			logger.info(e.getMessage());
 			message = "Naucni rad " + file.getOriginalFilename() + " nije ispravan!";
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
 		}
@@ -139,16 +92,12 @@ public class NaucniRadController {
 			storageService.init();
 			storageService.store(file);
 
-			message = "You successfully uploaded " + file.getOriginalFilename() + "!";
-			System.out.println(message);
-
 			naucniRadService.addLetter(id, idRevision, file.getOriginalFilename());
 			storageService.deleteAll();
 
 			return ResponseEntity.status(HttpStatus.OK).body(message);
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			logger.info(e.getMessage());
 			message = "FAIL to upload " + file.getOriginalFilename() + "!";
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
 		}
@@ -323,22 +272,6 @@ public class NaucniRadController {
 
 			sadrzaj.setPreporuka(TPreporuka.POTREBNO_MANJAISPRAVKA);
 
-			Recenzija.Sadrzaj.KommentarZaAutore kommentarZaAutore = new Recenzija.Sadrzaj.KommentarZaAutore();
-
-			ObicanTekst obicanTekst = new ObicanTekst();
-			obicanTekst.setTekstualniSadzaj("tekst");
-			Tekst.Highlight teHighlight = new Tekst.Highlight();
-			teHighlight.setObicanTekst(obicanTekst);
-			Tekst tekst = new Tekst();
-			tekst.getObicanTekstOrHighlightOrCitat().add(teHighlight);
-
-			Recenzija.Sadrzaj.KommentarZaUrednika kommentarZaUrednika = new Recenzija.Sadrzaj.KommentarZaUrednika();
-			kommentarZaUrednika.setTekst(tekst);
-			kommentarZaAutore.setTekst(tekst);
-
-			sadrzaj.setKommentarZaUrednika(kommentarZaUrednika);
-			sadrzaj.setKommentarZaAutore(kommentarZaAutore);
-
 			Recenzija.Sadrzaj.Pitanja pitanja = new Recenzija.Sadrzaj.Pitanja();
 			pitanja.setTekstPitanja("Tema ovog rada je vredna istrage");
 			pitanja.setOdgovor("Neopredeljen");
@@ -377,9 +310,7 @@ public class NaucniRadController {
 		System.out.println(recenzija.getSadrzaj().getPreporuka().toString());
 		System.out.println(recenzija.getSadrzaj().getPitanja().get(3).getTekstPitanja());
 		System.out.println(recenzija.getSadrzaj().getPitanja().get(4).getTekstPitanja());
-		
 
-		
 		try {
 			naucniRadService.addReview(recenzija, id, idRevision, username);
 			return new ResponseEntity<>(HttpStatus.OK);

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.model.naucni_rad.NaucniRad;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
+import com.example.utils.NaucniRadUtils;
 import com.example.utils.Utils;
 import com.marklogic.client.DatabaseClient;
 import com.marklogic.client.document.XMLDocumentManager;
@@ -41,15 +42,14 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 
 	@Autowired
 	protected QueryManager queryManager;
-
 	@Autowired
 	protected XMLDocumentManager xmlDocumentManager;
-
 	@Autowired
 	private Utils utils;
-
 	@Autowired
 	protected DatabaseClient client;
+	@Autowired
+	private NaucniRadUtils naucniRadUtils;
 
 	@Override
 	public void add(NaucniRad nr) {
@@ -131,7 +131,7 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 	}
 
 	@Override
-	public List<NaucniRad> findByReviewerAndID(String status, String email, String id, String idRevision)
+	public NaucniRad findByReviewerAndID(String status, String email, String id, String idRevision)
 			throws IOException, JAXBException {
 		String queryName = "findByIdAndReviewer.xqy";
 		String query = utils.readQuery(queryName);
@@ -139,7 +139,11 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 		query = query.replace("email", email);
 		query = query.replace("id", id);
 		query = query.replace("revizija", idRevision);
-		return getResponse(query);
+		List<NaucniRad> radovi = getResponse(query);
+		if (radovi.size() == 1) {
+			return radovi.get(0);
+		}
+		return null;
 
 	}
 
@@ -152,8 +156,9 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 
 		if (response.hasNext()) {
 			for (EvalResult result : response) {
-				NaucniRad revizija = unmarshalling(result.getString());
-				radovi.add(revizija);
+				NaucniRad naucniRad = unmarshalling(result.getString());
+				radovi.add(naucniRad);
+
 			}
 		} else {
 			System.out.println("your query returned an empty sequence.");
