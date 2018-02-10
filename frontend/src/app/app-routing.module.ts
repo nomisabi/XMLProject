@@ -21,6 +21,7 @@ import { WorkDetailReviewerComponent } from './home-reviewer/work-detail-reviewe
 import { ShowXmlComponent } from './work-detail/show-xml/show-xml.component';
 import { MyWorksReviewerComponent } from './home-reviewer/my-works-reviewer/my-works-reviewer.component';
 import { AddNewReviewComponent } from './home-reviewer/add-new-review/add-new-review.component';
+import { RevisionDetailsComponent } from './work-detail/revision-details/revision-details.component';
 
 const routers: Routes = [
   { path: 'prijava', component: LoginComponent },
@@ -32,6 +33,18 @@ const routers: Routes = [
       {
         path:'naucniRadovi/:id',
         component: WorkDetailComponent
+      },
+      {
+        path:'naucniRadovi/:id',
+        component: WorkDetailComponent
+      },
+      {
+        path:'naucniRadovi/:id/revizija/:i',
+        component: RevisionDetailsComponent
+      },
+      {
+        path:'naucniRadovi/:id/revizija/:i#:pog',
+        component: RevisionDetailsComponent
       },
       {
         path:'naucniRadovi/:id/xhtml',

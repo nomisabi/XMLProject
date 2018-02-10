@@ -13,7 +13,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -26,10 +28,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Naziv" type="{http://www.w3.org/2001/XMLSchema}anyType"/>
- *         &lt;element name="Oznak" type="{http://www.w3.org/2001/XMLSchema}anyType"/>
+ *         &lt;element name="Naziv" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="Oznak" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element ref="{http://www.ftn.uns.ac.rs/naucni_rad}Izdavac"/>
- *         &lt;element name="Godina" type="{http://www.w3.org/2001/XMLSchema}anyType"/>
+ *         &lt;element name="Godina" type="{http://www.w3.org/2001/XMLSchema}gYear"/>
  *       &lt;/sequence>
  *       &lt;attribute name="Strana">
  *         &lt;simpleType>
@@ -56,13 +58,14 @@ import javax.xml.bind.annotation.XmlType;
 public class ReferencaClanak {
 
     @XmlElement(name = "Naziv", required = true)
-    protected Object naziv;
+    protected String naziv;
     @XmlElement(name = "Oznak", required = true)
-    protected Object oznak;
+    protected String oznak;
     @XmlElement(name = "Izdavac", required = true)
     protected Izdavac izdavac;
     @XmlElement(name = "Godina", required = true)
-    protected Object godina;
+    @XmlSchemaType(name = "gYear")
+    protected XMLGregorianCalendar godina;
     @XmlAttribute(name = "Strana")
     protected BigInteger strana;
 
@@ -71,10 +74,10 @@ public class ReferencaClanak {
      * 
      * @return
      *     possible object is
-     *     {@link Object }
+     *     {@link String }
      *     
      */
-    public Object getNaziv() {
+    public String getNaziv() {
         return naziv;
     }
 
@@ -83,10 +86,10 @@ public class ReferencaClanak {
      * 
      * @param value
      *     allowed object is
-     *     {@link Object }
+     *     {@link String }
      *     
      */
-    public void setNaziv(Object value) {
+    public void setNaziv(String value) {
         this.naziv = value;
     }
 
@@ -95,10 +98,10 @@ public class ReferencaClanak {
      * 
      * @return
      *     possible object is
-     *     {@link Object }
+     *     {@link String }
      *     
      */
-    public Object getOznak() {
+    public String getOznak() {
         return oznak;
     }
 
@@ -107,10 +110,10 @@ public class ReferencaClanak {
      * 
      * @param value
      *     allowed object is
-     *     {@link Object }
+     *     {@link String }
      *     
      */
-    public void setOznak(Object value) {
+    public void setOznak(String value) {
         this.oznak = value;
     }
 
@@ -143,10 +146,10 @@ public class ReferencaClanak {
      * 
      * @return
      *     possible object is
-     *     {@link Object }
+     *     {@link XMLGregorianCalendar }
      *     
      */
-    public Object getGodina() {
+    public XMLGregorianCalendar getGodina() {
         return godina;
     }
 
@@ -155,10 +158,10 @@ public class ReferencaClanak {
      * 
      * @param value
      *     allowed object is
-     *     {@link Object }
+     *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setGodina(Object value) {
+    public void setGodina(XMLGregorianCalendar value) {
         this.godina = value;
     }
 
@@ -185,5 +188,4 @@ public class ReferencaClanak {
     public void setStrana(BigInteger value) {
         this.strana = value;
     }
-
 }

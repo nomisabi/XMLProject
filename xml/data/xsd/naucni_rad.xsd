@@ -56,7 +56,6 @@
             <xs:enumeration value="U obradi"/>
             <xs:enumeration value="Odobrodeno"/>
             <xs:enumeration value="Odbijen"/>
-            <xs:enumeration value="Obrisan"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="TTipLista">
@@ -347,10 +346,10 @@
     <xs:element name="ReferencaKnjiga">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Naziv"/>
-                <xs:element name="Autor"/>
+                <xs:element name="Naziv" type="xs:string"/>
+                <xs:element name="Autor" type="xs:string"/>
                 <xs:element ref="nr:Izdavac"/>
-                <xs:element name="Godina"/>
+                <xs:element name="Godina" type="xs:gYear"/>
             </xs:sequence>
             <xs:attribute name="Strana">
                 <xs:simpleType>
@@ -365,13 +364,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="Naziv" type="xs:string"/>
-                <xs:element name="Link">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:pattern value="http://[a-zA-Z]+"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
+                <xs:element name="Link" type="xs:anyURI"> </xs:element>
                 <xs:element name="Datum" type="xs:date"/>
             </xs:sequence>
         </xs:complexType>
@@ -379,10 +372,10 @@
     <xs:element name="ReferencaClanak">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Naziv"/>
-                <xs:element name="Oznak"/>
+                <xs:element name="Naziv" type="xs:string"/>
+                <xs:element name="Oznak" type="xs:string"/>
                 <xs:element ref="nr:Izdavac"/>
-                <xs:element name="Godina"/>
+                <xs:element name="Godina" type="xs:gYear"/>
             </xs:sequence>
             <xs:attribute name="Strana">
                 <xs:simpleType>

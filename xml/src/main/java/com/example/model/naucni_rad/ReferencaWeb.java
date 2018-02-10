@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 
+
 /**
  * <p>Java class for anonymous complex type.
  * 
@@ -27,13 +28,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="Naziv" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Link">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;pattern value="http://[a-zA-Z]+"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
+ *         &lt;element name="Link" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
  *         &lt;element name="Datum" type="{http://www.w3.org/2001/XMLSchema}date"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -55,6 +50,7 @@ public class ReferencaWeb {
     @XmlElement(name = "Naziv", required = true)
     protected String naziv;
     @XmlElement(name = "Link", required = true)
+    @XmlSchemaType(name = "anyURI")
     protected String link;
     @XmlElement(name = "Datum", required = true)
     @XmlSchemaType(name = "date")
@@ -131,5 +127,4 @@ public class ReferencaWeb {
     public void setDatum(XMLGregorianCalendar value) {
         this.datum = value;
     }
-
 }

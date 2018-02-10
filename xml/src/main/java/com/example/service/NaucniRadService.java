@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -56,6 +57,7 @@ import com.example.model.uloge.Recenzent;
 import com.example.repository.NaucniRadRepositoryXML;
 import com.example.utils.NaucniRadUtils;
 import com.example.utils.PropratnoPismoUtils;
+import com.example.utils.Utils;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
@@ -74,7 +76,9 @@ public class NaucniRadService {
 	NaucniRadUtils naucniRadUtils;
 	@Autowired
 	PropratnoPismoUtils propratnoPismoUtils;
-
+	@Autowired
+	Utils utils;
+	
 	private static TransformerFactory transformerFactory;
 
 	public static final String HTML_FILE = "gen/html/naucni_rad.html";
@@ -85,8 +89,16 @@ public class NaucniRadService {
 
 	public static final String OUTPUT_FILE = "gen/xsl/naucni_rad.pdf";
 
-	public String add(String file) throws JAXBException, SAXException, IOException {
+	public String add(String file) throws JAXBException, SAXException, IOException, TransformerException {
 		NaucniRad nr = naucniRadUtils.unmarshalling(file);
+		
+		//metadata extractor
+		InputStream in = new FileInputStream(new File("./upload-dir/" + file)); 
+		OutputStream out = new FileOutputStream("gen/rdf/"+nr.getId()+".rdf");
+		utils.extractMetadata(in, out);
+		//write to database
+		//Utils.writeRDFnr(Utils.loadProperties(), "gen/rdf/"+nr.getId()+".rdf");
+		
 		nr.setId(setIdNR());
 		if (nr.getRevizija().size() == 1) {
 			nr.getRevizija().get(0).setStatus(TStatus.POSLAT);
@@ -139,6 +151,16 @@ public class NaucniRadService {
 
 		return new Work(naucniRad.getId(), revisions);
 
+	}
+	
+	public Revizija findReview(String id, String idRevision) throws IOException, JAXBException {
+		NaucniRad naucniRad = nrRepositoryXML.findById(id);
+		for (Revizija rev : naucniRad.getRevizija()) {
+			System.out.println("rev: "+rev.getId());
+			if (rev.getId().equals(idRevision))
+				return rev;
+		}
+		return null;
 	}
 
 	public Recenzija getReview(String id, String idRevision, String username) throws IOException, JAXBException {

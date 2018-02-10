@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.dto.Revision;
 import com.example.dto.Work;
 import com.example.model.naucni_rad.NaucniRad;
+import com.example.model.naucni_rad.Revizija;
 import com.example.model.naucni_rad.TStatus;
 import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
 import com.example.model.recenzija.Recenzija;
@@ -135,6 +136,21 @@ public class NaucniRadController {
 		try {
 			Work work = naucniRadService.findByIdForReview(id, idRevision, username);
 			return new ResponseEntity<>(work, HttpStatus.OK);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/html", method = RequestMethod.GET)
+	public ResponseEntity<Revizija> getRevizija(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision, HttpServletRequest request) {
+		String token = request.getHeader("X-Auth-Token");
+		String username = tokenUtils.getUsernameFromToken(token);
+
+		try {
+			Revizija rev = naucniRadService.findReview(id, idRevision);
+			return new ResponseEntity<>(rev, HttpStatus.OK);
 		} catch (IOException | JAXBException e) {
 			logger.info(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

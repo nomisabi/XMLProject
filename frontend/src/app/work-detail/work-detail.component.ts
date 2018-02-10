@@ -68,4 +68,9 @@ export class WorkDetailComponent implements OnInit {
   gotoGetXML(){
     this.router.navigate(['naucniRadovi/'+this.route.snapshot.params['id']+'/xml']);
   }
+
+  goToRevizija(id){
+    console.log('gorev');
+    this.router.navigate(['naucniRadovi/'+this.route.snapshot.params['id']+'/revizija/'+id]);
+  }
 }

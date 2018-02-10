@@ -1,0 +1,144 @@
+<br><br>
+<div style="text-align: center; font-size: 20px;">
+  {{revizija.naslov}}
+  </div>
+
+  <div style="text-align: center; font-size: 12px;">
+          <span *ngFor='let autor of revizija.autor' style="margin-right:5em;">
+              {{autor.ime}} {{autor.prezime}} 
+          </span>
+          <br>
+          <span *ngFor='let autor of revizija.autor' style="margin-right:5em">
+              {{autor.institucija.naziv}}
+          </span>
+          <br>
+          <span *ngFor='let autor of revizija.autor' style="margin-right:5em">
+              {{autor.institucija.adresa.broj}} {{autor.institucija.adresa.ulica}} 
+          </span>
+          <br>
+          <span *ngFor='let autor of revizija.autor' style="margin-right:5em">
+              {{autor.institucija.adresa.mesto}} {{autor.institucija.adresa.postanski_broj}} 
+          </span>
+          <br>
+          <span *ngFor='let autor of revizija.autor' style="margin-right:5em">
+              {{autor.email}} 
+          </span>
+  </div>
+<br><br>
+  <div style="font-size: 14px;">
+          Abstract
+  </div>
+  <div style="font-size: 12px;">
+          <div *ngIf="revizija.abstrakt.stukturiranAbstakt!=null">
+                  <b>Purpose: </b>
+                  {{revizija.abstrakt.stukturiranAbstakt.purpose}}
+                  
+                  <br/>
+                  <b>Design Methodology Approach: </b>
+                  {{revizija.abstrakt.stukturiranAbstakt.designMethodologyApproach}}
+                  <br>
+                  <b>Findings: </b>
+                  {{revizija.abstrakt.stukturiranAbstakt.findings}}
+                  <br>
+                  <b>Research Limitations Implications: </b>
+                  {{revizija.abstrakt.stukturiranAbstakt.researchLimitationsImplications}}
+                  <br>
+                  <b>Originality Value: </b>
+                  {{revizija.abstrakt.stukturiranAbstakt.originalityValue}}
+                  <br>
+                  <b>Practical Implications: </b>
+                  {{revizija.abstrakt.stukturiranAbstakt.practicalImplications}}
+                  <br>
+                  <b>Social Implications: </b>
+                  {{revizija.abstrakt.stukturiranAbstakt.socialImplications}}
+                  <br>
+          </div>   
+          <div *ngIf="revizija.abstrakt.neStrukturiranAbstrakt!=null">
+              {{revizija.abstrakt.neStrukturiranAbstrakt.tekst}}
+          </div>
+          <br>
+          <b>Keywords: </b>
+          <span *ngFor="let rec of revizija.kljucnaRec">
+              {{rec}}, 
+          </span>
+
+          <br>
+  </div>
+  <br>
+  <div style="font-size: 12px;" *ngFor="let pog of revizija.sadrzaj.poglavlje">
+      <div style="font-size: 14px;" id="{{pog.id}}">
+          {{pog.naziv}}
+      </div>
+      
+      <div *ngFor="let paragraf of pog.paragraf" >
+          <span *ngIf="paragraf.tekst!=null">
+            
+           <span *ngFor="let tekst of paragraf.tekst.obicanTekstOrHighlightOrCitat">
+            
+              <span *ngIf="tekst.obicanTekst!=null">
+                <span *ngIf="tekst.bojaPozadine!=null">
+                  <span *ngIf="tekst.bojaPozadine=='blue'" style="background-color:blue">
+                    {{tekst.obicanTekst.tekstualniSadzaj}}  
+                  </span>
+                  <span *ngIf="tekst.bojaPozadine=='red'" style="background-color:red">
+                      {{tekst.obicanTekst.tekstualniSadzaj}}  
+                    </span>
+                    <span *ngIf="tekst.bojaPozadine=='green'" style="background-color:green">
+                        {{tekst.obicanTekst.tekstualniSadzaj}}  
+                    </span>
+                    <span *ngIf="tekst.bojaPozadine=='yellow'" style="background-color:yellow">
+                          {{tekst.obicanTekst.tekstualniSadzaj}}  
+                      </span>
+                      <span *ngIf="tekst.bojaPozadine!='yellow' && tekst.bojaPozadine!='blue' && tekst.bojaPozadine!='green' && tekst.bojaPozadine!='red'">
+                          {{tekst.obicanTekst.tekstualniSadzaj}}  
+                      </span>
+                </span>
+                <span *ngIf="tekst.broj!=null" style="font-size:6px;"> {{tekst.obicanTekst.tekstualniSadzaj}}   </span>
+                <a *ngIf="tekst.referenca!=null" >
+                    <a *ngIf="tekst.referenca.referencaClanak">{{tekst.obicanTekst.tekstualniSadzaj}}  ({{tekst.referenca.referencaClanak.naziv}}, {{tekst.referenca.referencaClanak.oznak}}, {{tekst.referenca.referencaClanak.godina}}., {{tekst.referenca.referencaClanak.strana}})</a>
+                    <a *ngIf="tekst.referenca.referencaKnjiga">{{tekst.obicanTekst.tekstualniSadzaj}} ({{tekst.referenca.referencaKnjiga.autor}}: {{tekst.referenca.referencaKnjiga.naziv}}, {{tekst.referenca.referencaKnjiga.strana}})</a>
+                    <a *ngIf="tekst.referenca.referencaWeb" href="{{tekst.referenca.referencaWeb.link}}">{{tekst.obicanTekst.tekstualniSadzaj}} </a>
+                    <a *ngIf="tekst.referenca.referencaNaucniRad" (click)="goToNaucniRad(tekst.referenca.referencaNaucniRad.naucniRad.id)">{{tekst.obicanTekst.tekstualniSadzaj}} ({{tekst.referenca.referencaNaucniRad.naucniRad.id}})</a>
+                    <a *ngIf="tekst.referenca.referencaPoglavlja" (click)="goToPoglavlja(tekst.referenca.referencaPoglavlja.poglavlje.id)"> {{tekst.obicanTekst.tekstualniSadzaj}}</a>
+                    <a *ngIf="tekst.referenca.referencaRecenzija" (click)="goToRecenzija(tekst.referenca.referencaRecenzija.recenzija.id)">{{tekst.obicanTekst.tekstualniSadzaj}} ({{tekst.referenca.referencaRecenzija.recenzija.id}}) </a>
+                  </a>
+                <span *ngIf="tekst.referenca==null && tekst.bojaPozadine==null && tekst.broj==null"> {{tekst.obicanTekst.tekstualniSadzaj}}</span>
+                 
+              </span> 
+            
+          </span>
+        </span>
+        <span *ngIf="paragraf.lista!=null">
+     
+            <span *ngIf="paragraf.lista.tip=='NEUREĐENA'">
+         
+            <ul style="list-style-type: circle;">
+                  
+              <li *ngFor="let stavke of paragraf.lista.stavke">
+                {{stavke.labela}}
+              </li>
+            </ul>
+            </span>
+            
+            <span *ngIf="paragraf.lista.tip=='UREĐENA'">
+    
+              <ol>
+                
+                    <li *ngFor="let stavke of paragraf.lista.stavke"> {{stavke.labela}} </li>
+              </ol>
+              </span>
+        </span> 
+        <span *ngIf="paragraf.tabela!=null">
+          <br>
+          <table>
+          <tr *ngFor="let red of paragraf.tabela.red">
+                <td *ngFor="let celija of red.celija">
+                  {{celija}}
+                </td>
+            </tr>
+          </table>
+          </span>  
+          <br/>
+      </div>
+      
+  </div>

@@ -136,6 +136,17 @@ export class WorkService {
           .catch(this.handleError);
   }
 
+  getRevizija(id: string, idRevision: string): Promise<RevizijaInterface>{
+    console.log('service')
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/html`;
+    return this.http
+          .get(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
+
   getPdf(id: string):Promise<any>{
     let httpHeaders:HttpHeaders = new HttpHeaders({"Accept": 'application/pdf','Content-Type':'application/pdf'});
     
