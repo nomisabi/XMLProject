@@ -22,6 +22,7 @@ import { ShowXmlComponent } from './work-detail/show-xml/show-xml.component';
 import { MyWorksReviewerComponent } from './home-reviewer/my-works-reviewer/my-works-reviewer.component';
 import { AddNewReviewComponent } from './home-reviewer/add-new-review/add-new-review.component';
 import { RevisionDetailsComponent } from './work-detail/revision-details/revision-details.component';
+import { WorkDetailEditorComponent } from './home-editor/work-detail-editor/work-detail-editor.component';
 
 const routers: Routes = [
   { path: 'prijava', component: LoginComponent },
@@ -30,10 +31,6 @@ const routers: Routes = [
     component: HomeComponent,
     children: [
       {path: '', component: WorksComponent},
-      {
-        path:'naucniRadovi/:id',
-        component: WorkDetailComponent
-      },
       {
         path:'naucniRadovi/:id',
         component: WorkDetailComponent
@@ -104,13 +101,18 @@ const routers: Routes = [
         component: ProgressWorkComponent
       },
       {
+        path: 'naucniRadovi/objavljeni',
+        component: WorksComponent
+      },
+      {
         path:'naucniRadovi/:id/revizije/:idRevizije/recenzent',
         component: AddReviewComponent
       },
       {
         path:'naucniRadovi/:id',
-        component: WorkDetailComponent
+        component: WorkDetailEditorComponent
       }
+      
       
     ]
   },

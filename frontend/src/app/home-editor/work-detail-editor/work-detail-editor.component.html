@@ -1,0 +1,54 @@
+<section>
+  <div class="row">
+    <div class="col-lg-9 main-chart">
+      <p class="title">NAUCNI RAD</p>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-lg-10">
+        <a (click)="gotoGetPDF()" class="small-btn">PDF</a>
+        <a (click)="gotoGetXHTML()" class="small-btn">XHTML</a>
+        <a (click)="gotoGetXML()" class="small-btn">XML</a>
+      </div>   
+    </div>
+    <div *ngFor="let revision of work.revisions; let i=index">
+      <div class="row">
+        <div class="col-lg-9 main-chart pFont">
+          <p class="title" (click)="goToRevizija(revision.id)">REVIZIJA {{i+1}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-9 main-chart">
+          <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+              <div class="notification">
+                <p (click)="goToRevizija(revision.id)"> <br> {{revision.title}} <br> &nbsp; </p>
+              </div>
+            </div>   
+          </div>    
+        </div>
+      </div> 
+      <div class="row" *ngIf="rate">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-5 border">
+          <div class="border-title"></div>
+          <div class="form-group">
+            <button class="btn btn-success"
+            (click)="publish(revision.id)">Objavi rad</button>
+            <button class="btn btn-default"
+            >Potrebne izmene rada</button>
+            <button class="btn btn-danger"
+              (click)="reject(revision.id)">Odbaci rad</button>
+          </div>
+        </div>
+        <div class="col-lg-5 border">
+          <div class="border-title"></div>
+          <div class="form-group">
+              
+          </div>
+        </div>
+    </div>   
+      <br>
+    </div>
+</section>

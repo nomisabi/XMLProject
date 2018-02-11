@@ -50,7 +50,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
-    this.router.navigate(['prijava']);
+    this.router.navigate(['']);
   }
 
   isEditor(): boolean {

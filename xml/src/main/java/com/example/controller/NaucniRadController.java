@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -141,7 +142,7 @@ public class NaucniRadController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
+
 	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/html", method = RequestMethod.GET)
 	public ResponseEntity<Revizija> getRevizija(@PathVariable("id") String id,
 			@PathVariable("id_revizija") String idRevision, HttpServletRequest request) {
@@ -366,7 +367,32 @@ public class NaucniRadController {
 			logger.info(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+	}
 
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/objavi", method = RequestMethod.GET)
+	public ResponseEntity<Void> publishRevision(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision) {
+
+		try {
+			naucniRadService.publishRevision(id, idRevision, TStatus.ODOBRODENO);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (JAXBException | IOException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/odbaci", method = RequestMethod.GET)
+	public ResponseEntity<Void> rejectRevision(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision) {
+
+		try {
+			naucniRadService.publishRevision(id, idRevision, TStatus.ODBIJEN);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (JAXBException | IOException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/*

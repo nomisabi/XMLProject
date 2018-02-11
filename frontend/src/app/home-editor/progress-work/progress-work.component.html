@@ -11,7 +11,7 @@
               </thead>
               <tbody>
                   <tr *ngFor="let work of works">
-                    <td style="width: 100px;">{{work.id}}</td>
+                    <td style="width: 100px;" (click)="gotoWorkDetail(work.id)">{{work.id}}</td>
                         <td>
                         <table class="table table-hover">
                                 <thead>

@@ -78,7 +78,7 @@ public class NaucniRadService {
 	PropratnoPismoUtils propratnoPismoUtils;
 	@Autowired
 	Utils utils;
-	
+
 	private static TransformerFactory transformerFactory;
 
 	public static final String HTML_FILE = "gen/html/naucni_rad.html";
@@ -91,15 +91,16 @@ public class NaucniRadService {
 
 	public String add(String file) throws JAXBException, SAXException, IOException, TransformerException {
 		NaucniRad nr = naucniRadUtils.unmarshalling(file);
-		
-		//metadata extractor
-		InputStream in = new FileInputStream(new File("./upload-dir/" + file)); 
-		OutputStream out = new FileOutputStream("gen/rdf/"+nr.getId()+".rdf");
+
+		// metadata extractor
+		InputStream in = new FileInputStream(new File("./upload-dir/" + file));
+		OutputStream out = new FileOutputStream("gen/rdf/" + nr.getId() + ".rdf");
 		utils.extractMetadata(in, out);
-		//write to database
-		//Utils.writeRDFnr(Utils.loadProperties(), "gen/rdf/"+nr.getId()+".rdf");
-		Utils.writeRDFnr( "gen/rdf/"+nr.getId()+".rdf");
-		
+		// write to database
+		// Utils.writeRDFnr(Utils.loadProperties(),
+		// "gen/rdf/"+nr.getId()+".rdf");
+		Utils.writeRDFnr("gen/rdf/" + nr.getId() + ".rdf");
+
 		nr.setId(setIdNR());
 		if (nr.getRevizija().size() == 1) {
 			nr.getRevizija().get(0).setStatus(TStatus.POSLAT);
@@ -153,11 +154,11 @@ public class NaucniRadService {
 		return new Work(naucniRad.getId(), revisions);
 
 	}
-	
+
 	public Revizija findReview(String id, String idRevision) throws IOException, JAXBException {
 		NaucniRad naucniRad = nrRepositoryXML.findById(id);
 		for (Revizija rev : naucniRad.getRevizija()) {
-			System.out.println("rev: "+rev.getId());
+			System.out.println("rev: " + rev.getId());
 			if (rev.getId().equals(idRevision))
 				return rev;
 		}
@@ -222,6 +223,16 @@ public class NaucniRadService {
 			ProptatnoPismo pismo = revizija.getProptatnoPismo();
 			if (pismo != null) {
 				revision.setHasLetter(true);
+			}
+			List<Recenzija> recenzije = revizija.getRecenzija();
+			List<Review> reviews = new ArrayList<>();
+			if (!recenzije.isEmpty()) {
+				for (Recenzija recenzija : recenzije) {
+					Review review = new Review(recenzija.getId(), recenzija.getStatus().toString());
+					reviews.add(review);
+
+				}
+				revision.setReviews(reviews);
 			}
 			revisions.add(revision);
 		}
@@ -374,6 +385,17 @@ public class NaucniRadService {
 						recenzija.setStatus(status);
 					}
 				}
+			}
+		}
+		nrRepositoryXML.add(naucniRad);
+	}
+
+	public void publishRevision(String id, String idRevision, TStatus status) throws IOException, JAXBException {
+		NaucniRad naucniRad = findById(id);
+
+		for (Revizija revizija : naucniRad.getRevizija()) {
+			if (revizija.getId().equals(idRevision)) {
+				revizija.setStatus(status);
 			}
 		}
 		nrRepositoryXML.add(naucniRad);

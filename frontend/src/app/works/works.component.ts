@@ -25,8 +25,11 @@ export class WorksComponent implements OnInit {
   }
 
   gotoWorkDetail(id: string){
-    this.router.navigate([`/naucniRadovi/${id}`]);
-
+    if(this.router.url.startsWith('/urednik')){
+      this.router.navigate([`/urednik/naucniRadovi/${id}`]);
+    }else{
+      this.router.navigate([`/naucniRadovi/${id}`]);
+    }
   }
 
 }

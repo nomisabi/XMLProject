@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { WorkService } from '../../works/work.service';
+
 
 @Component({
   selector: 'app-progress-work',
@@ -10,7 +13,8 @@ export class ProgressWorkComponent implements OnInit {
 
   works: WorkInterface[];
 
-  constructor(private workService: WorkService) { }
+  constructor(private workService: WorkService,
+              private router: Router) { }
 
   ngOnInit() {
     this.getWorks();
@@ -19,6 +23,10 @@ export class ProgressWorkComponent implements OnInit {
   getWorks(){
     this.workService.progressWorks()
         .then(works => this.works = works);
+  }
+
+  gotoWorkDetail(id: string){
+    this.router.navigate([`/urednik/naucniRadovi/${id}`]);
   }
 
 }
