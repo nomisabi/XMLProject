@@ -98,6 +98,7 @@ public class NaucniRadService {
 		utils.extractMetadata(in, out);
 		//write to database
 		//Utils.writeRDFnr(Utils.loadProperties(), "gen/rdf/"+nr.getId()+".rdf");
+		Utils.writeRDFnr( "gen/rdf/"+nr.getId()+".rdf");
 		
 		nr.setId(setIdNR());
 		if (nr.getRevizija().size() == 1) {

@@ -21,8 +21,10 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.example.XmlApplication;
 import com.marklogic.client.DatabaseClient;
 import com.marklogic.client.DatabaseClientFactory;
 import com.marklogic.client.DatabaseClientFactory.Authentication;
@@ -43,7 +45,6 @@ public class Utils {
 	@Autowired
 	protected DatabaseClient client;
 	
-
 
 	public String readQuery(String queryName) throws IOException {
 		String filePath = PREFIX + queryName;
@@ -100,7 +101,7 @@ public class Utils {
 		grddlTransformer.transform(source, result);
 		
 	}
-	
+	/*
 	static public class ConnectionProperties {
 
 		public String host;
@@ -125,7 +126,7 @@ public class Utils {
 	 * Read the configuration properties for the example.
 	 * 
 	 * @return the configuration object
-	 */
+	 *//*
 	public static ConnectionProperties loadProperties() throws IOException {
 		String propsName = "connection.properties";
 
@@ -138,7 +139,7 @@ public class Utils {
 
 		return new ConnectionProperties(props);
 	}
-
+*/
 	/**
 	 * Read a resource for an example.
 	 * 
@@ -148,14 +149,16 @@ public class Utils {
 	 * @throws IOException
 	 */
 	
-	private static DatabaseClient client2;
+	//private static DatabaseClient client2;
 	public static InputStream openStream(String fileName) throws IOException {
 		return Utils.class.getClassLoader().getResourceAsStream(fileName);
 	}
 	
-	public static void writeRDFnr(ConnectionProperties props, String rdfFilePath) throws IOException {
+
+	
+	public static void writeRDFnr( String rdfFilePath) throws IOException {
 				
-		// Initialize the database client
+	/*	// Initialize the database client
 		if (props.database.equals("")) {
 			System.out.println("[INFO] Using default database.");
 			client2 = DatabaseClientFactory.newClient(props.host, props.port, props.user, props.password, props.authType);
@@ -163,6 +166,11 @@ public class Utils {
 			System.out.println("[INFO] Using \"" + props.database + "\" database.");
 			client2 = DatabaseClientFactory.newClient(props.host, props.port, props.database, props.user, props.password, props.authType);
 		}
+		*/
+		
+		//XmlApplication app= new XmlApplication();
+		DatabaseClient client2= DatabaseClientFactory.newClient("localhost", 8000, "admin", "admin",
+				DatabaseClientFactory.Authentication.DIGEST);
 		
 		// Create a document manager to work with XML files.
 		GraphManager graphManager = client2.newGraphManager();
