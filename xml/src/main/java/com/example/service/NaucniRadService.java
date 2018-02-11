@@ -56,6 +56,7 @@ import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
 import com.example.model.propratnopismo.ProptatnoPismo;
 import com.example.model.recenzija.Recenzija;
 import com.example.model.recenzija.TStatusRecenzija;
+import com.example.model.uloge.Autor;
 import com.example.model.uloge.Recenzent;
 import com.example.repository.NaucniRadRepositoryXML;
 import com.example.utils.NaucniRadUtils;
@@ -194,9 +195,11 @@ public class NaucniRadService {
 	}
 
 	public void addReview(Recenzija rec, String id, String idRevision, String username)
-			throws IOException, JAXBException {
+			throws IOException, JAXBException, MailException, InterruptedException {
 		String korisnikStr = korisnici2Service.pronadjiKorisnickoIme(username);
 		Korisnik korisnik = korisnici2Service.unmarshalling(korisnikStr);
+
+		emailService.sendMailThanksReviewer(korisnik.getEmail());
 
 		NaucniRad naucniRad = nrRepositoryXML.findByReviewerAndID("Prihvacen", korisnik.getEmail(), id, idRevision);
 
@@ -306,7 +309,7 @@ public class NaucniRadService {
 		recenzent2.setEmail(korisnik2.getEmail());
 		recenzent2.setIme(korisnik2.getIme());
 		recenzent2.setPrezime(korisnik2.getPrezime());
-		emailService.sendMail(korisnik1.getEmail());
+		emailService.sendMailGetReview(korisnik1.getEmail(), id, idRevision);
 
 		Recenzija recenzija1 = new Recenzija();
 		recenzija1.setRecenzent(recenzent1);
@@ -316,7 +319,7 @@ public class NaucniRadService {
 		Recenzija recenzija2 = new Recenzija();
 		recenzija2.setRecenzent(recenzent2);
 		recenzija2.setStatus(TStatusRecenzija.CEKA_SE);
-		emailService.sendMail(korisnik2.getEmail());
+		emailService.sendMailGetReview(korisnik2.getEmail(), id, idRevision);
 		recenzent2.setId("RC2");
 
 		for (Revizija revizija : naucniRad.getRevizija()) {
@@ -401,12 +404,18 @@ public class NaucniRadService {
 		nrRepositoryXML.add(naucniRad);
 	}
 
-	public void publishRevision(String id, String idRevision, TStatus status) throws IOException, JAXBException {
+	public void publishRevision(String id, String idRevision, TStatus status)
+			throws IOException, JAXBException, MailException, InterruptedException {
 		NaucniRad naucniRad = findById(id);
 
 		for (Revizija revizija : naucniRad.getRevizija()) {
 			if (revizija.getId().equals(idRevision)) {
 				revizija.setStatus(status);
+
+				for (Autor autor : revizija.getAutor()) {
+					emailService.sendMailRejectRevision(autor.getEmail(), revizija.getNaslov(), naucniRad.getId(),
+							status.toString());
+				}
 			}
 		}
 		nrRepositoryXML.add(naucniRad);

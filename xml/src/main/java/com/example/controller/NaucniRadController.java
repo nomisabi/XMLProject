@@ -356,7 +356,7 @@ public class NaucniRadController {
 		try {
 			naucniRadService.addReview(recenzija, id, idRevision, username);
 			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (IOException | JAXBException e) {
+		} catch (IOException | JAXBException | MailException | InterruptedException e) {
 			logger.info(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -401,7 +401,7 @@ public class NaucniRadController {
 		try {
 			naucniRadService.publishRevision(id, idRevision, TStatus.ODOBRODENO);
 			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (JAXBException | IOException e) {
+		} catch (JAXBException | IOException | MailException | InterruptedException e) {
 			logger.info(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -414,7 +414,7 @@ public class NaucniRadController {
 		try {
 			naucniRadService.publishRevision(id, idRevision, TStatus.POTREBNA_IZMENA);
 			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (JAXBException | IOException e) {
+		} catch (JAXBException | IOException | MailException | InterruptedException e) {
 			logger.info(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -427,7 +427,7 @@ public class NaucniRadController {
 		try {
 			naucniRadService.publishRevision(id, idRevision, TStatus.ODBIJEN);
 			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (JAXBException | IOException e) {
+		} catch (JAXBException | IOException | MailException | InterruptedException e) {
 			logger.info(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
