@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
-	@Autowired
-	private JavaMailSender javaMailSender;
+	//@Autowired
+	//private JavaMailSender javaMailSender;
 	@Autowired
 	private Environment env;
 
@@ -29,7 +29,7 @@ public class EmailService {
 		String text = "Dodeljen vam je novi rad za recenziju";
 		mail.setText(text);
 
-		javaMailSender.send(mail);
+		//javaMailSender.send(mail);
 		System.out.println("email poslat");
 
 	}
@@ -51,7 +51,7 @@ public class EmailService {
 		text += "\n http://localhost:4200/recenzent/naucniRadovi/" + id + "/revizije/" + idRevision;
 		mail.setText(text);
 
-		javaMailSender.send(mail);
+		//javaMailSender.send(mail);
 		System.out.println("email poslat");
 
 	}
@@ -68,7 +68,7 @@ public class EmailService {
 		String subject = "Zahvaljujemo Vam za recenziju";
 		mail.setSubject(subject);
 
-		javaMailSender.send(mail);
+		//javaMailSender.send(mail);
 		System.out.println("email poslat");
 
 	}
@@ -91,7 +91,7 @@ public class EmailService {
 		text += "\n http://localhost:4200/autor/naucniRadovi/" + id;
 		mail.setText(text);
 
-		javaMailSender.send(mail);
+		//javaMailSender.send(mail);
 		System.out.println("email poslat");
 
 	}
