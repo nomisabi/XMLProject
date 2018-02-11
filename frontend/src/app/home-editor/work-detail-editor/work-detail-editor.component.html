@@ -37,7 +37,7 @@
             <button class="btn btn-success"
             (click)="publish(revision.id)">Objavi rad</button>
             <button class="btn btn-default"
-            >Potrebne izmene rada</button>
+            (click)="revise(revision.id)">Potrebne izmene rada</button>
             <button class="btn btn-danger"
               (click)="reject(revision.id)">Odbaci rad</button>
           </div>

@@ -7,4 +7,5 @@ interface RevisionInterface{
     hasLetter: boolean;
     review: ReviewInterface;
     reviews: ReviewInterface[];
+    flag?: boolean;
 }

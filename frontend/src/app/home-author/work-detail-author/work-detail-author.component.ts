@@ -36,6 +36,29 @@ export class WorkDetailAuthorComponent implements OnInit {
         .then(work => {
           console.log(work);
           this.work = work;
+          for(let i in this.work.revisions){
+            if(this.work.revisions[i].status === 'POTREBNA_IZMENA'){
+              this.work.revisions[i].flag = true;
+              if (this.work.revisions.length-1 > +i){
+                this.work.revisions[i].flag = false;
+              }
+              var j: number = +i;
+              j++;
+
+              while(j < this.work.revisions.length){
+                if (this.work.revisions[j].status === 'OBRISAN' && this.work.revisions.length === j+1){
+                  this.work.revisions[i].flag = true;
+                }
+                if (this.work.revisions[j].status !== 'OBRISAN'){
+                  this.work.revisions[i].flag = false;
+                  break;
+                }
+                j++;
+              }
+              
+              
+            }
+          }
         })
   }
 
@@ -59,6 +82,30 @@ export class WorkDetailAuthorComponent implements OnInit {
 
         }else if (event.status === 417){
           this.toastr.error('Greska prilikom slanja pisma.')
+        }
+      }
+    });
+   // .catch(err =>  this.toastr.error('Greska prilikom slanja naucnog rada.'));
+ 
+    this.selectedFiles = undefined
+  }
+
+  uploadRevision() {
+    this.progress.percentage = 0;
+ 
+    this.currentFileUpload = this.selectedFiles.item(0)
+    this.uploadService.pushFileRevision(this.currentFileUpload,this.work.id)
+    .subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress) {
+        this.progress.percentage = Math.round(100 * event.loaded / event.total);
+      } else if (event instanceof HttpResponse) {
+        if (event.status === 200){
+         console.log(event.body);
+          this.toastr.success('Revizija uspesno poslata.');
+          this.getWork();
+
+        }else if (event.status === 417){
+          this.toastr.error('Greska prilikom slanja revizije.')
         }
       }
     });

@@ -105,6 +105,31 @@ public class NaucniRadController {
 		}
 	}
 
+	@PostMapping("/api/naucni_radovi/{id}/revizije")
+	public ResponseEntity<String> createRevizija(@RequestParam("file") MultipartFile file, @PathVariable String id) {
+		String message = "";
+		try {
+			storageService.deleteAll();
+			storageService.init();
+			storageService.store(file);
+
+			String id1 = naucniRadService.addRevision(id, file.getOriginalFilename());
+			storageService.deleteAll();
+
+			if (id1 != null) {
+				System.out.println(id1);
+				return ResponseEntity.status(HttpStatus.OK).body(id1);
+			} else {
+				message = "Naucni rad " + file.getOriginalFilename() + " nije ispravan!";
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+			}
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			message = "Naucni rad " + file.getOriginalFilename() + " nije ispravan!";
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+		}
+	}
+
 	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteNaucniRad(@PathVariable("id") String id, @PathVariable("id_revizija") String idRevision) {
@@ -375,6 +400,19 @@ public class NaucniRadController {
 
 		try {
 			naucniRadService.publishRevision(id, idRevision, TStatus.ODOBRODENO);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (JAXBException | IOException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/potrebna_izmena", method = RequestMethod.GET)
+	public ResponseEntity<Void> reviseRevision(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision) {
+
+		try {
+			naucniRadService.publishRevision(id, idRevision, TStatus.POTREBNA_IZMENA);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (JAXBException | IOException e) {
 			logger.info(e.getMessage());

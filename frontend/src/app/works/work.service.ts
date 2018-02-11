@@ -145,6 +145,15 @@ export class WorkService {
           .catch(this.handleError);
   }
 
+  reviseRevision(id: string, idRevision: string): Promise<any>{
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/potrebna_izmena`;
+    return this.http
+          .get(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
   rejectRevision(id: string, idRevision: string): Promise<any>{
     const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/odbaci`;
     return this.http

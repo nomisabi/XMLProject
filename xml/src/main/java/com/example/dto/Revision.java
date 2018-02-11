@@ -11,6 +11,7 @@ public class Revision {
 	private boolean hasLetter;
 	private Review review;
 	private List<Review> reviews;
+	private boolean flag;
 
 	public Revision() {
 
@@ -86,6 +87,14 @@ public class Revision {
 
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
 	}
 
 }

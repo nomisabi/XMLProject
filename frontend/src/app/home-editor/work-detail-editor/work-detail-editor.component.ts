@@ -76,10 +76,12 @@ export class WorkDetailEditorComponent implements OnInit {
   reject(id: string){
     this.workService.rejectRevision(this.work.id, id)
         .then(() => this.getWork());
-
   }
 
-
+  revise(id: string){
+    this.workService.reviseRevision(this.work.id, id)
+        .then(() => this.getWork());
+  }
 
 
   gotoGetPDF(){

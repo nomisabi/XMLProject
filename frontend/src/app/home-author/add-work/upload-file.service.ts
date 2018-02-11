@@ -35,4 +35,17 @@ export class UploadFileService {
     return this.http.request(req);
   }
 
+  pushFileRevision(file: File, id: string): Observable<HttpEvent<{}>> {
+    let formdata: FormData = new FormData();
+ 
+    formdata.append('file', file);
+ 
+    const req = new HttpRequest('POST', `/api/naucni_radovi/${id}/revizije`, formdata, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+ 
+    return this.http.request(req);
+  }
+
 }
