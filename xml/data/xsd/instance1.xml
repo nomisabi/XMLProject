@@ -1,40 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ns1:Revizija xmlns:ns1="http://www.ftn.uns.ac.rs/naucni_rad"
- xmlns:rc="http://www.ftn.uns.ac.rs/recenzija"
- xmlns:ul="http://www.ftn.uns.ac.rs/uloge"
- xmlns:nr="http://www.ftn.uns.ac.rs/naucni_radovi"
- xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo"
+<korisnik xmlns="http://www.ftn.uns.ac.rs/korisnici"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.ftn.uns.ac.rs/naucni_rad file:/C:/Users/Nevena%20Djeric/git/XMLProject/xml/data/xsd/naucni_rad.xsd">
-    <ns1:Naslov>Naslov0</ns1:Naslov>
-    <ul:Autor>
-        <ul:Ime>Ime0</ul:Ime>
-        <ul:Prezime>Prezime0</ul:Prezime>
-        <ul:Korisnicko_ime>Korisnicko_ime0</ul:Korisnicko_ime>
-        <ul:Lozinka>Lozinka0</ul:Lozinka>
-        <ul:Email>Email11</ul:Email>
-        <ul:Institucija>
-            <ul:Naziv>Naziv0</ul:Naziv>
-            <ul:Adresa>
-                <ul:Mesto>Mesto0</ul:Mesto>
-                <ul:Postanski_broj>Postanski_</ul:Postanski_broj>
-                <ul:Ulica>Ulica0</ul:Ulica>
-                <ul:Broj>d</ul:Broj>
-            </ul:Adresa>
-        </ul:Institucija>
-    </ul:Autor>
-    <ns1:Abstrakt>
-        <ns1:NeStrukturiranAbstrakt>
-            <ns1:Tekst>Tekst111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</ns1:Tekst>
-        </ns1:NeStrukturiranAbstrakt>
-    </ns1:Abstrakt>
-    <ns1:Kljucna_rec>Kljucna_rec0</ns1:Kljucna_rec>
-    <ns1:Sadrzaj>
-        <ns1:Poglavlje>
-            <ns1:Naziv>Naziv0</ns1:Naziv>
-            <ns1:Paragraf>
-                <ns1:Figura/>
-            </ns1:Paragraf>
-        </ns1:Poglavlje>
-    </ns1:Sadrzaj>
-</ns1:Revizija>
+ xsi:schemaLocation="http://www.ftn.uns.ac.rs/korisnici file:/C:/Users/Nevena%20Djeric/git/XMLProject/xml/data/xsd/korisnici.xsd" Id="ID001">
+    <ime>ime0</ime>
+    <prezime>prezime0</prezime>
+    <korisnicko_ime>korisnicko_ime0</korisnicko_ime>
+    <lozinka>lozinka0</lozinka>
+    <email>email0</email>
+    <uloga>AUTOR</uloga>
+    <domen>domen0</domen>
+    <domen>domen1</domen>
+</korisnik>

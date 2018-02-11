@@ -18,6 +18,12 @@
           <option>RECENZENT</option>
         </select>
         <br>
+        <div *ngFor="let domen of domeni; let i=index ">
+          <input style="width: 90%;" type="text" class="form-control" placeholder="Domen ekspertize" name="domen" [(ngModel)]="domeni[i].text">
+          <button (click)="addDomen()" *ngIf="i+1 === domeni.length" style="float: right; margin-top: -30px; margin-right: 5%;"><i class="fa fa-plus"></i></button>
+          <button (click)="deleteDomen()" *ngIf="i+1 === domeni.length" style="float: right; margin-top: -30px;"><i class="fa fa-minus"></i></button>
+        </div>
+        <br>
         <br>
         <button (click)="save()" class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> REGISTRUJ SE</button>
       </div>
