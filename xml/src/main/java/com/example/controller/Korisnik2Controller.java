@@ -60,6 +60,23 @@ public class Korisnik2Controller {
 
 	}
 
+	@RequestMapping(value = "/korisnici", method = RequestMethod.GET, params = { "param" })
+	public ResponseEntity<Korisnici> pronadjiKorisnika(@RequestParam("param") String param) {
+		try {
+			Korisnici korisnici = korisnici2Service.pronadjiKorisnike(param);
+			if (korisnici != null) {
+				return new ResponseEntity<>(korisnici, HttpStatus.OK);
+
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
 	@RequestMapping(value = "/korisnici/{id}", method = RequestMethod.GET)
 	public ResponseEntity<String> pronadjiId(@PathVariable String id) {
 		try {

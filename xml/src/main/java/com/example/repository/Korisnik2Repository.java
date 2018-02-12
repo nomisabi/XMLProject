@@ -18,7 +18,8 @@ public interface Korisnik2Repository {
 	String pronadjiSve() throws IOException;
 
 	Korisnici pronadjiSveRecenzente() throws IOException, JAXBException;
-	
+
 	Korisnici pronadjiRecenzente(List<String> domeni) throws IOException, JAXBException;
 
+	Korisnici pronadjiKorisnike(String param) throws IOException, JAXBException;
 }

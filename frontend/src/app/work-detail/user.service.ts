@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class UserService {
@@ -14,6 +14,17 @@ export class UserService {
           .toPromise()
           .then(res => res)
           .catch(this.handleError);
+  }
+
+  findReviews(param: string): Promise<any>{
+    const url = `/api/korisnici`;
+    const httpParams = new HttpParams().set('param', param);
+    return this.http
+          .get(url, {params: httpParams})
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+
   }
 
   private handleError(error: any): Promise<any> {

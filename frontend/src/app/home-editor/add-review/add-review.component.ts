@@ -19,6 +19,8 @@ export class AddReviewComponent implements OnInit {
   users: any;
   selected: any[];
 
+  param: string;
+
   constructor(private userService: UserService,
               private workService: WorkService,
               private router: Router,
@@ -30,8 +32,6 @@ export class AddReviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    var id = this.route.snapshot.params['id'];
-    var idRevision = this.route.snapshot.params['idRevizije'];
     this.selected = [];
     this.revision = {
       id: '',
@@ -43,6 +43,14 @@ export class AddReviewComponent implements OnInit {
       review: null,
       reviews: []
     }
+
+    this.getReviews();
+  }
+
+  getReviews(){
+    var id = this.route.snapshot.params['id'];
+    var idRevision = this.route.snapshot.params['idRevizije'];
+
     this.userService.getReviews(id, idRevision)
     .then(reviews => {
       console.log(reviews);
@@ -50,6 +58,7 @@ export class AddReviewComponent implements OnInit {
       console.log(this.users);
     })
     .catch(() => this.toastr.error('Nema recenzenata u sistemu.'));
+
   }
 
   save(){
@@ -98,6 +107,20 @@ export class AddReviewComponent implements OnInit {
     return false;
   }
 
-
+  find(){
+    if (this.param === ""){
+      this.getReviews();
+    }else{
+      this.userService.findReviews(this.param)
+          .then(reviews => {
+            console.log(reviews);
+            this.users = reviews.korisnik;
+          })
+          .catch(() => {
+            this.toastr.error('Trazeni korisnik ne postoji.');
+            this.users = [];
+          });
+      }
+  }
 
 }
