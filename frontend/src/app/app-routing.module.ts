@@ -23,6 +23,7 @@ import { MyWorksReviewerComponent } from './home-reviewer/my-works-reviewer/my-w
 import { AddNewReviewComponent } from './home-reviewer/add-new-review/add-new-review.component';
 import { RevisionDetailsComponent } from './work-detail/revision-details/revision-details.component';
 import { WorkDetailEditorComponent } from './home-editor/work-detail-editor/work-detail-editor.component';
+import { ShowXhtmlreviewerComponent } from './home-reviewer/show-xhtmlreviewer/show-xhtmlreviewer.component';
 
 const routers: Routes = [
   { path: 'prijava', component: LoginComponent },
@@ -67,6 +68,22 @@ const routers: Routes = [
     {
       path: 'naucniRadovi/:id',
       component: WorkDetailAuthorComponent
+    },
+    {
+      path:'naucniRadovi/:id/revizija/:i',
+      component: RevisionDetailsComponent
+    },
+    {
+      path:'naucniRadovi/:id/revizija/:i#:pog',
+      component: RevisionDetailsComponent
+    },
+    {
+      path:'naucniRadovi/:id/xhtml',
+      component: ShowXhtmlComponent
+    },
+    {
+      path:'naucniRadovi/:id/xml',
+      component: ShowXmlComponent
     }
   ]},
   { path: 'recenzent', 
@@ -87,7 +104,11 @@ const routers: Routes = [
       {
         path: 'naucniRadovi/:id/revizije/:idRevizije',
         component: WorkDetailReviewerComponent
-      }
+      },
+      {
+        path:'naucniRadovi/:id/xhtml',
+        component: ShowXhtmlreviewerComponent
+      },
     ]},
   { path: 'urednik', 
     component: HomeEditorComponent,
@@ -111,6 +132,22 @@ const routers: Routes = [
       {
         path:'naucniRadovi/:id',
         component: WorkDetailEditorComponent
+      },
+      {
+        path:'naucniRadovi/:id/revizija/:i',
+        component: RevisionDetailsComponent
+      },
+      {
+        path:'naucniRadovi/:id/revizija/:i#:pog',
+        component: RevisionDetailsComponent
+      },
+      {
+        path:'naucniRadovi/:id/xhtml',
+        component: ShowXhtmlComponent
+      },
+      {
+        path:'naucniRadovi/:id/xml',
+        component: ShowXmlComponent
       }
       
       

@@ -11,10 +11,17 @@
         <p class="title">NAUCNI RAD</p>
       </div>
     </div>
+    <div class="row">
+      <div class="col-lg-10">
+        <a (click)="gotoGetPDF()" class="small-btn">PDF</a>
+        <a (click)="gotoGetXHTML()" class="small-btn">XHTML</a>
+        <a (click)="gotoGetXML()" class="small-btn">XML</a>
+      </div>   
+    </div>
     <div *ngFor="let revision of work.revisions; let i=index" >
         <div class="row" *ngIf="revision.status !== 'OBRISAN'">
           <div class="col-lg-9 main-chart pFont">
-            <p class="title">REVIZIJA {{i+1}}</p>
+            <p class="title" (click)="goToRevizija(revision.id)">REVIZIJA {{i+1}}</p>
           </div>
         </div>
         <div class="row" *ngIf="revision.status !== 'OBRISAN'">
@@ -23,7 +30,7 @@
               <div class="col-lg-1"></div>
               <div class="col-lg-10">
                 <div class="notification">
-                  <p> <br> {{revision.title}} <br> &nbsp; </p>
+                  <p (click)="goToRevizija(revision.id)"> <br> {{revision.title}} <br> &nbsp; </p>
                 </div>
               </div>   
             </div>  

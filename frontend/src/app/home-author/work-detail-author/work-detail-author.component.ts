@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { WorkService } from '../../works/work.service';
 import { UploadFileService } from '../add-work/upload-file.service';
-
+import * as FileSaver from 'file-saver'; 
 
 @Component({
   selector: 'app-work-detail-author',
@@ -21,6 +21,7 @@ export class WorkDetailAuthorComponent implements OnInit {
   constructor(private workService:WorkService,
               private uploadService: UploadFileService,
               private toastr: ToastsManager, 
+              private router: Router,
               private vcr: ViewContainerRef,
               private route: ActivatedRoute) { 
     this.toastr.setRootViewContainerRef(vcr);
@@ -112,6 +113,36 @@ export class WorkDetailAuthorComponent implements OnInit {
    // .catch(err =>  this.toastr.error('Greska prilikom slanja naucnog rada.'));
  
     this.selectedFiles = undefined
+  }
+
+
+  gotoGetPDF(){
+    this.workService.getPdf(this.route.snapshot.params['id']).then(
+        response=>{
+        let blob = new Blob([response], { 
+          type: 'application/pdf' // must match the Accept type
+        });
+
+        var filename = 'mypdf.pdf';
+        console.log(blob);
+        console.log(response);
+        FileSaver.saveAs(blob, filename);
+        }
+    )
+  }
+
+  gotoGetXHTML(){
+    this.router.navigate(['autori/naucniRadovi/'+this.route.snapshot.params['id']+'/xhtml']);
+
+  }
+
+  gotoGetXML(){
+    this.router.navigate(['autor/naucniRadovi/'+this.route.snapshot.params['id']+'/xml']);
+  }
+
+  goToRevizija(id){
+    console.log('gorev');
+    this.router.navigate(['autor/naucniRadovi/'+this.route.snapshot.params['id']+'/revizija/'+id]);
   }
 
 }

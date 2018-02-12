@@ -207,6 +207,30 @@ export class WorkService {
           .catch(this.handleError);
   }
 
+  getPdfNoAuthor(id: string):Promise<any>{
+    let httpHeaders:HttpHeaders = new HttpHeaders({"Accept": 'application/pdf','Content-Type':'application/pdf'});
+    
+    const url = `/api/naucni_radovi/${id}/no_author/download`;
+    return this.http
+          .get(url, {headers:httpHeaders, responseType:'blob' })
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+
+          
+  }
+
+  getHtmlNoAuthor(id: string):Promise<any>{
+    let httpHeaders:HttpHeaders = new HttpHeaders({"Accept": 'text/html;charset=UTF-8','Content-Type':'text/html;charset=UTF-8'});
+    const url = `/api/naucni_radovi/${id}/no_author/html`;
+    return this.http
+          .get(url, {headers:httpHeaders, responseType: 'text'})
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
+  
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);

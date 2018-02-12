@@ -11,6 +11,12 @@
       <p class="title">NAUCNI RAD</p>
     </div>
   </div>
+  <div class="row">
+    <div class="col-lg-10">
+      <a (click)="gotoGetPDF()" class="small-btn">PDF</a>
+      <a (click)="gotoGetXHTML()" class="small-btn">XHTML</a>
+    </div>   
+  </div>
   <div *ngFor="let revision of work.revisions; let i=index">
       <div class="row">
         <div class="col-lg-9 main-chart pFont">

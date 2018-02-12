@@ -37,6 +37,7 @@ import { MyWorksReviewerComponent } from './home-reviewer/my-works-reviewer/my-w
 import { AddNewReviewComponent } from './home-reviewer/add-new-review/add-new-review.component';
 import { RevisionDetailsComponent } from './work-detail/revision-details/revision-details.component';
 import { WorkDetailEditorComponent } from './home-editor/work-detail-editor/work-detail-editor.component';
+import { ShowXhtmlreviewerComponent } from './home-reviewer/show-xhtmlreviewer/show-xhtmlreviewer.component';
 
 export class CustomOption extends ToastOptions {
   animate = 'flyRight'; // you can override any options available
@@ -69,7 +70,8 @@ export class CustomOption extends ToastOptions {
     MyWorksReviewerComponent,
     AddNewReviewComponent,
     RevisionDetailsComponent,
-    WorkDetailEditorComponent
+    WorkDetailEditorComponent,
+    ShowXhtmlreviewerComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WorkService } from '../../works/work.service';
 import { Router } from '@angular/router';
+import * as FileSaver from 'file-saver'; 
 
 @Component({
   selector: 'app-work-detail-reviewer',
@@ -46,8 +47,24 @@ export class WorkDetailReviewerComponent implements OnInit {
     this.router.navigate([`/recenzent/naucniRadovi/${this.work.id}/revizije/${id}/recenzija`]);
   }
 
-  
+  gotoGetPDF(){
+    this.workService.getPdfNoAuthor(this.route.snapshot.params['id']).then(
+        response=>{
+        let blob = new Blob([response], { 
+          type: 'application/pdf' // must match the Accept type
+        });
 
-  
+        var filename = 'mypdf.pdf';
+        console.log(blob);
+        console.log(response);
+        FileSaver.saveAs(blob, filename);
+        }
+    )
+  }
+
+  gotoGetXHTML(){
+    this.router.navigate(['recenzent/naucniRadovi/'+this.route.snapshot.params['id']+'/xhtml']);
+
+  }
 
 }
