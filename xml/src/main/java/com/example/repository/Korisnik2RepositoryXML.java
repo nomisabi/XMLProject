@@ -36,7 +36,7 @@ public class Korisnik2RepositoryXML implements Korisnik2Repository {
 
 	@Autowired
 	private Utils utils;
-	
+
 	@Autowired
 	protected DatabaseClient client;
 
@@ -83,7 +83,27 @@ public class Korisnik2RepositoryXML implements Korisnik2Repository {
 		String query = utils.readQuery(queryName);
 		return getResponse(query);
 	}
-	
+
+	@Override
+	public Korisnici pronadjiRecenzente(List<String> domeni) throws IOException, JAXBException {
+		String queryName = "findByDomen.xqy";
+		String query = utils.readQuery(queryName);
+		StringBuilder bld = new StringBuilder();
+		int i = 0;
+		for (String string : domeni) {
+			bld.append("$korisnik/ko:domen = '" + string + "'");
+			if (i + 2 <= domeni.size()) {
+				bld.append(" or ");
+			}
+			i++;
+		}
+		query = query.replace("domeni", bld.toString());
+
+		System.out.println(query);
+		return getResponse(query);
+
+	}
+
 	public Korisnici getResponse(String query) throws JAXBException {
 		ServerEvaluationCall invoker = client.newServerEval();
 		invoker.xquery(query);
@@ -96,17 +116,17 @@ public class Korisnik2RepositoryXML implements Korisnik2Repository {
 				korisnici.getKorisnik().add(korisnik);
 			}
 		} else {
-			System.out.println("your query returned an empty sequence.");
+			return null;
 		}
 		return korisnici;
 	}
-	
+
 	public Korisnik unmarshalling(String korisnik) throws JAXBException {
 		Unmarshaller unmarshaller = this.getKorisnikContext().createUnmarshaller();
 		StringReader reader = new StringReader(korisnik);
 		return (Korisnik) unmarshaller.unmarshal(reader);
 	}
-	
+
 	private JAXBContext getKorisnikContext() throws JAXBException {
 		return JAXBContext.newInstance(Korisnik.class);
 	}

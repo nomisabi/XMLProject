@@ -22,7 +22,7 @@ import com.example.korisnici.Korisnici;
 import com.example.service.Korisnici2Service;
 
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value = "/api")
 public class Korisnik2Controller {
 	private static final Logger logger = LoggerFactory.getLogger(Korisnik2Controller.class);
 
@@ -93,11 +93,13 @@ public class Korisnik2Controller {
 		}
 
 	}
-	
-	@RequestMapping(value = "/korisnici/recenzenti", method = RequestMethod.GET)
-	public ResponseEntity<Korisnici> pronadjiSveRecenzente() {
+
+	@RequestMapping(value = "/naucni_radovi/{id}/revizija/{id_revizija}/recenzenti", method = RequestMethod.GET)
+	public ResponseEntity<Korisnici> pronadjiSveRecenzente(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision) {
 		try {
-			Korisnici korisnici = korisnici2Service.pronadjiSveRecenzente();
+			Korisnici korisnici = korisnici2Service.pronadjiRecenzente(id, idRevision);
+
 			if (korisnici != null) {
 				return new ResponseEntity<>(korisnici, HttpStatus.OK);
 

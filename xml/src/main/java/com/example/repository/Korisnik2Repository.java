@@ -1,6 +1,7 @@
 package com.example.repository;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
@@ -17,5 +18,7 @@ public interface Korisnik2Repository {
 	String pronadjiSve() throws IOException;
 
 	Korisnici pronadjiSveRecenzente() throws IOException, JAXBException;
+	
+	Korisnici pronadjiRecenzente(List<String> domeni) throws IOException, JAXBException;
 
 }

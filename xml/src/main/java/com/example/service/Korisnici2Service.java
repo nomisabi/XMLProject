@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.xml.XMLConstants;
@@ -20,7 +22,10 @@ import org.xml.sax.SAXException;
 
 import com.example.korisnici.Korisnici;
 import com.example.korisnici.Korisnik;
+import com.example.model.naucni_rad.NaucniRad;
+import com.example.model.naucni_rad.Revizija;
 import com.example.repository.Korisnik2RepositoryXML;
+import com.example.repository.NaucniRadRepositoryXML;
 import com.example.utils.MyValidationEventHandler;
 import com.example.utils.NSPrefixMapper;
 
@@ -28,6 +33,8 @@ import com.example.utils.NSPrefixMapper;
 public class Korisnici2Service {
 	@Autowired
 	protected Korisnik2RepositoryXML korisnik2RepositoryXML;
+	@Autowired
+	NaucniRadRepositoryXML naucniRadRepositoryXML;
 
 	public void dodaj(String korisnikXML) throws JAXBException, SAXException {
 		Korisnik korisnik = unmarshalling(korisnikXML);
@@ -48,9 +55,42 @@ public class Korisnici2Service {
 	public String pronadjiSve() throws IOException {
 		return korisnik2RepositoryXML.pronadjiSve();
 	}
-	
-	public Korisnici pronadjiSveRecenzente() throws IOException, JAXBException{
+
+	public Korisnici pronadjiSveRecenzente() throws IOException, JAXBException {
 		return korisnik2RepositoryXML.pronadjiSveRecenzente();
+	}
+
+	public Korisnici pronadjiRecenzente(String id, String idRevision) throws IOException, JAXBException {
+		NaucniRad naucniRad = naucniRadRepositoryXML.findById(id);
+		List<String> domeni = new ArrayList<>();
+
+		for (Revizija revizija : naucniRad.getRevizija()) {
+			if (revizija.getId().equals(idRevision)) {
+				domeni = revizija.getKljucnaRec();
+			}
+		}
+		Korisnici recenzenti = korisnik2RepositoryXML.pronadjiRecenzente(domeni);
+
+		if (recenzenti == null) {
+			return korisnik2RepositoryXML.pronadjiSveRecenzente();
+		}
+
+		if (recenzenti.getKorisnik().size() < 3) {
+			Korisnici sviRecenzenti = korisnik2RepositoryXML.pronadjiSveRecenzente();
+			for (Korisnik recenzent : sviRecenzenti.getKorisnik()) {
+				boolean flag = false;
+				for (Korisnik recenznet2 : recenzenti.getKorisnik()) {
+					if (recenznet2.getId().equals(recenzent.getId())) {
+						flag = true;
+						break;
+					}
+				}
+				if (!flag) {
+					recenzenti.getKorisnik().add(recenzent);
+				}
+			}
+		}
+		return recenzenti;
 	}
 
 	private String setId() {
