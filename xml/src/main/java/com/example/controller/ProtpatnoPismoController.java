@@ -92,12 +92,12 @@ public class ProtpatnoPismoController {
         }
     }
     
-    @RequestMapping(value = "api/protpatnoPisma/{id}/download", method = RequestMethod.GET, produces = "application/pdf")
-    public ResponseEntity<InputStreamResource> downloadPDFFile(@PathVariable("id") String id)
+    @RequestMapping(value = "api/naunci_rad/{nrId}/revizija/{revId}/protpatnoPismo/download", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<InputStreamResource> downloadPDFFile(@PathVariable("nrId") String nrId, @PathVariable("revId") String revId)
             throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {
     	
     	File pdfFile=protpatnoPismoService.createFile();
-    	InputStreamResource resource = protpatnoPismoService.generatePDF(id, pdfFile);
+    	InputStreamResource resource = protpatnoPismoService.generatePDF(nrId, revId, pdfFile);
         return ResponseEntity
                 .ok()
                 .contentLength(pdfFile.length())
@@ -107,9 +107,9 @@ public class ProtpatnoPismoController {
     
 
     
-    @RequestMapping(value = "api/protpatnoPisma/{id}/html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String downloadHTML(@PathVariable("id") String id)
+    @RequestMapping(value = "api/naunci_rad/{nrId}/revizija/{revId}/protpatnoPismo/html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String downloadHTML(@PathVariable("nrId") String nrId, @PathVariable("revId") String revId)
             throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {  	  
-        return protpatnoPismoService.generateHTML(id);
+        return protpatnoPismoService.generateHTML(nrId, revId);
     }	
 }

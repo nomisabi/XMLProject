@@ -24,6 +24,7 @@ import { AddNewReviewComponent } from './home-reviewer/add-new-review/add-new-re
 import { RevisionDetailsComponent } from './work-detail/revision-details/revision-details.component';
 import { WorkDetailEditorComponent } from './home-editor/work-detail-editor/work-detail-editor.component';
 import { ShowXhtmlreviewerComponent } from './home-reviewer/show-xhtmlreviewer/show-xhtmlreviewer.component';
+import { ShowXhtmlletterComponent } from './home-author/show-xhtmlletter/show-xhtmlletter.component';
 
 const routers: Routes = [
   { path: 'prijava', component: LoginComponent },
@@ -80,6 +81,10 @@ const routers: Routes = [
     {
       path:'naucniRadovi/:id/xhtml',
       component: ShowXhtmlComponent
+    },
+    {
+      path:'naucniRadovi/:id/revizija/:revId/pismo',
+      component: ShowXhtmlletterComponent
     },
     {
       path:'naucniRadovi/:id/xml',
@@ -144,6 +149,10 @@ const routers: Routes = [
       {
         path:'naucniRadovi/:id/xhtml',
         component: ShowXhtmlComponent
+      },
+      {
+        path:'naucniRadovi/:id/revizija/:revId/pismo',
+        component: ShowXhtmlletterComponent
       },
       {
         path:'naucniRadovi/:id/xml',

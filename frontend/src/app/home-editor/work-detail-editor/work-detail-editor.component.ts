@@ -113,4 +113,24 @@ export class WorkDetailEditorComponent implements OnInit {
     this.router.navigate(['naucniRadovi/'+this.route.snapshot.params['id']+'/revizija/'+id]);
   }
 
+  gotoGetPDFPismo(id){
+    this.workService.getPdfPismo(this.route.snapshot.params['id'], id).then(
+        response=>{
+        let blob = new Blob([response], { 
+          type: 'application/pdf' // must match the Accept type
+        });
+
+        var filename = 'mypdf.pdf';
+        console.log(blob);
+        console.log(response);
+        FileSaver.saveAs(blob, filename);
+        }
+    )
+  }
+
+  gotoGetXHTMLPismo(id){
+    this.router.navigate(['urednik/naucniRadovi/'+this.route.snapshot.params['id']+'/revizija/'+id+'/pismo']);
+
+  }
+
 }

@@ -51,7 +51,17 @@
                     (click)="upload(revision.id)">Dodaj propratno pismo</button>
                 </div>
               </div>
-          </div>   
+          </div>  
+          <div class="row" *ngIf="revision.hasLetter">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10 border">
+              <div class="border-title">Pismo:</div>
+              <div class="border-desc">
+                <a (click)="gotoGetPDFPismo(revision.id)" class="small-btn">PDF</a>
+                <a (click)="gotoGetXHTMLPismo(revision.id)" class="small-btn">XHTML</a>
+              </div>
+            </div>
+        </div>  
           <div class="row" *ngIf="revision.status==='POTREBNA_IZMENA' && revision.flag === true">
             <div class="col-lg-1"></div>
             <div class="col-lg-5 border">
