@@ -230,6 +230,29 @@ export class WorkService {
           .catch(this.handleError);
   }
 
+  getPdfPismo(id: string, revId:string):Promise<any>{
+    let httpHeaders:HttpHeaders = new HttpHeaders({"Accept": 'application/pdf','Content-Type':'application/pdf'});
+    
+    const url = `/api/naunci_rad/${id}/revizija/${revId}/protpatnoPismo/download`;
+    return this.http
+          .get(url, {headers:httpHeaders, responseType:'blob' })
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+
+          
+  }
+
+  getHtmlPismo(id: string, revId:string):Promise<any>{
+    let httpHeaders:HttpHeaders = new HttpHeaders({"Accept": 'text/html;charset=UTF-8','Content-Type':'text/html;charset=UTF-8'});
+    const url = `/api/naunci_rad/${id}/revizija/${revId}/protpatnoPismo/html`;
+    return this.http
+          .get(url, {headers:httpHeaders, responseType: 'text'})
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
   
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);

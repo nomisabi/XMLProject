@@ -26,7 +26,17 @@
                 <p (click)="goToRevizija(revision.id)"> <br> {{revision.title}} <br> &nbsp; </p>
               </div>
             </div>   
-          </div>    
+          </div>  
+          <div class="row" *ngIf="revision.hasLetter">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10 border">
+              <div class="border-title">Pismo:</div>
+              <div class="border-desc">
+                <a (click)="gotoGetPDFPismo(revision.id)" class="small-btn">PDF</a>
+                <a (click)="gotoGetXHTMLPismo(revision.id)" class="small-btn">XHTML</a>
+              </div>
+            </div>
+        </div>    
         </div>
       </div> 
       <div class="row" *ngIf="rate">

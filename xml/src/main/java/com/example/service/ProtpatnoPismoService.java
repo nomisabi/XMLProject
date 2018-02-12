@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -41,10 +43,15 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.example.controller.RecenzijaController;
+import com.example.dto.Revision;
 import com.example.korisnici.Korisnik;
+import com.example.model.naucni_rad.NaucniRad;
+import com.example.model.naucni_rad.Revizija;
+import com.example.model.naucni_rad.TStatus;
 import com.example.model.propratnopismo.ProptatnoPismo;
 import com.example.model.propratnopismo.search.ProptatnoPismoSearchResult;
 import com.example.repository.Korisnik2RepositoryXML;
+import com.example.repository.NaucniRadRepositoryXML;
 import com.example.repository.ProptatnoPismoRepositoryXML;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
@@ -58,6 +65,8 @@ public class ProtpatnoPismoService {
 	    
 	 @Autowired
 	 protected ProptatnoPismoRepositoryXML protpatnoPismoRepositoryXML;
+	 @Autowired
+	 protected NaucniRadRepositoryXML nrRepositoryXML;
 	 @Autowired
 		protected Korisnik2RepositoryXML korisnik2RepositoryXML;
 		
@@ -93,8 +102,15 @@ public class ProtpatnoPismoService {
 			return JAXBContext.newInstance(Korisnik.class);
 		}
 	
-	public String generateHTML(String id) throws JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException{
-			ProptatnoPismo p= protpatnoPismoRepositoryXML.findById(id);
+	public String generateHTML(String nrId,String revId) throws JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException{
+			ProptatnoPismo pismo= null;
+			NaucniRad naucniRad = nrRepositoryXML.findById(nrId);
+			List<Revision> revisions = new ArrayList<>();
+			for (Revizija revizija : naucniRad.getRevizija()) {
+				if (revizija.getId().equals(revId)) {
+					pismo = revizija.getProptatnoPismo();
+				}				
+			}
 			
 			//generatePDFHTML.propratnopismo.ProptatnoPismo pismo = convertPP(p);
 	    	TransformerFactory transformerFactory = new TransformerFactoryImpl();
@@ -115,7 +131,7 @@ public class ProtpatnoPismoService {
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			
 	    	StringWriter sw = new StringWriter();
-			jaxbMarshaller.marshal(p, sw);
+			jaxbMarshaller.marshal(pismo, sw);
 			String xmlString = sw.toString();
 			
 			// Initialize the transformation subject
@@ -143,10 +159,17 @@ public class ProtpatnoPismoService {
 		}
 		
 		
-		public InputStreamResource generatePDF(String id, File pdfFile) throws JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException{
+		public InputStreamResource generatePDF(String nrId,String revId, File pdfFile) throws JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException{
 			//com.example.model.propratnopismo.ProptatnoPismo pismo= protpatnoPismoRepositoryXML.findById(id);
 
-			ProptatnoPismo pismo=  protpatnoPismoRepositoryXML.findById(id);
+			ProptatnoPismo pismo= null;
+			NaucniRad naucniRad = nrRepositoryXML.findById(nrId);
+			List<Revision> revisions = new ArrayList<>();
+			for (Revizija revizija : naucniRad.getRevizija()) {
+				if (revizija.getId().equals(revId)) {
+					pismo = revizija.getProptatnoPismo();
+				}				
+			}
 			
 			
 	    	// Initialize FOP factory object
