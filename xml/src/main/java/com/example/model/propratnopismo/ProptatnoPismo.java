@@ -30,7 +30,6 @@ import com.example.model.uloge.Autor;
 import com.example.model.uloge.Recenzent;
 import com.example.model.uloge.Urednik;
 
-
 /**
  * <p>Java class for anonymous complex type.
  * 
@@ -48,42 +47,12 @@ import com.example.model.uloge.Urednik;
  *           &lt;complexType>
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;choice>
- *                   &lt;element name="Rad">
- *                     &lt;complexType>
- *                       &lt;complexContent>
- *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                           &lt;sequence>
- *                             &lt;element ref="{http://www.ftn.uns.ac.rs/naucni_rad}Tekst" maxOccurs="unbounded"/>
- *                           &lt;/sequence>
- *                         &lt;/restriction>
- *                       &lt;/complexContent>
- *                     &lt;/complexType>
- *                   &lt;/element>
- *                   &lt;element name="Rezultat" maxOccurs="unbounded">
- *                     &lt;complexType>
- *                       &lt;complexContent>
- *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                           &lt;sequence>
- *                             &lt;element ref="{http://www.ftn.uns.ac.rs/naucni_rad}Tekst"/>
- *                           &lt;/sequence>
- *                         &lt;/restriction>
- *                       &lt;/complexContent>
- *                     &lt;/complexType>
- *                   &lt;/element>
- *                   &lt;element name="Razlog" maxOccurs="unbounded">
- *                     &lt;complexType>
- *                       &lt;complexContent>
- *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                           &lt;sequence>
- *                             &lt;element ref="{http://www.ftn.uns.ac.rs/naucni_rad}Tekst"/>
- *                           &lt;/sequence>
- *                         &lt;/restriction>
- *                       &lt;/complexContent>
- *                     &lt;/complexType>
- *                   &lt;/element>
+ *                 &lt;sequence>
+ *                   &lt;element name="Rad" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *                   &lt;element name="Rezultat" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/>
+ *                   &lt;element name="Razlog" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/>
  *                   &lt;element ref="{http://www.ftn.uns.ac.rs/uloge}Recenzent" maxOccurs="unbounded" minOccurs="0"/>
- *                 &lt;/choice>
+ *                 &lt;/sequence>
  *               &lt;/restriction>
  *             &lt;/complexContent>
  *           &lt;/complexType>
@@ -287,42 +256,12 @@ public class ProptatnoPismo {
      * &lt;complexType>
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;choice>
-     *         &lt;element name="Rad">
-     *           &lt;complexType>
-     *             &lt;complexContent>
-     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                 &lt;sequence>
-     *                   &lt;element ref="{http://www.ftn.uns.ac.rs/naucni_rad}Tekst" maxOccurs="unbounded"/>
-     *                 &lt;/sequence>
-     *               &lt;/restriction>
-     *             &lt;/complexContent>
-     *           &lt;/complexType>
-     *         &lt;/element>
-     *         &lt;element name="Rezultat" maxOccurs="unbounded">
-     *           &lt;complexType>
-     *             &lt;complexContent>
-     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                 &lt;sequence>
-     *                   &lt;element ref="{http://www.ftn.uns.ac.rs/naucni_rad}Tekst"/>
-     *                 &lt;/sequence>
-     *               &lt;/restriction>
-     *             &lt;/complexContent>
-     *           &lt;/complexType>
-     *         &lt;/element>
-     *         &lt;element name="Razlog" maxOccurs="unbounded">
-     *           &lt;complexType>
-     *             &lt;complexContent>
-     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                 &lt;sequence>
-     *                   &lt;element ref="{http://www.ftn.uns.ac.rs/naucni_rad}Tekst"/>
-     *                 &lt;/sequence>
-     *               &lt;/restriction>
-     *             &lt;/complexContent>
-     *           &lt;/complexType>
-     *         &lt;/element>
+     *       &lt;sequence>
+     *         &lt;element name="Rad" type="{http://www.w3.org/2001/XMLSchema}string"/>
+     *         &lt;element name="Rezultat" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/>
+     *         &lt;element name="Razlog" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/>
      *         &lt;element ref="{http://www.ftn.uns.ac.rs/uloge}Recenzent" maxOccurs="unbounded" minOccurs="0"/>
-     *       &lt;/choice>
+     *       &lt;/sequence>
      *     &lt;/restriction>
      *   &lt;/complexContent>
      * &lt;/complexType>
@@ -339,12 +278,12 @@ public class ProptatnoPismo {
     })
     public static class Sadrzaj {
 
-        @XmlElement(name = "Rad")
-        protected ProptatnoPismo.Sadrzaj.Rad rad;
-        @XmlElement(name = "Rezultat")
-        protected List<ProptatnoPismo.Sadrzaj.Rezultat> rezultat;
-        @XmlElement(name = "Razlog")
-        protected List<ProptatnoPismo.Sadrzaj.Razlog> razlog;
+        @XmlElement(name = "Rad", required = true)
+        protected String rad;
+        @XmlElement(name = "Rezultat", required = true)
+        protected List<String> rezultat;
+        @XmlElement(name = "Razlog", required = true)
+        protected List<String> razlog;
         @XmlElement(name = "Recenzent", namespace = "http://www.ftn.uns.ac.rs/uloge")
         protected List<Recenzent> recenzent;
 
@@ -353,10 +292,10 @@ public class ProptatnoPismo {
          * 
          * @return
          *     possible object is
-         *     {@link ProptatnoPismo.Sadrzaj.Rad }
+         *     {@link String }
          *     
          */
-        public ProptatnoPismo.Sadrzaj.Rad getRad() {
+        public String getRad() {
             return rad;
         }
 
@@ -365,10 +304,10 @@ public class ProptatnoPismo {
          * 
          * @param value
          *     allowed object is
-         *     {@link ProptatnoPismo.Sadrzaj.Rad }
+         *     {@link String }
          *     
          */
-        public void setRad(ProptatnoPismo.Sadrzaj.Rad value) {
+        public void setRad(String value) {
             this.rad = value;
         }
 
@@ -390,13 +329,13 @@ public class ProptatnoPismo {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link ProptatnoPismo.Sadrzaj.Rezultat }
+         * {@link String }
          * 
          * 
          */
-        public List<ProptatnoPismo.Sadrzaj.Rezultat> getRezultat() {
+        public List<String> getRezultat() {
             if (rezultat == null) {
-                rezultat = new ArrayList<ProptatnoPismo.Sadrzaj.Rezultat>();
+                rezultat = new ArrayList<String>();
             }
             return this.rezultat;
         }
@@ -419,13 +358,13 @@ public class ProptatnoPismo {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link ProptatnoPismo.Sadrzaj.Razlog }
+         * {@link String }
          * 
          * 
          */
-        public List<ProptatnoPismo.Sadrzaj.Razlog> getRazlog() {
+        public List<String> getRazlog() {
             if (razlog == null) {
-                razlog = new ArrayList<ProptatnoPismo.Sadrzaj.Razlog>();
+                razlog = new ArrayList<String>();
             }
             return this.razlog;
         }
@@ -457,176 +396,6 @@ public class ProptatnoPismo {
                 recenzent = new ArrayList<Recenzent>();
             }
             return this.recenzent;
-        }
-
-
-        /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
-         * <pre>
-         * &lt;complexType>
-         *   &lt;complexContent>
-         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *       &lt;sequence>
-         *         &lt;element ref="{http://www.ftn.uns.ac.rs/naucni_rad}Tekst" maxOccurs="unbounded"/>
-         *       &lt;/sequence>
-         *     &lt;/restriction>
-         *   &lt;/complexContent>
-         * &lt;/complexType>
-         * </pre>
-         * 
-         * 
-         */
-        @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "", propOrder = {
-            "tekst"
-        })
-        public static class Rad {
-
-            @XmlElement(name = "Tekst", namespace = "http://www.ftn.uns.ac.rs/naucni_rad", required = true)
-            protected List<Tekst> tekst;
-
-            /**
-             * Gets the value of the tekst property.
-             * 
-             * <p>
-             * This accessor method returns a reference to the live list,
-             * not a snapshot. Therefore any modification you make to the
-             * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the tekst property.
-             * 
-             * <p>
-             * For example, to add a new item, do as follows:
-             * <pre>
-             *    getTekst().add(newItem);
-             * </pre>
-             * 
-             * 
-             * <p>
-             * Objects of the following type(s) are allowed in the list
-             * {@link Tekst }
-             * 
-             * 
-             */
-            public List<Tekst> getTekst() {
-                if (tekst == null) {
-                    tekst = new ArrayList<Tekst>();
-                }
-                return this.tekst;
-            }
-
-        }
-
-
-        /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
-         * <pre>
-         * &lt;complexType>
-         *   &lt;complexContent>
-         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *       &lt;sequence>
-         *         &lt;element ref="{http://www.ftn.uns.ac.rs/naucni_rad}Tekst"/>
-         *       &lt;/sequence>
-         *     &lt;/restriction>
-         *   &lt;/complexContent>
-         * &lt;/complexType>
-         * </pre>
-         * 
-         * 
-         */
-        @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "", propOrder = {
-            "tekst"
-        })
-        public static class Razlog {
-
-            @XmlElement(name = "Tekst", namespace = "http://www.ftn.uns.ac.rs/naucni_rad", required = true)
-            protected Tekst tekst;
-
-            /**
-             * Gets the value of the tekst property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link Tekst }
-             *     
-             */
-            public Tekst getTekst() {
-                return tekst;
-            }
-
-            /**
-             * Sets the value of the tekst property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link Tekst }
-             *     
-             */
-            public void setTekst(Tekst value) {
-                this.tekst = value;
-            }
-
-        }
-
-
-        /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
-         * <pre>
-         * &lt;complexType>
-         *   &lt;complexContent>
-         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *       &lt;sequence>
-         *         &lt;element ref="{http://www.ftn.uns.ac.rs/naucni_rad}Tekst"/>
-         *       &lt;/sequence>
-         *     &lt;/restriction>
-         *   &lt;/complexContent>
-         * &lt;/complexType>
-         * </pre>
-         * 
-         * 
-         */
-        @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "", propOrder = {
-            "tekst"
-        })
-        public static class Rezultat {
-
-            @XmlElement(name = "Tekst", namespace = "http://www.ftn.uns.ac.rs/naucni_rad", required = true)
-            protected Tekst tekst;
-
-            /**
-             * Gets the value of the tekst property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link Tekst }
-             *     
-             */
-            public Tekst getTekst() {
-                return tekst;
-            }
-
-            /**
-             * Sets the value of the tekst property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link Tekst }
-             *     
-             */
-            public void setTekst(Tekst value) {
-                this.tekst = value;
-            }
-
         }
 
     }

@@ -111,5 +111,26 @@ public class RecenzijaController {
     public String downloadHTML(@PathVariable("id") String id)
             throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {  	  
         return recenzijaService.generateHTML(id);
+    }
+    
+    @RequestMapping(value = "api/recenzije/{id}/no_creator/download", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<InputStreamResource> downloadPDFFileNoCreator(@PathVariable("id") String id)
+            throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {
+    	
+    	File pdfFile=recenzijaService.createFile();
+    	InputStreamResource resource = recenzijaService.generatePDFNoRecenzent(id, pdfFile);
+        return ResponseEntity
+                .ok()
+                .contentLength(pdfFile.length())
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
+    }
+    
+
+    
+    @RequestMapping(value = "api/recenzije/{id}/no_creator/html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String downloadHTMLNoCreator(@PathVariable("id") String id)
+            throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {  	  
+        return recenzijaService.generateHTMLNoRecenzent(id);
     }	
 }

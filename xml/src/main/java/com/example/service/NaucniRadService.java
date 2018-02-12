@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,6 +11,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -86,21 +88,29 @@ public class NaucniRadService {
 	public static final String XSL_FILE = "data/xsl/naucni_rad.xsl";
 
 	public static final String XSL_FO_FILE = "data/xsl-fo/naucniRad-fo.xsl";
+	
+	public static final String XSL_FILE_NO_AUTHOR = "data/xsl/naucni_rad_no_author.xsl";
+
+	public static final String XSL_FO_FILE_NO_AUTHOR = "data/xsl-fo/naucniRad_fo_no_author.xsl";
 
 	public static final String OUTPUT_FILE = "gen/xsl/naucni_rad.pdf";
 
 	public String add(String file) throws JAXBException, SAXException, IOException, TransformerException {
 		NaucniRad nr = naucniRadUtils.unmarshalling(file);
+		String oldId= nr.getId();
+		nr.setId(setIdNR());
 		
 		//metadata extractor
 		InputStream in = new FileInputStream(new File("./upload-dir/" + file)); 
+		String changed= Utils.getStringFromInputStream(in, oldId, nr.getId());
+		InputStream changedIn = new ByteArrayInputStream(changed.getBytes(StandardCharsets.UTF_8));
 		OutputStream out = new FileOutputStream("gen/rdf/"+nr.getId()+".rdf");
-		utils.extractMetadata(in, out);
-		//write to database
-		//Utils.writeRDFnr(Utils.loadProperties(), "gen/rdf/"+nr.getId()+".rdf");
-		Utils.writeRDFnr( "gen/rdf/"+nr.getId()+".rdf");
+		utils.extractMetadata(changedIn, out);
 		
-		nr.setId(setIdNR());
+		//write to database
+		NaucniRadUtils.writeRDFnr(nr.getId());
+		
+		
 		if (nr.getRevizija().size() == 1) {
 			nr.getRevizija().get(0).setStatus(TStatus.POSLAT);
 			nr.getRevizija().get(0).setId("RV1");
@@ -211,6 +221,8 @@ public class NaucniRadService {
 		}
 
 		nrRepositoryXML.add(naucniRad);
+		
+		
 
 	}
 
@@ -309,22 +321,37 @@ public class NaucniRadService {
 
 	}
 
-	public void addLetter(String id, String idRevision, String file) throws IOException, JAXBException, SAXException {
+	public void addLetter(String id, String idRevision, String file) throws IOException, JAXBException, SAXException, TransformerException {
 		NaucniRad naucniRad = findById(id);
 		ProptatnoPismo pismo = propratnoPismoUtils.unmarshalling(file);
-
+	
 		// String pismoStr = propratnoPismoUtils.marshalling(pismo);
 		// propratnoPismoUtils.validation(pismoStr);
-
+		
+		String newId="";
+		
+		
 		for (Revizija revizija : naucniRad.getRevizija()) {
 			if (revizija.getId().equals(idRevision) && revizija.getProptatnoPismo() == null) {
 				pismo.setId("PP" + revizija.getId().substring(2, revizija.getId().length()));
+				newId=pismo.getId();
 				revizija.setProptatnoPismo(pismo);
 				break;
 			}
 		}
 		nrRepositoryXML.add(naucniRad);
-
+		
+		//rdf
+		NaucniRad nrgen= nrRepositoryXML.findById(id);
+		InputStream in = new FileInputStream(new File("./upload-dir/" + file)); 
+		String changed= Utils.getStringFromInputStream(in, "", nrgen.getId(), "", idRevision, pismo.getId(), newId );
+		InputStream changedIn = new ByteArrayInputStream(changed.getBytes(StandardCharsets.UTF_8));
+		OutputStream out = new FileOutputStream("gen/rdf/"+id+".rdf");
+		utils.extractMetadata(changedIn, out);
+		
+		//write to database
+		NaucniRadUtils.updateRDF(id);
+	
 	}
 
 	public List<Work> getWorksForReviewer(TStatusRecenzija status, String statusStr, String username)
@@ -501,4 +528,99 @@ public class NaucniRadService {
 
 	}
 
+	public String generateHTMLWithoutAuthor(String id)
+			throws JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException {
+		NaucniRad nr = nrRepositoryXML.findById(id);
+		TransformerFactory transformerFactory = new TransformerFactoryImpl();
+		StreamSource transformSource = new StreamSource(new File(XSL_FILE_NO_AUTHOR));
+		Transformer transformer = transformerFactory.newTransformer(transformSource);
+		transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+		// Generate XHTML
+		transformer.setOutputProperty(OutputKeys.METHOD, "xhtml");
+
+		JAXBContext jaxbContext = JAXBContext.newInstance(NaucniRad.class);
+		Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+		// output pretty printed
+		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+		StringWriter sw = new StringWriter();
+		jaxbMarshaller.marshal(nr, sw);
+		String xmlString = sw.toString();
+
+		// Initialize the transformation subject
+		StreamSource xmlSource = new StreamSource(new StringReader(xmlString));
+
+		// Transform DOM to HTML
+		DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		Document doc = db.parse(new InputSource(new StringReader(xmlString)));
+		DOMSource source = new DOMSource(doc);
+		// DOMSource source = new DOMSource(buildDocument(xmlString));
+		StreamResult result = new StreamResult(new FileOutputStream(HTML_FILE));
+		transformer.transform(source, result);
+		String content = Files.toString(new File(HTML_FILE), Charsets.UTF_8);
+		return content;
+	}
+
+
+	public InputStreamResource generatePDFWithoutAuthor(String id, File pdfFile)
+			throws JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException {
+		NaucniRad nr = nrRepositoryXML.findById(id);
+
+		// Initialize FOP factory object
+		FopFactory fopFactory = FopFactory.newInstance(new File("src/main/java/fop.xconf"));
+
+		// Setup the XSLT transformer factory
+		TransformerFactory transformerFactory = new TransformerFactoryImpl();
+
+		// Point to the XSL-FO file
+		File xslFile = new File(XSL_FO_FILE_NO_AUTHOR);
+
+		// Create transformation source
+		StreamSource transformSource = new StreamSource(xslFile);
+
+		JAXBContext jaxbContext = JAXBContext.newInstance(NaucniRad.class);
+		Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+		// output pretty printed
+		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+		StringWriter sw = new StringWriter();
+		jaxbMarshaller.marshal(nr, sw);
+		String xmlString = sw.toString();
+
+		// Initialize the transformation subject
+		StreamSource source = new StreamSource(new StringReader(xmlString));
+
+		// Initialize user agent needed for the transformation
+		FOUserAgent userAgent = fopFactory.newFOUserAgent();
+
+		// Create the output stream to store the results
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+
+		// Initialize the XSL-FO transformer object
+		Transformer xslFoTransformer = transformerFactory.newTransformer(transformSource);
+
+		// Construct FOP instance with desired output format
+		Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, userAgent, outStream);
+
+		// Resulting SAX events
+		Result res = new SAXResult(fop.getDefaultHandler());
+
+		// Start XSLT transformation and FOP processing
+		xslFoTransformer.transform(source, res);
+
+		OutputStream out = new BufferedOutputStream(new FileOutputStream(pdfFile));
+		out.write(outStream.toByteArray());
+
+		System.out.println("[INFO] File \"" + pdfFile.getCanonicalPath() + "\" generated successfully.");
+		out.close();
+
+		System.out.println("[INFO] End.");
+		InputStreamResource resource = new InputStreamResource(new FileInputStream(pdfFile));
+		return resource;
+
+	}
 }

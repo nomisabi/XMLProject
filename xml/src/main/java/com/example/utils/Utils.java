@@ -2,10 +2,12 @@ package com.example.utils;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -41,7 +43,6 @@ import com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;
 public class Utils {
 	private static final String PREFIX = "data/xquery/";
 	
-	private static final String NAUCNI_RAD_GRAPH_URI = "example/naucni_rad/metadata";
 	@Autowired
 	protected DatabaseClient client;
 	
@@ -156,48 +157,107 @@ public class Utils {
 	
 
 	
-	public static void writeRDFnr( String rdfFilePath) throws IOException {
-				
-	/*	// Initialize the database client
-		if (props.database.equals("")) {
-			System.out.println("[INFO] Using default database.");
-			client2 = DatabaseClientFactory.newClient(props.host, props.port, props.user, props.password, props.authType);
-		} else {
-			System.out.println("[INFO] Using \"" + props.database + "\" database.");
-			client2 = DatabaseClientFactory.newClient(props.host, props.port, props.database, props.user, props.password, props.authType);
-		}
-		*/
-		
-		//XmlApplication app= new XmlApplication();
-		DatabaseClient client2= DatabaseClientFactory.newClient("localhost", 8000, "admin", "admin",
-				DatabaseClientFactory.Authentication.DIGEST);
-		
-		// Create a document manager to work with XML files.
-		GraphManager graphManager = client2.newGraphManager();
-		
-		// Set the default media type (RDF/XML)
-		graphManager.setDefaultMimetype(RDFMimeTypes.RDFXML);
-		
+	
+	
+	// convert InputStream to String
+	public static String getStringFromInputStream(InputStream is, String oldId, String newId) {
 
-		// A handle to hold the RDF content.
-		FileHandle rdfFileHandle =
-				new FileHandle(new File(rdfFilePath))
-				.withMimetype(RDFMimeTypes.RDFXML);
+			BufferedReader br = null;
+			StringBuilder sb = new StringBuilder();
+
+			String line;
+			try {
+				br = new BufferedReader(new InputStreamReader(is));
+				while ((line = br.readLine()) != null) {
+					if (line.contains("http://www.ftn.uns.ac.rs/naucni_rad/"+oldId)){
+						line=line.replace(oldId, newId);
+					}
+					sb.append(line);
+				}
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (br != null) {
+					try {
+						br.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+			return sb.toString();
+
+		}
 		
-		// Write the document to the database
-		System.out.println("[INFO] Loading triples from \"" + rdfFilePath + "\"\n\n" + FileUtils.readFile(rdfFilePath, UTF_8));
-		
-		// Using a named graph to write the RDF file contents
-		// To reference the default graph use GraphManager.DEFAULT_GRAPH.
-		
-		// Writing the first named graph
-		graphManager.write(NAUCNI_RAD_GRAPH_URI, rdfFileHandle);
-		
-		
-		// Release the client
-		client2.release();
-		
-		System.out.println("[INFO] End.");
-	}
+	// convert InputStream to String
+	public static String getStringFromInputStream(InputStream is, String oldIdNR, String newIdNR, String oldIdR, String newIdR) {
+
+			BufferedReader br = null;
+			StringBuilder sb = new StringBuilder();
+
+			String line;
+			try {
+				br = new BufferedReader(new InputStreamReader(is));
+				while ((line = br.readLine()) != null) {
+					if (line.contains("http://www.ftn.uns.ac.rs/naucni_rad/"+oldIdNR+"/revizija/"+oldIdR)){
+						line=line.replace(("http://www.ftn.uns.ac.rs/naucni_rad/"+oldIdNR+"/revizija/"+oldIdR), ("http://www.ftn.uns.ac.rs/naucni_rad/"+newIdNR+"/revizija/"+newIdR));
+					}
+					sb.append(line);
+				}
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (br != null) {
+					try {
+						br.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+			return sb.toString();
+
+		}
+	
+	// convert InputStream to String
+	public static String getStringFromInputStream(InputStream is, String oldIdNR, String newIdNR, String oldIdR, String newIdR, String oldIdP, String newIdP) {	
+			BufferedReader br = null;
+			StringBuilder sb = new StringBuilder();
+
+			String line;
+			try {
+				br = new BufferedReader(new InputStreamReader(is));
+				while ((line = br.readLine()) != null) {
+					if (line.contains("http://www.ftn.uns.ac.rs/naucni_rad/")){
+						String[] first= line.split("http://www.ftn.uns.ac.rs/naucni_rad/");
+						String[] second= first[1].split("/revizija/");
+						oldIdNR = second[0];
+						String[] third= second[1].split("/pismo/");
+						oldIdR = third[0];
+						System.out.println("odIdNR:"+oldIdNR+"  newIdNR:"+ newIdNR+"  oldIdR,"+ oldIdR+ " newIdR, " + newIdR+" oldIdP," + oldIdP+" newIdP "+ newIdP);						
+						line=line.replace(("http://www.ftn.uns.ac.rs/naucni_rad/"+oldIdNR+"/revizija/"+oldIdR+"/pismo/"+oldIdP), ("http://www.ftn.uns.ac.rs/naucni_rad/"+newIdNR+"/revizija/"+newIdR+"/pismo/"+newIdP));
+					}
+					sb.append(line);
+				}
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (br != null) {
+					try {
+						br.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+			return sb.toString();
+
+		}
 
 }

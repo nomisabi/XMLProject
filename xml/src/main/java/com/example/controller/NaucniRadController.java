@@ -402,11 +402,28 @@ public class NaucniRadController {
 		return ResponseEntity.ok().contentLength(pdfFile.length()).contentType(MediaType.APPLICATION_PDF)
 				.body(resource);
 	}
-
+	
 	@RequestMapping(value = "/api/naucni_radovi/{id}/html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
 	public String downloadHTML(@PathVariable("id") String id)
 			throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {
 		return naucniRadService.generateHTML(id);
 	}
+
+	@RequestMapping(value = "/api/naucni_radovi/{id}/no_author/html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+	public String downloadHTMLNoAuthor(@PathVariable("id") String id)
+			throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {
+		return naucniRadService.generateHTMLWithoutAuthor(id);
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/{id}/no_author/download", method = RequestMethod.GET, produces = "application/pdf")
+	public ResponseEntity<InputStreamResource> downloadPDFFileNoAuthor(@PathVariable("id") String id)
+			throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {
+
+		File pdfFile = naucniRadService.createFile();
+		InputStreamResource resource = naucniRadService.generatePDFWithoutAuthor(id, pdfFile);
+		return ResponseEntity.ok().contentLength(pdfFile.length()).contentType(MediaType.APPLICATION_PDF)
+				.body(resource);
+	}
+
 
 }

@@ -24,7 +24,9 @@
                     <fo:block font-family="sans-serif" font-size="20px" text-align="center"> 
                         &#160;
                     </fo:block>
-                   
+                    <fo:block font-family="sans-serif" font-size="20px" text-align="center"> 
+                        &#160;
+                    </fo:block>
                     <fo:block font-family="sans-serif" font-size="14px"> 
                         Abstract
                     </fo:block>
@@ -33,7 +35,7 @@
                         <xsl:if test="nr:Naucni_rad/nr:Revizija[last()]/nr:Abstrakt/nr:StukturiranAbstakt">
                                 <fo:block>
                                     <fo:block font-weight="bold"> Purpose: </fo:block>
-                                <xsl:value-of select="nr:Naucni_rad/nr:Revizija[last()]/nr:Abstrakt/nr:StrukturiranAbstrakt/nr:Purpose"/>
+                                	<xsl:value-of select="nr:Naucni_rad/nr:Revizija[last()]/nr:Abstrakt/nr:StukturiranAbstakt/nr:Purpose"/>
                                 </fo:block>
                                 <fo:block> 
                                     <fo:block font-weight="bold">Design Methodology Approach: </fo:block> 
@@ -62,11 +64,10 @@
                                 
                             </xsl:if>
                             <xsl:if test="nr:Naucni_rad/nr:Revizija[last()]/nr:Abstrakt/nr:NeStrukturiranAbstrakt">
+                              
+                                <xsl:value-of select="nr:Naucni_rad/nr:Revizija[last()]/nr:Abstrakt/nr:NeStrukturiranAbstrakt/nr:Tekst"/>
                                 
-                                <xsl:value-of select="nr:Naucni_rad/nr:Revizija[last()]/nr:Abstrakt/nr:NeStukturiranAbstakt/nr:Tekst"/>
-                                <br></br>
-                            </xsl:if>
-                        
+                            </xsl:if>                    
                         
                     </fo:block>
                     <fo:block font-family="sans-serif" font-size="12px">  &#160;</fo:block>
@@ -87,41 +88,40 @@
                             </fo:block>
                             <fo:block>
                                 <xsl:for-each select="nr:Paragraf">
-                                    1
+                                    
                                     <xsl:for-each select="nr:Tekst">
                                         <xsl:if test="nr:ObicanTekst">
-                                            ob
+                                            
                                             <xsl:value-of select="nr:ObicanTekst/nr:Tekstualni_sadzaj"/> &#160; 
                                         </xsl:if>
                                         <xsl:if test="nr:MatematickaForma">
-                                            mf
+                                            
                                             <xsl:value-of select="nr:MatematickaForma/nr:ObicanTekst/nr:Tekstualni_sadzaj"/> &#160; 
                                         </xsl:if>
                                         <xsl:if test="nr:Highlight">
-                                            h
-                                            <xsl:value-of select="nr:Highlight[@BojaPozadine]"/> &#160; 
-                                            <xsl:choose>
+                                            
+                                           <xsl:choose>
                        
-                                                <xsl:when test="nr:Highlight[@BojaPozadine=blue]">
-                                                blue
+                                                <xsl:when test="nr:Highlight[@BojaPozadine='blue']">
+                                                
                                                 <fo:inline background-color="blue">
                                                     <xsl:value-of select="nr:Highlight/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
                                                 </fo:inline>
                                             </xsl:when> 
-                                                <xsl:when test="nr:Highlight[@BojaPozadine=red]">
-                                                red
+                                                <xsl:when test="nr:Highlight[@BojaPozadine='red']">
+                                                
                                                 <fo:inline background-color="red">
                                                     <xsl:value-of select="nr:Highlight/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
                                                 </fo:inline>
                                             </xsl:when> 
-                                                <xsl:when test="nr:Highlight[@BojaPozadine=yellow]">
-                                                ye
+                                                <xsl:when test="nr:Highlight[@BojaPozadine='yellow']">
+                                                
                                                 <fo:inline background-color="yellow">
                                                     <xsl:value-of select="nr:Highlight/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
                                                 </fo:inline>
                                             </xsl:when> 
-                                                <xsl:when test="nr:Highlight[@BojaPozadine=green]">
-                                                gr
+                                                <xsl:when test="nr:Highlight[@BojaPozadine='green']">
+                                                
                                                 <fo:inline background-color="green">
                                                     <xsl:value-of select="nr:Highlight/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
                                                 </fo:inline>
@@ -133,45 +133,47 @@
                                             </xsl:choose>
                                         </xsl:if>
                                         <xsl:if test="nr:Footnote">
-                                            ft
+                                            
                                             <fo:inline font-size="6px">
                                             <xsl:value-of select="nr:Footnote/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
                                             </fo:inline>
                                         </xsl:if>
                                         <xsl:if test="nr:Citat">
-                                            cit
+                                            
                                             <fo:inline font-style="italic">
                                             <xsl:value-of select="nr:Citat/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
                                             </fo:inline>
                                         </xsl:if>
                                         <xsl:if test="nr:Link">
-                                            link
-                                            <fo:basic-link  font-color="blue" text-decoration="underline">
+                                            
+                                            <fo:block  color="blue" text-decoration="underline">
                                                 <xsl:value-of select="nr:Link/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
-                                            </fo:basic-link  >
+                                            </fo:block  >
                                         </xsl:if>
                                     </xsl:for-each>
                                     
                                     
-                                    
+                               <!--     
                                     <xsl:for-each select="nr:Figura">
                                         fig
                                         <xsl:value-of select="@Url"/>&#160; 
                                         <fo:external-graphic src="url(@Url)"  content-height="scale-to-fit" height="2.00in"  content-width="2.00in" scaling="non-uniform"/>
                                         &#160; 
                                     </xsl:for-each>
-                                    
+                                   -->   
                                     
                                     
                                     <xsl:for-each select="nr:Tabela">
-                                        tab
-                                        <fo:table font-family="serif" margin="50px auto 50px auto" border="1px">
+                                        
+                                        <fo:table font-family="serif" margin="10px auto 10px auto" border="1px">
                                             <fo:table-body>
                                                 <xsl:for-each select="nr:Red">
-                                                    <fo:table-row border="1px solid darkgrey">
+                                                    <fo:table-row>
                                                         <xsl:for-each select="nr:Celija">
-                                                            <fo:table-cell padding="10px">
-                                                                <xsl:value-of select="."/>
+                                                            <fo:table-cell padding="5px" border="1px solid darkgrey">
+                                                            	<fo:block>
+                                                                	<xsl:value-of select="."/>
+                                                                </fo:block>
                                                             </fo:table-cell>
                                                         </xsl:for-each>
                                                     </fo:table-row>
@@ -183,17 +185,17 @@
                                     
                                     
                                     <xsl:for-each select="nr:Lista">
-                                        lista
+                                        
                                         <xsl:choose>
                                         <xsl:when test="@Tip = 'neuređena'">
                                             <fo:list-block >
                                                 <!-- list item -->
                                                 <xsl:for-each select="nr:Stavke">
-                                                <fo:list-item>
+                                                <fo:list-item space-after="0.5em">
                                                     <!-- insert a bullet -->
-                                                    <fo:list-item-label end-indent="label-end()">
+                                                    <fo:list-item-label start-indent="1em" end-indent="label-end()">
                                                         <fo:block>
-                                                            <fo:inline font-family="Symbol"> &amp;#183; </fo:inline>
+                                                            <fo:inline>• </fo:inline>
                                                         </fo:block>
                                                     </fo:list-item-label>
                                                     <!-- list text -->

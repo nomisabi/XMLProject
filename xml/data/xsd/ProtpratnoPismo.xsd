@@ -15,30 +15,12 @@
                 <xs:element name="Datum" type="xs:date"/>
                 <xs:element name="Sadrzaj">
                     <xs:complexType>
-                        <xs:choice>
-                            <xs:element name="Rad">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element maxOccurs="unbounded" ref="nr:Tekst"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element maxOccurs="unbounded" name="Rezultat">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element ref="nr:Tekst"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element maxOccurs="unbounded" name="Razlog">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element ref="nr:Tekst"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
+                        <xs:sequence>
+                            <xs:element name="Rad" type="xs:string"> </xs:element>
+                            <xs:element maxOccurs="unbounded" name="Rezultat" type="xs:string"> </xs:element>
+                            <xs:element maxOccurs="unbounded" name="Razlog" type="xs:string"> </xs:element>
                             <xs:element maxOccurs="unbounded" minOccurs="0" ref="au:Recenzent"/>
-                        </xs:choice>
+                        </xs:sequence>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="Potpis">
