@@ -6,8 +6,8 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getReviews(): Promise<any>{
-    const url = '/api/korisnici/recenzenti';
+  getReviews(id: string, idRevision: string): Promise<any>{
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/recenzenti`;
     var httpHeaders = new HttpHeaders({"Content-Type": 'application/xml'});
     return this.http
           .get(url)

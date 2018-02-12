@@ -7,7 +7,34 @@
     <div class="row">
       <div class="col-lg-9 main-chart">
         <form name="form" (ngSubmit)="save()">
-        <div class="row">
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-10">
+                      <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Ime</th>
+                                <th>Prezime</th>
+                                <th>Domen ekspertize</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let user of users">
+                                <td>{{user.id}}</td>
+                                <td>{{user.ime}}</td>
+                                <td>{{user.prezime}}</td>
+                                <td>{{user.domen}}</td>
+                                <td *ngIf="!contains(user)"><button (click)="add(user)" class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></td>
+                                <td *ngIf="contains(user)"><button (click)="delete(user)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button> </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    <br>
+                </div>   
+              </div> 
+        <!-- <div class="row">
             <div class="col-lg-1"></div>
             <div class="col-lg-5 border">
               <div class="border-title">recenzent 1</div>
@@ -27,7 +54,7 @@
                 </select>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="row">
               <div class="col-lg-1"></div>
               <div class="col-lg-5">

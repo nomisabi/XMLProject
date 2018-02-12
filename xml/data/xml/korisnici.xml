@@ -42,5 +42,15 @@
 		<ko:domen>domen0</ko:domen>
 		<ko:domen>domen1</ko:domen>
 	</ko:korisnik>
+	<ko:korisnik Id="ID005">
+		<ko:ime>Marko</ko:ime>
+		<ko:prezime>Markovic</ko:prezime>
+		<ko:korisnicko_ime>mare</ko:korisnicko_ime>
+		<ko:lozinka>mare</ko:lozinka>
+		<ko:email>mare@mare</ko:email>
+		<ko:uloga>RECENZENT</ko:uloga>
+		<ko:domen>Kljucna_rec0</ko:domen>
+		<ko:domen>domen1</ko:domen>
+	</ko:korisnik>
 	
 </ko:korisnici>
