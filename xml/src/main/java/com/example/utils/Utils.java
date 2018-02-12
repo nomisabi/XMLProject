@@ -64,7 +64,7 @@ public class Utils {
 				bld.append("\n" + result.getString());
 			}
 		} else {
-			System.out.println("your query returned an empty sequence.");
+			return null;
 		}
 		return bld.toString();
 	}

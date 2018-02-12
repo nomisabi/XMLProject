@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <pp:ProptatnoPismo xmlns:na="http://www.ftn.uns.ac.rs/naucni_rad"
  xmlns:ulog="http://www.ftn.uns.ac.rs/uloge"
@@ -60,3 +61,18 @@
     </pp:Sadrzaj>
     <pp:Potpis>Potpis0</pp:Potpis>
 </pp:ProptatnoPismo>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<korisnik xmlns="http://www.ftn.uns.ac.rs/korisnici"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.ftn.uns.ac.rs/korisnici file:/C:/Users/Nevena%20Djeric/git/XMLProject/xml/data/xsd/korisnici.xsd" Id="ID001">
+    <ime>ime0</ime>
+    <prezime>prezime0</prezime>
+    <korisnicko_ime>korisnicko_ime0</korisnicko_ime>
+    <lozinka>lozinka0</lozinka>
+    <email>email0</email>
+    <uloga>AUTOR</uloga>
+    <domen>domen0</domen>
+    <domen>domen1</domen>
+</korisnik>
+>>>>>>> branch 'master' of https://github.com/nomisabi/XMLProject.git

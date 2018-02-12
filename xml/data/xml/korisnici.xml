@@ -9,6 +9,8 @@
 		<ko:lozinka>pero</ko:lozinka>
 		<ko:email>WVyolNVCr9.R01w9x</ko:email>
 		<ko:uloga>UREDNIK</ko:uloga>
+		<ko:domen>domen0</ko:domen>
+		<ko:domen>domen1</ko:domen>
 	</ko:korisnik>
 	<ko:korisnik Id="ID002">
 		<ko:ime>Milan</ko:ime>
@@ -17,6 +19,8 @@
 		<ko:lozinka>mile</ko:lozinka>
 		<ko:email>f</ko:email>
 		<ko:uloga>RECENZENT</ko:uloga>
+		<ko:domen>domen0</ko:domen>
+		<ko:domen>domen1</ko:domen>
 	</ko:korisnik>
 	<ko:korisnik Id="ID003">
 		<ko:ime>Uros</ko:ime>
@@ -25,6 +29,8 @@
 		<ko:lozinka>uros</ko:lozinka>
 		<ko:email>XQuMZcEWFeJPWyo0Jp1rDv</ko:email>
 		<ko:uloga>AUTOR</ko:uloga>
+		<ko:domen>domen0</ko:domen>
+		<ko:domen>domen1</ko:domen>
 	</ko:korisnik>
 	<ko:korisnik Id="ID004">
 		<ko:ime>Ivana</ko:ime>
@@ -33,6 +39,8 @@
 		<ko:lozinka>iva</ko:lozinka>
 		<ko:email>PKTrhvbR9EQEGWEgTg_</ko:email>
 		<ko:uloga>RECENZENT</ko:uloga>
+		<ko:domen>domen0</ko:domen>
+		<ko:domen>domen1</ko:domen>
 	</ko:korisnik>
 	
 </ko:korisnici>

@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	elementFormDefault="qualified" targetNamespace="http://www.ftn.uns.ac.rs/korisnici"
-	xmlns="http://www.ftn.uns.ac.rs/korisnici">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	targetNamespace="http://www.ftn.uns.ac.rs/korisnici" xmlns="http://www.ftn.uns.ac.rs/korisnici">
 
 	<xs:element name="korisnik">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="ime" type="xs:string" />
-				<xs:element name="prezime" type="xs:string" />
-				<xs:element name="korisnicko_ime" type="xs:string" />
-				<xs:element name="lozinka" type="xs:string" />
-				<xs:element name="email" minOccurs="1" type="xs:string" />
+				<xs:element name="ime" type="xs:string"/>
+				<xs:element name="prezime" type="xs:string"/>
+				<xs:element name="korisnicko_ime" type="xs:string"/>
+				<xs:element name="lozinka" type="xs:string"/>
+				<xs:element name="email" minOccurs="1" type="xs:string"/>
 				<xs:element name="uloga">
 					<xs:simpleType>
 						<xs:restriction base="xs:string">
-							<xs:enumeration value="AUTOR" />
-							<xs:enumeration value="RECENZENT" />
-							<xs:enumeration value="UREDNIK" />
+							<xs:enumeration value="AUTOR"/>
+							<xs:enumeration value="RECENZENT"/>
+							<xs:enumeration value="UREDNIK"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>
+				<xs:element maxOccurs="unbounded" name="domen" type="xs:string"/>
 			</xs:sequence>
-			<xs:attribute name="Id" type="xs:ID" use="required" />
+			<xs:attribute name="Id" type="xs:ID" use="required"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="korisnici">
 		<xs:complexType>
 			<xs:sequence maxOccurs="unbounded">
-				<xs:element ref="korisnik" />
+				<xs:element ref="korisnik"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

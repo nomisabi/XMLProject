@@ -6,4 +6,6 @@ interface RevisionInterface{
     review2: string;
     hasLetter: boolean;
     review: ReviewInterface;
+    reviews: ReviewInterface[];
+    flag?: boolean;
 }

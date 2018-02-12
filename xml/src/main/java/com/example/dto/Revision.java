@@ -1,5 +1,7 @@
 package com.example.dto;
 
+import java.util.List;
+
 public class Revision {
 	private String id;
 	private String title;
@@ -8,6 +10,8 @@ public class Revision {
 	private String review2;
 	private boolean hasLetter;
 	private Review review;
+	private List<Review> reviews;
+	private boolean flag;
 
 	public Revision() {
 
@@ -75,6 +79,22 @@ public class Revision {
 
 	public void setReview(Review review) {
 		this.review = review;
+	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
 	}
 
 }

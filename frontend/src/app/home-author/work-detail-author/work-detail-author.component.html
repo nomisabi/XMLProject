@@ -11,13 +11,13 @@
         <p class="title">NAUCNI RAD</p>
       </div>
     </div>
-    <div *ngFor="let revision of work.revisions; let i=index">
-        <div class="row">
+    <div *ngFor="let revision of work.revisions; let i=index" >
+        <div class="row" *ngIf="revision.status !== 'OBRISAN'">
           <div class="col-lg-9 main-chart pFont">
             <p class="title">REVIZIJA {{i+1}}</p>
           </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="revision.status !== 'OBRISAN'">
           <div class="col-lg-9 main-chart">
             <div class="row">
               <div class="col-lg-1"></div>
@@ -45,6 +45,24 @@
                 </div>
               </div>
           </div>   
+          <div class="row" *ngIf="revision.status==='POTREBNA_IZMENA' && revision.flag === true">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-5 border">
+              <div class="border-title"></div>
+              <div class="form-group">
+                  <label class="btn btn-default">
+                      <input type="file" (change)="selectFile($event)" value="Izaberi reviziju">
+                    </label>
+              </div>
+            </div>
+            <div class="col-lg-5 border">
+              <div class="border-title"></div>
+              <div class="form-group">
+                  <button class="btn btn-success" [disabled]="!selectedFiles"
+                  (click)="uploadRevision()">Dodaj reviziju</button>
+              </div>
+            </div>
+        </div> 
           </div>
           </div>   
         <br>

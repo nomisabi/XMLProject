@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
-import { UserService } from './user.service';
 import { WorkService } from '../works/work.service';
 import * as FileSaver from 'file-saver'; 
 
@@ -15,11 +14,9 @@ import * as FileSaver from 'file-saver';
 })
 export class WorkDetailComponent implements OnInit {
   work: WorkInterface;
-  users: any;
   
 
-  constructor(private userService: UserService,
-              private workService: WorkService,
+  constructor(private workService: WorkService,
               private router: Router,
               private route: ActivatedRoute,
               private location: Location) {  }
@@ -29,14 +26,8 @@ export class WorkDetailComponent implements OnInit {
       id: '',
       revisions: null
     }
-    this.userService.getReviews()
-    .then(reviews => {
-      console.log(reviews);
-      this.users = reviews.korisnik;
-      console.log(this.users);
-      this.getWork();
-     
-    });
+    this.getWork(); 
+  
   }
 
   getWork(){

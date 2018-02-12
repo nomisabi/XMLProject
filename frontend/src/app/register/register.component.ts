@@ -12,6 +12,7 @@ import { AuthService } from '../login/auth.service';
 })
 export class RegisterComponent implements OnInit {
   korisnik: KorisnikInterface;
+  domeni: DomenInterface[];
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -24,11 +25,26 @@ export class RegisterComponent implements OnInit {
       korisnicko_ime: '',
       lozinka: '',
       email: '',
-      uloga: 'AUTOR'
+      uloga: 'AUTOR',
+      domen: ['']
     };
+
+    this.domeni = [
+      {text: ''}
+    ]
   }
 
   ngOnInit() {
+  }
+
+  addDomen(){
+    this.domeni.push({text: ''});
+  }
+
+  deleteDomen(){
+    if(this.domeni.length > 1){
+      this.domeni.pop();
+    }
   }
   
   jsToXmlFile(obj) {
@@ -48,10 +64,17 @@ export class RegisterComponent implements OnInit {
 
   save(){
     console.log(this.korisnik);
+    
+    this.korisnik.domen = [];
+    for(let domen of this.domeni){
+      this.korisnik.domen.push(domen.text);
+    }
+
     var xml = this.jsToXmlFile(this.korisnik);
+    console.log(xml);
   
     this.authService.register(xml)
-        .then(() => this.router.navigate(['prijava']))
-        .catch(() => this.toastr.error('Registracija nije uspela'));
+       .then(() => this.router.navigate(['prijava']))
+       .catch(() => this.toastr.error('Registracija nije uspela'));
   }
 }

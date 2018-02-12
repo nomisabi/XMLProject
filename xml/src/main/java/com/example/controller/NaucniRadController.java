@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -104,6 +105,31 @@ public class NaucniRadController {
 		}
 	}
 
+	@PostMapping("/api/naucni_radovi/{id}/revizije")
+	public ResponseEntity<String> createRevizija(@RequestParam("file") MultipartFile file, @PathVariable String id) {
+		String message = "";
+		try {
+			storageService.deleteAll();
+			storageService.init();
+			storageService.store(file);
+
+			String id1 = naucniRadService.addRevision(id, file.getOriginalFilename());
+			storageService.deleteAll();
+
+			if (id1 != null) {
+				System.out.println(id1);
+				return ResponseEntity.status(HttpStatus.OK).body(id1);
+			} else {
+				message = "Naucni rad " + file.getOriginalFilename() + " nije ispravan!";
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+			}
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			message = "Naucni rad " + file.getOriginalFilename() + " nije ispravan!";
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+		}
+	}
+
 	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteNaucniRad(@PathVariable("id") String id, @PathVariable("id_revizija") String idRevision) {
@@ -141,7 +167,7 @@ public class NaucniRadController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
+
 	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/html", method = RequestMethod.GET)
 	public ResponseEntity<Revizija> getRevizija(@PathVariable("id") String id,
 			@PathVariable("id_revizija") String idRevision, HttpServletRequest request) {
@@ -330,7 +356,7 @@ public class NaucniRadController {
 		try {
 			naucniRadService.addReview(recenzija, id, idRevision, username);
 			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (IOException | JAXBException e) {
+		} catch (IOException | JAXBException | MailException | InterruptedException e) {
 			logger.info(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -366,7 +392,45 @@ public class NaucniRadController {
 			logger.info(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+	}
 
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/objavi", method = RequestMethod.GET)
+	public ResponseEntity<Void> publishRevision(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision) {
+
+		try {
+			naucniRadService.publishRevision(id, idRevision, TStatus.ODOBRODENO);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (JAXBException | IOException | MailException | InterruptedException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/potrebna_izmena", method = RequestMethod.GET)
+	public ResponseEntity<Void> reviseRevision(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision) {
+
+		try {
+			naucniRadService.publishRevision(id, idRevision, TStatus.POTREBNA_IZMENA);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (JAXBException | IOException | MailException | InterruptedException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/{id}/revizija/{id_revizija}/odbaci", method = RequestMethod.GET)
+	public ResponseEntity<Void> rejectRevision(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision) {
+
+		try {
+			naucniRadService.publishRevision(id, idRevision, TStatus.ODBIJEN);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (JAXBException | IOException | MailException | InterruptedException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/*

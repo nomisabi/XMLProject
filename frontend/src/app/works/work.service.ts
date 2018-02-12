@@ -136,6 +136,33 @@ export class WorkService {
           .catch(this.handleError);
   }
 
+  publishRevision(id: string, idRevision: string): Promise<any>{
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/objavi`;
+    return this.http
+          .get(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
+  reviseRevision(id: string, idRevision: string): Promise<any>{
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/potrebna_izmena`;
+    return this.http
+          .get(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
+  rejectRevision(id: string, idRevision: string): Promise<any>{
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/odbaci`;
+    return this.http
+          .get(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
   getRevizija(id: string, idRevision: string): Promise<RevizijaInterface>{
     console.log('service')
     const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/html`;

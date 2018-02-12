@@ -5,4 +5,5 @@ interface KorisnikInterface{
     lozinka: string;
     email: string;
     uloga: string;
+    domen: string[];
 }

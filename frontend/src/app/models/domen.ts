@@ -1,0 +1,3 @@
+interface DomenInterface{
+    text: string;
+}

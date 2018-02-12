@@ -1,4 +1,4 @@
 interface WorkInterface{
     id: string;
-    revisions: RevisionInterface;
+    revisions: RevisionInterface[];
 }

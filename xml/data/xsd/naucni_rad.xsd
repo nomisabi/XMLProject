@@ -56,6 +56,8 @@
             <xs:enumeration value="U obradi"/>
             <xs:enumeration value="Odobrodeno"/>
             <xs:enumeration value="Odbijen"/>
+             <xs:enumeration value="Obrisan"/>
+            <xs:enumeration value="Potrebna izmena"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="TTipLista">

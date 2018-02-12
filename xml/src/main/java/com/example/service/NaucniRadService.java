@@ -13,8 +13,11 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -55,10 +58,12 @@ import com.example.model.naucni_radovi.search.NaucniRadSearchResult;
 import com.example.model.propratnopismo.ProptatnoPismo;
 import com.example.model.recenzija.Recenzija;
 import com.example.model.recenzija.TStatusRecenzija;
+import com.example.model.uloge.Autor;
 import com.example.model.uloge.Recenzent;
 import com.example.repository.NaucniRadRepositoryXML;
 import com.example.utils.NaucniRadUtils;
 import com.example.utils.PropratnoPismoUtils;
+import com.example.utils.RevizijaUtils;
 import com.example.utils.Utils;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
@@ -79,8 +84,10 @@ public class NaucniRadService {
 	@Autowired
 	PropratnoPismoUtils propratnoPismoUtils;
 	@Autowired
+	RevizijaUtils revizijaUtils;
+	@Autowired
 	Utils utils;
-	
+
 	private static TransformerFactory transformerFactory;
 
 	public static final String HTML_FILE = "gen/html/naucni_rad.html";
@@ -167,7 +174,7 @@ public class NaucniRadService {
 	public Revizija findReview(String id, String idRevision) throws IOException, JAXBException {
 		NaucniRad naucniRad = nrRepositoryXML.findById(id);
 		for (Revizija rev : naucniRad.getRevizija()) {
-			System.out.println("rev: "+rev.getId());
+			System.out.println("rev: " + rev.getId());
 			if (rev.getId().equals(idRevision))
 				return rev;
 		}
@@ -197,9 +204,11 @@ public class NaucniRadService {
 	}
 
 	public void addReview(Recenzija rec, String id, String idRevision, String username)
-			throws IOException, JAXBException {
+			throws IOException, JAXBException, MailException, InterruptedException {
 		String korisnikStr = korisnici2Service.pronadjiKorisnickoIme(username);
 		Korisnik korisnik = korisnici2Service.unmarshalling(korisnikStr);
+
+		emailService.sendMailThanksReviewer(korisnik.getEmail());
 
 		NaucniRad naucniRad = nrRepositoryXML.findByReviewerAndID("Prihvacen", korisnik.getEmail(), id, idRevision);
 
@@ -230,10 +239,23 @@ public class NaucniRadService {
 		NaucniRad naucniRad = nrRepositoryXML.findById(id);
 		List<Revision> revisions = new ArrayList<>();
 		for (Revizija revizija : naucniRad.getRevizija()) {
+			if (revizija.getStatus().equals(TStatus.OBRISAN)) {
+				continue;
+			}
 			Revision revision = new Revision(revizija.getId(), revizija.getNaslov(), revizija.getStatus().toString());
 			ProptatnoPismo pismo = revizija.getProptatnoPismo();
 			if (pismo != null) {
 				revision.setHasLetter(true);
+			}
+			List<Recenzija> recenzije = revizija.getRecenzija();
+			List<Review> reviews = new ArrayList<>();
+			if (!recenzije.isEmpty()) {
+				for (Recenzija recenzija : recenzije) {
+					Review review = new Review(recenzija.getId(), recenzija.getStatus().toString());
+					reviews.add(review);
+
+				}
+				revision.setReviews(reviews);
 			}
 			revisions.add(revision);
 		}
@@ -248,6 +270,7 @@ public class NaucniRadService {
 	public List<Work> findByStatus(TStatus status, String statusStr) throws IOException, JAXBException {
 		List<NaucniRad> radovi = nrRepositoryXML.findByStatus(statusStr);
 		List<Work> works = new ArrayList<>();
+		Map<String, Work> worksHash = new HashMap<>();
 		for (NaucniRad naucniRad : radovi) {
 			List<Revision> revisions = new ArrayList<>();
 			for (Revizija revizija : naucniRad.getRevizija()) {
@@ -255,8 +278,9 @@ public class NaucniRadService {
 					revisions
 							.add(new Revision(revizija.getId(), revizija.getNaslov(), revizija.getStatus().toString()));
 				}
-				works.add(new Work(naucniRad.getId(), revisions));
 			}
+			worksHash.put(naucniRad.getId(), new Work(naucniRad.getId(), revisions));
+			works.add(new Work(naucniRad.getId(), revisions));
 		}
 		return works;
 	}
@@ -296,7 +320,7 @@ public class NaucniRadService {
 		recenzent2.setEmail(korisnik2.getEmail());
 		recenzent2.setIme(korisnik2.getIme());
 		recenzent2.setPrezime(korisnik2.getPrezime());
-		emailService.sendMail(korisnik1.getEmail());
+		emailService.sendMailGetReview(korisnik1.getEmail(), id, idRevision);
 
 		Recenzija recenzija1 = new Recenzija();
 		recenzija1.setRecenzent(recenzent1);
@@ -306,7 +330,7 @@ public class NaucniRadService {
 		Recenzija recenzija2 = new Recenzija();
 		recenzija2.setRecenzent(recenzent2);
 		recenzija2.setStatus(TStatusRecenzija.CEKA_SE);
-		emailService.sendMail(korisnik2.getEmail());
+		emailService.sendMailGetReview(korisnik2.getEmail(), id, idRevision);
 		recenzent2.setId("RC2");
 
 		for (Revizija revizija : naucniRad.getRevizija()) {
@@ -404,6 +428,38 @@ public class NaucniRadService {
 			}
 		}
 		nrRepositoryXML.add(naucniRad);
+	}
+
+	public void publishRevision(String id, String idRevision, TStatus status)
+			throws IOException, JAXBException, MailException, InterruptedException {
+		NaucniRad naucniRad = findById(id);
+
+		for (Revizija revizija : naucniRad.getRevizija()) {
+			if (revizija.getId().equals(idRevision)) {
+				revizija.setStatus(status);
+
+				for (Autor autor : revizija.getAutor()) {
+					emailService.sendMailRejectRevision(autor.getEmail(), revizija.getNaslov(), naucniRad.getId(),
+							status.toString());
+				}
+			}
+		}
+		nrRepositoryXML.add(naucniRad);
+	}
+
+	public String addRevision(String id, String file) throws IOException, JAXBException {
+		NaucniRad naucniRad = findById(id);
+		Revizija revizija = revizijaUtils.unmarshalling(file);
+		revizija.setStatus(TStatus.POSLAT);
+
+		List<Revizija> revizije = naucniRad.getRevizija();
+		int idR = revizije.size() + 1;
+		revizija.setId("RV" + idR);
+		naucniRad.getRevizija().add(revizija);
+
+		nrRepositoryXML.add(naucniRad);
+		return "RV" + revizije.size() + 1;
+
 	}
 
 	public Long count() {
