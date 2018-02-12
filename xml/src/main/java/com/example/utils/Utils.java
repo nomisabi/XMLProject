@@ -260,4 +260,39 @@ public class Utils {
 
 		}
 
+	// convert InputStream to String
+		public static String getStringFromInputStream(InputStream is, String newNR, String newRev, String oldRev) {	
+				BufferedReader br = null;
+				StringBuilder sb = new StringBuilder();
+				String oldIdNR="";
+				String line;
+				try {
+					br = new BufferedReader(new InputStreamReader(is));
+					while ((line = br.readLine()) != null) {
+						if (line.contains("http://www.ftn.uns.ac.rs/naucni_rad/")){
+							String[] first= line.split("http://www.ftn.uns.ac.rs/naucni_rad/");
+							String[] second= first[1].split("/revizija/");
+							oldIdNR = second[0];
+							System.out.println("odIdNR:"+oldIdNR+"  newIdNR:"+ newNR+"  oldIdR,"+ oldRev+ " newRev, " + newRev);						
+							line=line.replace(("http://www.ftn.uns.ac.rs/naucni_rad/"+oldIdNR+"/revizija/"+oldRev), ("http://www.ftn.uns.ac.rs/naucni_rad/"+newNR+"/revizija/"+newRev));
+						}
+						sb.append(line);
+					}
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					if (br != null) {
+						try {
+							br.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+
+				return sb.toString();
+
+			}
+
 }

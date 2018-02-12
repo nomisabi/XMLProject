@@ -447,17 +447,29 @@ public class NaucniRadService {
 		nrRepositoryXML.add(naucniRad);
 	}
 
-	public String addRevision(String id, String file) throws IOException, JAXBException {
+	public String addRevision(String id, String file) throws IOException, JAXBException, TransformerException {
 		NaucniRad naucniRad = findById(id);
 		Revizija revizija = revizijaUtils.unmarshalling(file);
 		revizija.setStatus(TStatus.POSLAT);
 
+		String oldId= revizija.getId();
 		List<Revizija> revizije = naucniRad.getRevizija();
 		int idR = revizije.size() + 1;
 		revizija.setId("RV" + idR);
 		naucniRad.getRevizija().add(revizija);
 
 		nrRepositoryXML.add(naucniRad);
+		
+		//rdf
+		InputStream in = new FileInputStream(new File("./upload-dir/" + file)); 
+		String changed= Utils.getStringFromInputStream(in, id, revizija.getId() ,oldId);
+		InputStream changedIn = new ByteArrayInputStream(changed.getBytes(StandardCharsets.UTF_8));
+		OutputStream out = new FileOutputStream("gen/rdf/"+id+".rdf");
+		utils.extractMetadata(changedIn, out);
+				
+		//write to database
+		NaucniRadUtils.updateRDF(id);
+				
 		return "RV" + revizije.size() + 1;
 
 	}
