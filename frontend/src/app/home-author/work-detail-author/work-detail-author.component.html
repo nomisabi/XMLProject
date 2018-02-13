@@ -16,6 +16,8 @@
         <a (click)="gotoGetPDF()" class="small-btn">PDF</a>
         <a (click)="gotoGetXHTML()" class="small-btn">XHTML</a>
         <a (click)="gotoGetXML()" class="small-btn">XML</a>
+        <a (click)="gotoGetRDF()" class="small-btn">RDF</a>
+        <a (click)="gotoGetJSON()" class="small-btn">JSON</a>
       </div>   
     </div>
     <div *ngFor="let revision of work.revisions; let i=index" >
@@ -56,7 +58,7 @@
             <div class="col-lg-1"></div>
             <div class="col-lg-10 border">
               <div class="border-title">Pismo:</div>
-              <div class="border-desc">
+              <div class="border-title">
                 <a (click)="gotoGetPDFPismo(revision.id)" class="small-btn">PDF</a>
                 <a (click)="gotoGetXHTMLPismo(revision.id)" class="small-btn">XHTML</a>
               </div>
@@ -83,5 +85,19 @@
           </div>
           </div>   
         <br>
+      </div>
+      <div class="row">
+        <div class="col-lg-9 main-chart">
+          <a (click)="showAddRdf()" class="small-btn">Add RDF</a>
+          <br>
+          <br>
+          <div *ngIf="addRdf">
+              <textarea name="Text1" cols="100%" rows="5" [(ngModel)]="rdfText"></textarea>
+              <br>
+              <br>
+              <a (click)="addNewRdf()" class="small-btn">Save</a>
+
+          </div>
+        </div>
       </div>
 </section>

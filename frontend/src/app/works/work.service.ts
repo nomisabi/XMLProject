@@ -253,7 +253,37 @@ export class WorkService {
           .catch(this.handleError);
   }
 
+  addRdf(id: string, rdf:string):Promise<any>{
+    const url = `/api/naucni_radovi/${id}/rdf`;
+    return this.http
+          .post(url, rdf)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
+  getRdfJSON(id: string):Promise<any>{
+    let httpHeaders:HttpHeaders = new HttpHeaders({"Accept": 'application/json','Content-Type':'application/json'});
+    
+    const url = `/api/naucni_radovi/${id}/json`;
+    return this.http
+          .get(url, {headers:httpHeaders, responseType: 'json'})
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
   
+  getRdfRDF(id: string):Promise<any>{
+    let httpHeaders:HttpHeaders = new HttpHeaders({"Accept": 'text/plain;charset=UTF-8','Content-Type':'text/plain;charset=UTF-8'});
+    const url = `/api/naucni_radovi/${id}/rdf`;
+    return this.http
+          .get(url, {headers:httpHeaders, responseType: 'text'})
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+  
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);

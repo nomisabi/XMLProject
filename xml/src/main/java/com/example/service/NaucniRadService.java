@@ -39,6 +39,7 @@ import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
+import org.eclipse.rdf4j.rio.RDFFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.mail.MailException;
@@ -63,6 +64,7 @@ import com.example.model.uloge.Recenzent;
 import com.example.repository.NaucniRadRepositoryXML;
 import com.example.utils.NaucniRadUtils;
 import com.example.utils.PropratnoPismoUtils;
+import com.example.utils.RdfJsonUtil;
 import com.example.utils.RevizijaUtils;
 import com.example.utils.Utils;
 import com.google.common.base.Charsets;
@@ -691,4 +693,39 @@ public class NaucniRadService {
 		return resource;
 
 	}
+	
+	public void addRDF(String id, String file) throws JAXBException, SAXException, IOException, TransformerException {
+
+		InputStream in = new ByteArrayInputStream(file.getBytes(StandardCharsets.UTF_8));
+		OutputStream out = new FileOutputStream("gen/rdf/new.rdf");
+		byte[] buffer = new byte[in.available()];
+		in.read(buffer);
+		out.write(buffer);
+
+		out.close();
+		in.close();
+		
+		//write to database
+		NaucniRadUtils.updateRDFWithPath(id, "gen/rdf/new.rdf");
+	
+	}
+	
+	public String readRDF(String id) throws JAXBException, SAXException, IOException, TransformerException {
+		return NaucniRadUtils.readRDF(id);
+	}
+	
+	
+	public String readRDFasJSON(String id) throws JAXBException, SAXException, IOException, TransformerException {
+		NaucniRadUtils.readRDF(id);
+		//InputStream in = new FileInputStream(new File("gen/rdf/nr_metadata"+id+".rdf")); 
+		//try(InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("gen/rdf/nr_metadata"+id+".rdf")){
+		try(InputStream in = new FileInputStream(new File("gen/nr_metadata"+id+".nt"))){
+			String retVal= RdfJsonUtil.getPrettyJsonLdString(in,RDFFormat.NTRIPLES);
+            System.out.println(retVal);
+            return retVal;
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }
+	}
+	
 }

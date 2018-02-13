@@ -490,4 +490,29 @@ public class NaucniRadController {
 	}
 
 
+	@RequestMapping(value = "/api/naucni_radovi/{id}/rdf", method = RequestMethod.POST, consumes="text/plain")
+	public ResponseEntity<Void> addRdf(@PathVariable("id") String id, @RequestBody String rdf) throws JAXBException, SAXException, IOException, TransformerException
+	{	
+		//System.out.println("1");
+		naucniRadService.addRDF(id, rdf);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/naucni_radovi/{id}/rdf", method = RequestMethod.GET, produces="text/plain")
+	public ResponseEntity<String> getRDFText(@PathVariable("id") String id) throws JAXBException, SAXException, IOException, TransformerException
+	{	
+		System.out.println("1");
+		String s= naucniRadService.readRDF(id);
+		return new ResponseEntity<>(s,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/naucni_radovi/{id}/json", method = RequestMethod.GET, produces="application/json")
+	public ResponseEntity<String> getRDFJSON(@PathVariable("id") String id) throws JAXBException, SAXException, IOException, TransformerException
+	{	
+		System.out.println("1");
+		String s= naucniRadService.readRDFasJSON(id);
+
+		return new ResponseEntity<>(s,HttpStatus.OK);
+	}
+
 }

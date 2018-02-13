@@ -17,6 +17,8 @@ export class WorkDetailAuthorComponent implements OnInit {
   selectedFiles: FileList
   currentFileUpload: File
   progress: { percentage: number } = { percentage: 0 }
+  addRdf=false;
+  rdfText='';
 
   constructor(private workService:WorkService,
               private uploadService: UploadFileService,
@@ -163,5 +165,35 @@ export class WorkDetailAuthorComponent implements OnInit {
   gotoGetXHTMLPismo(id){
     this.router.navigate(['autor/naucniRadovi/'+this.route.snapshot.params['id']+'/revizija/'+id+'/pismo']);
 
+  }
+
+  showAddRdf(){
+    if (this.addRdf)
+      this.addRdf=false;
+    else
+      this.addRdf=true;
+  }
+
+  addNewRdf(){
+    console.log(this.rdfText);
+    this.workService.addRdf(this.route.snapshot.params['id'], this.rdfText);
+    this.rdfText='';
+    this.showAddRdf();
+  }
+
+  gotoGetRDF(){
+    this.workService.getRdfRDF(this.route.snapshot.params['id']).then(
+      rdf=> {var blob = new Blob([rdf], {type: "text/plain;charset=utf-8"});
+      FileSaver.saveAs(blob, "metadata.rdf");
+    }
+    )
+  }
+
+  gotoGetJSON(){
+    this.workService.getRdfJSON(this.route.snapshot.params['id']).then(
+      rdf=> {var blob = new Blob([rdf], {type: "application/json;charset=utf-8"});
+      FileSaver.saveAs(blob, "metadata.json");
+    }
+    )
   }
 }

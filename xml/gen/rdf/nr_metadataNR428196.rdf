@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor">
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode11607416271948349361"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode13930887373175815058"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode14202369077999894026"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode15370187931747682505"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode15651183958653305560"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode1621773350359293698"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode17058510452342457380"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode18395309648386912825"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode2837050897302373757"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode3796580088471350345"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode4415096260544758803"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode5195569572448782306"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode574435475182162685"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode5823613168285075907"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode5920082853740107995"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode6406076228689087093"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode642114620348929878"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode8474846480529078010"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode8576472510085123068"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode9015298544975137453"/>
+      <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:nodeID="bnode9374323033994721324"/>
+      <email xmlns="http://www.w3.org/ns/rdfa#"
+             rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Email11</email>
+      <email xmlns="http://www.w3.org/ns/rdfa#"
+             rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Email33</email>
+      <email xmlns="http://www.w3.org/ns/rdfa#"
+             rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Email55</email>
+      <ime xmlns="http://www.w3.org/ns/rdfa#"
+           rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Ime0</ime>
+      <ime xmlns="http://www.w3.org/ns/rdfa#"
+           rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Ime1</ime>
+      <ime xmlns="http://www.w3.org/ns/rdfa#"
+           rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Ime2</ime>
+      <institucija xmlns="http://www.w3.org/ns/rdfa#"
+                   rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naziv0</institucija>
+      <institucija xmlns="http://www.w3.org/ns/rdfa#"
+                   rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naziv1</institucija>
+      <institucija xmlns="http://www.w3.org/ns/rdfa#"
+                   rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naziv2</institucija>
+      <prezime xmlns="http://www.w3.org/ns/rdfa#"
+               rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Prezime0</prezime>
+      <prezime xmlns="http://www.w3.org/ns/rdfa#"
+               rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Prezime1</prezime>
+      <prezime xmlns="http://www.w3.org/ns/rdfa#"
+               rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Prezime2</prezime>
+   </rdf:Description>
+   <ulogeBroj xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode11791985691622405926">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeBroj"/>
+   </ulogeBroj>
+   <ulogeMesto xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode16951523614906023184">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeMesto"/>
+   </ulogeMesto>
+   <ulogeBroj xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode16162235071819831504">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeBroj"/>
+   </ulogeBroj>
+   <ulogeBiography xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode15651183958653305560">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeBiography"/>
+   </ulogeBiography>
+   <ulogeIme xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode18395309648386912825">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeIme"/>
+   </ulogeIme>
+   <ulogeUlica xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode68342461949400810">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeUlica"/>
+   </ulogeUlica>
+   <ulogeKorisnicko_ime xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode5920082853740107995">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeKorisnicko_ime"/>
+   </ulogeKorisnicko_ime>
+   <ulogeLozinka xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode642114620348929878">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeLozinka"/>
+   </ulogeLozinka>
+   <ulogePostanski_broj xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode10911787785882646386">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogePostanski_broj"/>
+   </ulogePostanski_broj>
+   <ulogeKorisnicko_ime xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode8576472510085123068">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeKorisnicko_ime"/>
+   </ulogeKorisnicko_ime>
+   <ulogePrezime xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode2837050897302373757">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogePrezime"/>
+   </ulogePrezime>
+   <ulogeKorisnicko_ime xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode5195569572448782306">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeKorisnicko_ime"/>
+   </ulogeKorisnicko_ime>
+   <ulogeMesto xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode9977413019211089003">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeMesto"/>
+   </ulogeMesto>
+   <ulogePrezime xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode1621773350359293698">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogePrezime"/>
+   </ulogePrezime>
+   <ulogeEmail xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode5823613168285075907">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeEmail"/>
+   </ulogeEmail>
+   <ulogeBiography xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode15370187931747682505">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeBiography"/>
+   </ulogeBiography>
+   <ulogeUlica xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode6490148074781387215">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeUlica"/>
+   </ulogeUlica>
+   <ulogeEmail xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode9015298544975137453">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeEmail"/>
+   </ulogeEmail>
+   <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR428196/revizija/RV1">
+      <kljucna_rec xmlns="http://www.w3.org/ns/rdfa#"
+                   rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Kljucna_rec0</kljucna_rec>
+      <kljucna_rec xmlns="http://www.w3.org/ns/rdfa#"
+                   rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Kljucna_rec1</kljucna_rec>
+      <kljucna_rec xmlns="http://www.w3.org/ns/rdfa#"
+                   rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Kljucna_rec2</kljucna_rec>
+      <naslov xmlns="http://www.w3.org/ns/rdfa#"
+              rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naslov0</naslov>
+      <referencaNaucniRad xmlns="http://www.w3.org/ns/rdfa#"
+                          rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">I5</referencaNaucniRad>
+      <referencaRecenzija xmlns="http://www.w3.org/ns/rdfa#"
+                          rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">I5</referencaRecenzija>
+      <referencaRecenzija xmlns="http://www.w3.org/ns/rdfa#"
+                          rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">ID000006</referencaRecenzija>
+   </rdf:Description>
+   <ulogeInstitucija xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode8474846480529078010">
+      <ulogeAdresa rdf:nodeID="bnode10911787785882646386"/>
+      <ulogeAdresa rdf:nodeID="bnode12654540882084168120"/>
+      <ulogeAdresa rdf:nodeID="bnode16162235071819831504"/>
+      <ulogeAdresa rdf:nodeID="bnode9977413019211089003"/>
+      <ulogeNaziv rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Naziv2</ulogeNaziv>
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeInstitucija"/>
+   </ulogeInstitucija>
+   <ulogePostanski_broj xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode15549709902449950528">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogePostanski_broj"/>
+   </ulogePostanski_broj>
+   <ulogePrezime xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode574435475182162685">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogePrezime"/>
+   </ulogePrezime>
+   <ulogeBroj xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode16630534725887331932">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeBroj"/>
+   </ulogeBroj>
+   <ulogeInstitucija xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode17058510452342457380">
+      <ulogeAdresa rdf:nodeID="bnode15549709902449950528"/>
+      <ulogeAdresa rdf:nodeID="bnode16630534725887331932"/>
+      <ulogeAdresa rdf:nodeID="bnode16951523614906023184"/>
+      <ulogeAdresa rdf:nodeID="bnode6490148074781387215"/>
+      <ulogeNaziv rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Naziv1</ulogeNaziv>
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeInstitucija"/>
+   </ulogeInstitucija>
+   <ulogeInstitucija xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode4415096260544758803">
+      <ulogeAdresa rdf:nodeID="bnode11791985691622405926"/>
+      <ulogeAdresa rdf:nodeID="bnode14452790818225716464"/>
+      <ulogeAdresa rdf:nodeID="bnode68342461949400810"/>
+      <ulogeAdresa rdf:nodeID="bnode7280975249181429357"/>
+      <ulogeNaziv rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Naziv0</ulogeNaziv>
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeInstitucija"/>
+   </ulogeInstitucija>
+   <ulogeIme xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode11607416271948349361">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeIme"/>
+   </ulogeIme>
+   <ulogeMesto xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode14452790818225716464">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeMesto"/>
+   </ulogeMesto>
+   <ulogeLozinka xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode3796580088471350345">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeLozinka"/>
+   </ulogeLozinka>
+   <ulogeIme xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode13930887373175815058">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeIme"/>
+   </ulogeIme>
+   <ulogeLozinka xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode14202369077999894026">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeLozinka"/>
+   </ulogeLozinka>
+   <ulogeEmail xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode6406076228689087093">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeEmail"/>
+   </ulogeEmail>
+   <ulogePostanski_broj xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode7280975249181429357">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogePostanski_broj"/>
+   </ulogePostanski_broj>
+   <ulogeUlica xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode12654540882084168120">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeUlica"/>
+   </ulogeUlica>
+   <ulogeBiography xmlns="http://www.ftn.uns.ac.rs/" rdf:nodeID="bnode9374323033994721324">
+      <rdf:type rdf:resource="http://www.ftn.uns.ac.rs/ulogeBiography"/>
+   </ulogeBiography>
+</rdf:RDF>
