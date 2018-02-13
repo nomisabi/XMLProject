@@ -6,6 +6,26 @@
     </div>
     <div class="row">
       <div class="col-lg-9 main-chart">
+        <form name="form" (ngSubmit)="find()">
+        
+        <div class="row">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-5 border">
+            <div class="border-title">Ime i prezime ili email ili korisnicko ime</div>
+            <div class="container-4">
+              <input type="text" class="form-control" [(ngModel)]="param" name="param" autofocus>
+            </div>
+          </div>
+          <div class="col-lg-5 border">
+            <div class="border-title">&nbsp;</div>
+            <div class="full-button">
+                <input type="submit"  class="save-button-text" value="Pronadji recenzneta">
+            </div>
+          </div>
+        </div> 
+    </form>
+    <br>
+    <br>
         <form name="form" (ngSubmit)="save()">
             <div class="row">
                 <div class="col-lg-1"></div>

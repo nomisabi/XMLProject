@@ -104,6 +104,16 @@ public class Korisnik2RepositoryXML implements Korisnik2Repository {
 
 	}
 
+	@Override
+	public Korisnici pronadjiKorisnike(String param) throws IOException, JAXBException {
+		String queryName = "findKorisnici.xqy";
+		String query = utils.readQuery(queryName);
+		query = query.replace("param", param);
+		System.out.println(query);
+		return getResponse(query);
+
+	}
+
 	public Korisnici getResponse(String query) throws JAXBException {
 		ServerEvaluationCall invoker = client.newServerEval();
 		invoker.xquery(query);

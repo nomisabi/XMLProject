@@ -92,6 +92,10 @@ public class Korisnici2Service {
 		}
 		return recenzenti;
 	}
+	
+	public Korisnici pronadjiKorisnike(String param) throws IOException, JAXBException{
+		return korisnik2RepositoryXML.pronadjiKorisnike(param);
+	}
 
 	private String setId() {
 		try {
