@@ -36,7 +36,9 @@ export class AddNewReviewComponent implements OnInit {
     console.log(this.titleAuthor);
     this.recenzija.sadrzaj.pitanja.push({'tekstPitanja': this.titleAuthor});
     this.recenzija.sadrzaj.pitanja.push({'tekstPitanja': this.titleEditor});
-    this.workService.addRec(this.recenzija, this.route.snapshot.params['id'],this.route.snapshot.params['idRevizije']);
+    this.workService.addRec(this.recenzija, this.route.snapshot.params['id']
+                            ,this.route.snapshot.params['idRevizije'])
+        .then(() => this.router.navigate(['/recenzent/naucniRadovi/prihvaceni']));
     
   }
 

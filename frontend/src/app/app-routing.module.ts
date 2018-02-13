@@ -25,6 +25,8 @@ import { RevisionDetailsComponent } from './work-detail/revision-details/revisio
 import { WorkDetailEditorComponent } from './home-editor/work-detail-editor/work-detail-editor.component';
 import { ShowXhtmlreviewerComponent } from './home-reviewer/show-xhtmlreviewer/show-xhtmlreviewer.component';
 import { ShowXhtmlletterComponent } from './home-author/show-xhtmlletter/show-xhtmlletter.component';
+import { SearchComponent } from './search/search.component';
+import { SearchAuthorComponent } from './home-author/search-author/search-author.component';
 
 const routers: Routes = [
   { path: 'prijava', component: LoginComponent },
@@ -33,6 +35,10 @@ const routers: Routes = [
     component: HomeComponent,
     children: [
       {path: '', component: WorksComponent},
+      {
+        path: 'pretraga',
+        component: SearchComponent
+      },
       {
         path:'naucniRadovi/:id',
         component: WorkDetailComponent
@@ -59,12 +65,28 @@ const routers: Routes = [
     component: HomeAuthorComponent,
     children: [
     {
+        path: 'pretraga',
+        component: SearchComponent
+    },
+    {
       path: 'naucniRadovi/novi',
       component: AddWorkComponent
     },
     {
       path:'naucniRadovi/moji',
       component: MyWorksComponent
+    },
+    {
+      path:'naucniRadovi/objavljeni',
+      component: WorksComponent
+    },
+    {
+      path:'naucniRadovi/pretraga',
+      component: SearchAuthorComponent
+    },
+    {
+      path:'naucniRadovi/objavljeni/:id',
+      component: WorkDetailComponent
     },
     {
       path: 'naucniRadovi/:id',

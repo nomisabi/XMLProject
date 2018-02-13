@@ -31,16 +31,34 @@
           <nav>
               <li class="mt">
                   <a [routerLink]="['/autor/naucniRadovi/novi']">
-                      <i class="fa fa-building"></i>
+                      <i class="fa fa-file-o"></i>
                       <span>Objavi naucni rad</span>
                   </a>
               </li>
               <li class="sub-menu">
                   <a [routerLink]="['/autor/naucniRadovi/moji']">
-                      <i class="fa fa-users"></i>
+                      <i class="fa fa-book"></i>
                       <span>Moji naucni radovi</span>
                   </a>
               </li>
+              <li class="sub-menu">
+                    <a [routerLink]="['/autor/naucniRadovi/pretraga']">
+                        <i class="fa fa-search"></i>
+                        <span>Pretraga mojih radova</span>
+                    </a>
+                </li>
+              <li class="sub-menu">
+                    <a [routerLink]="['/autor/naucniRadovi/objavljeni']">
+                        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                        <span>Objavljeni radovi</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a [routerLink]="['/autor/pretraga']">
+                        <i class="fa fa-search"></i>
+                        <span>Pretraga objavljenih radova</span>
+                    </a>
+                </li>
           </nav>
       </ul>
   </div>

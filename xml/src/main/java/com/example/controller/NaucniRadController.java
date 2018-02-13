@@ -433,6 +433,29 @@ public class NaucniRadController {
 		}
 	}
 
+	@RequestMapping(value = "/api/naucni_radovi", method = RequestMethod.GET, params = { "param" })
+	public ResponseEntity<List<Work>> search(@RequestParam("param") String param) {
+
+		List<Work> works = naucniRadService.search(param);
+		return new ResponseEntity<>(works, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/moji", method = RequestMethod.GET, params = { "param" })
+	public ResponseEntity<List<Work>> searchAuthor(@RequestParam("param") String param, HttpServletRequest request) {
+		String token = request.getHeader("X-Auth-Token");
+		String username = tokenUtils.getUsernameFromToken(token);
+
+		try {
+			List<Work> works = naucniRadService.searchAuthor(username, param);
+			return new ResponseEntity<>(works, HttpStatus.OK);
+		} catch (IOException | JAXBException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
 	/*
 	 * @RequestMapping(value = "/naucni_radovi/{id}.xml", method =
 	 * RequestMethod.DELETE)
@@ -466,7 +489,7 @@ public class NaucniRadController {
 		return ResponseEntity.ok().contentLength(pdfFile.length()).contentType(MediaType.APPLICATION_PDF)
 				.body(resource);
 	}
-	
+
 	@RequestMapping(value = "/api/naucni_radovi/{id}/html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
 	public String downloadHTML(@PathVariable("id") String id)
 			throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {
@@ -489,30 +512,29 @@ public class NaucniRadController {
 				.body(resource);
 	}
 
-
-	@RequestMapping(value = "/api/naucni_radovi/{id}/rdf", method = RequestMethod.POST, consumes="text/plain")
-	public ResponseEntity<Void> addRdf(@PathVariable("id") String id, @RequestBody String rdf) throws JAXBException, SAXException, IOException, TransformerException
-	{	
-		//System.out.println("1");
+	@RequestMapping(value = "/api/naucni_radovi/{id}/rdf", method = RequestMethod.POST, consumes = "text/plain")
+	public ResponseEntity<Void> addRdf(@PathVariable("id") String id, @RequestBody String rdf)
+			throws JAXBException, SAXException, IOException, TransformerException {
+		// System.out.println("1");
 		naucniRadService.addRDF(id, rdf);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/api/naucni_radovi/{id}/rdf", method = RequestMethod.GET, produces="text/plain")
-	public ResponseEntity<String> getRDFText(@PathVariable("id") String id) throws JAXBException, SAXException, IOException, TransformerException
-	{	
-		System.out.println("1");
-		String s= naucniRadService.readRDF(id);
-		return new ResponseEntity<>(s,HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/api/naucni_radovi/{id}/json", method = RequestMethod.GET, produces="application/json")
-	public ResponseEntity<String> getRDFJSON(@PathVariable("id") String id) throws JAXBException, SAXException, IOException, TransformerException
-	{	
-		System.out.println("1");
-		String s= naucniRadService.readRDFasJSON(id);
 
-		return new ResponseEntity<>(s,HttpStatus.OK);
+	@RequestMapping(value = "/api/naucni_radovi/{id}/rdf", method = RequestMethod.GET, produces = "text/plain")
+	public ResponseEntity<String> getRDFText(@PathVariable("id") String id)
+			throws JAXBException, SAXException, IOException, TransformerException {
+		System.out.println("1");
+		String s = naucniRadService.readRDF(id);
+		return new ResponseEntity<>(s, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/api/naucni_radovi/{id}/json", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<String> getRDFJSON(@PathVariable("id") String id)
+			throws JAXBException, SAXException, IOException, TransformerException {
+		System.out.println("1");
+		String s = naucniRadService.readRDFasJSON(id);
+
+		return new ResponseEntity<>(s, HttpStatus.OK);
 	}
 
 }

@@ -39,6 +39,8 @@ import { RevisionDetailsComponent } from './work-detail/revision-details/revisio
 import { WorkDetailEditorComponent } from './home-editor/work-detail-editor/work-detail-editor.component';
 import { ShowXhtmlreviewerComponent } from './home-reviewer/show-xhtmlreviewer/show-xhtmlreviewer.component';
 import { ShowXhtmlletterComponent } from './home-author/show-xhtmlletter/show-xhtmlletter.component';
+import { SearchComponent } from './search/search.component';
+import { SearchAuthorComponent } from './home-author/search-author/search-author.component';
 
 export class CustomOption extends ToastOptions {
   animate = 'flyRight'; // you can override any options available
@@ -73,7 +75,9 @@ export class CustomOption extends ToastOptions {
     RevisionDetailsComponent,
     WorkDetailEditorComponent,
     ShowXhtmlreviewerComponent,
-    ShowXhtmlletterComponent
+    ShowXhtmlletterComponent,
+    SearchComponent,
+    SearchAuthorComponent
   ],
   imports: [
     BrowserModule,
