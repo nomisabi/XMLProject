@@ -103,43 +103,103 @@
                         
                         <xsl:for-each select="nr:Paragraf">
                             <xsl:for-each select="nr:Tekst">
-                                 <xsl:if test="nr:ObicanTekst">
-                                 	<xsl:value-of select="nr:ObicanTekst/nr:Tekstualni_sadzaj"/> &#160; 
-                                 </xsl:if>
-                                 <xsl:if test="nr:MatematickaForma">
-                                    <xsl:value-of select="nr:MatematickaForma/nr:ObicanTekst/nr:Tekstualni_sadzaj"/> &#160; 
-                                 </xsl:if>
-                                 <xsl:if test="nr:Highlight">
+                                <xsl:if test="nr:ObicanTekst">
                                     <xsl:choose>
-                       					<xsl:when test="nr:Highlight[@BojaPozadine='blue']">
-                                        	<p style="background-color:blue">
-                                            	<xsl:value-of select="nr:Highlight/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; </p>
+                                        <xsl:when test="nr:ObicanTekst[@Naglaseno]">
+                                            <b>
+                                                <xsl:value-of select="nr:ObicanTekst/nr:Tekstualni_sadzaj"/> &#160;
+                                            </b>
+                                        </xsl:when>
+                                        <xsl:when test="nr:ObicanTekst[@Iskoseno]">
+                                            <i>
+                                                <xsl:value-of select="nr:ObicanTekst/nr:Tekstualni_sadzaj"/> &#160;
+                                            </i>
+                                        </xsl:when>
+                                        <xsl:when test="nr:ObicanTekst[@Podvuceno]">
+                                            <u>
+                                                <xsl:value-of select="nr:ObicanTekst/nr:Tekstualni_sadzaj"/> &#160; 
+                                            </u>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:value-of select="nr:ObicanTekst/nr:Tekstualni_sadzaj"/> &#160; 
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:if>
+                                <xsl:if test="nr:MatematickaForma">
+                                    <xsl:choose>
+                                        <xsl:when test="nr:MatematickaForma/nr:ObicanTekst[@Naglaseno]">
+                                            <b>
+                                                <xsl:value-of select="nr:MatematickaForma/nr:ObicanTekst/nr:Tekstualni_sadzaj"/> &#160; 
+                                            </b>
+                                        </xsl:when>
+                                        <xsl:when test="nr:MatematickaForma/nr:ObicanTekst[@Iskoseno]">
+                                            <i>
+                                                <xsl:value-of select="nr:MatematickaForma/nr:ObicanTekst/nr:Tekstualni_sadzaj"/> &#160; &#160; 
+                                            </i>
+                                        </xsl:when>
+                                        <xsl:when test="nr:MatematickaForma/nr:ObicanTekst[@Podvuceno]">
+                                            <u>
+                                                <xsl:value-of select="nr:MatematickaForma/nr:ObicanTekst/nr:Tekstualni_sadzaj"/> &#160;  
+                                            </u>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:value-of select="nr:MatematickaForma/nr:ObicanTekst/nr:Tekstualni_sadzaj"/> &#160; 
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:if>
+                                <xsl:if test="nr:Highlight">
+                                    <xsl:choose>
+                                        <xsl:when test="nr:Highlight[@BojaPozadine='blue']">
+                                            <p style="background-color:blue">
+                                                <xsl:value-of select="nr:Highlight/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; </p>
                                         </xsl:when> 
                                         <xsl:when test="nr:Highlight[@BojaPozadine='red']">
                                             <p style="background-color:red">
-                                            	<xsl:value-of select="nr:Highlight/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
+                                                <xsl:value-of select="nr:Highlight/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
                                             </p>
                                         </xsl:when> 
                                         <xsl:when test="nr:Highlight[@BojaPozadine='yellow']">
-	                                        <p style="background-color:yellow">
-                                            	<xsl:value-of select="nr:Highlight/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
+                                            <p style="background-color:yellow">
+                                                <xsl:value-of select="nr:Highlight/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
                                             </p>
                                         </xsl:when> 
                                         <xsl:when test="nr:Highlight[@BojaPozadine='green']">
                                             <p style="background-color:green">
-                                            	<xsl:value-of select="nr:Highlight/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
+                                                <xsl:value-of select="nr:Highlight/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
                                             </p>
                                         </xsl:when> 
                                         <xsl:otherwise>
-                                             <xsl:value-of select="nr:Highlight/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
-                          				</xsl:otherwise>
+                                            <xsl:value-of select="nr:Highlight/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
+                                        </xsl:otherwise>
                                     </xsl:choose>
-                                 </xsl:if>
-                                 <xsl:if test="nr:Footnote">
-                                     <p style="font-size:6px;">
-                                     	<xsl:value-of select="nr:Footnote/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
-                                     </p>
-                                 </xsl:if>
+                                </xsl:if>
+                                <xsl:if test="nr:Footnote">
+                                    <p style="font-size:6px;">
+                                        
+                                        <xsl:choose>
+                                            <xsl:when test="nr:Footnote/nr:ObicanTekst[@Naglaseno]">
+                                                <b>
+                                                    <xsl:value-of select="nr:Footnote/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
+                                                </b>
+                                            </xsl:when>
+                                            <xsl:when test="nr:Footnote/nr:ObicanTekst[@Iskoseno]">
+                                                <i>
+                                                    <xsl:value-of select="nr:Footnote/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160;  
+                                                </i>
+                                            </xsl:when>
+                                            <xsl:when test="nr:Footnote/nr:ObicanTekst[@Podvuceno]">
+                                                <u>
+                                                    <xsl:value-of select="nr:Footnote/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
+                                                </u>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <xsl:value-of select="nr:Footnote/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                        
+                                        
+                                    </p>
+                                </xsl:if>
                                  <xsl:if test="nr:Citat">
                                  	<i>
                                     	<xsl:value-of select="nr:Citat/nr:ObicanTekst/nr:Tekstualni_sadzaj"/>&#160; 

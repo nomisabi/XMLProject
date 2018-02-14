@@ -31,7 +31,6 @@
                 <xs:element ref="nr:ReferencaWeb"/>
                 <xs:element ref="nr:ReferencaNaucniRad"/>
                 <xs:element ref="nr:ReferencaPoglavlja"/>
-                <xs:element ref="nr:ReferencaRecenzija"/>
             </xs:choice>
         </xs:complexType>
     </xs:element>
@@ -404,13 +403,6 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="ReferencaRecenzija">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="Recenzija" type="xs:IDREF"/>
-            </xs:sequence>
         </xs:complexType>
     </xs:element>
 </xs:schema>

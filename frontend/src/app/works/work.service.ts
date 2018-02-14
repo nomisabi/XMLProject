@@ -282,6 +282,17 @@ export class WorkService {
           .then(res => res)
           .catch(this.handleError);
   }
+
+  getLinks(id: string):Promise<any>{
+    let httpHeaders:HttpHeaders = new HttpHeaders({"Accept": 'application/json','Content-Type':'application/json'});
+    
+    const url = `/api/naucni_radovi/${id}/links`;
+    return this.http
+          .get(url, {headers:httpHeaders, responseType: 'json'})
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
   
 
   private handleError(error: any): Promise<any> {

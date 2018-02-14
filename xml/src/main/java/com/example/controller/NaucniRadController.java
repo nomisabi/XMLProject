@@ -1,7 +1,7 @@
 package com.example.controller;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -514,5 +514,12 @@ public class NaucniRadController {
 
 		return new ResponseEntity<>(s,HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/api/naucni_radovi/{id}/links", method = RequestMethod.GET, produces="application/json")
+	public ResponseEntity<ArrayList<String>> getLink(@PathVariable("id") String id) throws JAXBException, SAXException, IOException{
+		ArrayList<String> s= naucniRadService.getLinks(id);
+		return new ResponseEntity<>(s,HttpStatus.OK);
+	}
+
 
 }

@@ -74,8 +74,11 @@
           <span *ngIf="paragraf.tekst!=null">
             
            <span *ngFor="let tekst of paragraf.tekst.obicanTekstOrHighlightOrCitat">
-            
+
               <span *ngIf="tekst.obicanTekst!=null">
+                
+                <!--Naglaseno -->
+                <b *ngIf="tekst.obicanTekst.naglaseno">
                 <span *ngIf="tekst.bojaPozadine!=null">
                   <span *ngIf="tekst.bojaPozadine=='blue'" style="background-color:blue">
                     {{tekst.obicanTekst.tekstualniSadzaj}}  
@@ -102,9 +105,99 @@
                     <a *ngIf="tekst.referenca.referencaPoglavlja" (click)="goToPoglavlja(tekst.referenca.referencaPoglavlja.poglavlje.id)"> {{tekst.obicanTekst.tekstualniSadzaj}}</a>
                     <a *ngIf="tekst.referenca.referencaRecenzija" (click)="goToRecenzija(tekst.referenca.referencaRecenzija.recenzija.id)">{{tekst.obicanTekst.tekstualniSadzaj}} ({{tekst.referenca.referencaRecenzija.recenzija.id}}) </a>
                   </a>
-                <span *ngIf="tekst.referenca==null && tekst.bojaPozadine==null && tekst.broj==null"> {{tekst.obicanTekst.tekstualniSadzaj}}</span>
-                 
-              </span> 
+                <span *ngIf="tekst.referenca==null && tekst.bojaPozadine==null && tekst.broj==null"> {{tekst.obicanTekst.tekstualniSadzaj}}</span>  
+                </b> 
+                <!--Iskosen -->
+                <i *ngIf="tekst.obicanTekst.iskoseno">
+                        <span *ngIf="tekst.bojaPozadine!=null">
+                          <span *ngIf="tekst.bojaPozadine=='blue'" style="background-color:blue">
+                            {{tekst.obicanTekst.tekstualniSadzaj}}  
+                          </span>
+                          <span *ngIf="tekst.bojaPozadine=='red'" style="background-color:red">
+                              {{tekst.obicanTekst.tekstualniSadzaj}}  
+                            </span>
+                            <span *ngIf="tekst.bojaPozadine=='green'" style="background-color:green">
+                                {{tekst.obicanTekst.tekstualniSadzaj}}  
+                            </span>
+                            <span *ngIf="tekst.bojaPozadine=='yellow'" style="background-color:yellow">
+                                  {{tekst.obicanTekst.tekstualniSadzaj}}  
+                              </span>
+                              <span *ngIf="tekst.bojaPozadine!='yellow' && tekst.bojaPozadine!='blue' && tekst.bojaPozadine!='green' && tekst.bojaPozadine!='red'">
+                                  {{tekst.obicanTekst.tekstualniSadzaj}}  
+                              </span>
+                        </span>
+                        <span *ngIf="tekst.broj!=null" style="font-size:6px;"> {{tekst.obicanTekst.tekstualniSadzaj}}   </span>
+                        <a *ngIf="tekst.referenca!=null" >
+                            <a *ngIf="tekst.referenca.referencaClanak">{{tekst.obicanTekst.tekstualniSadzaj}}  ({{tekst.referenca.referencaClanak.naziv}}, {{tekst.referenca.referencaClanak.oznak}}, {{tekst.referenca.referencaClanak.godina}}., {{tekst.referenca.referencaClanak.strana}})</a>
+                            <a *ngIf="tekst.referenca.referencaKnjiga">{{tekst.obicanTekst.tekstualniSadzaj}} ({{tekst.referenca.referencaKnjiga.autor}}: {{tekst.referenca.referencaKnjiga.naziv}}, {{tekst.referenca.referencaKnjiga.strana}})</a>
+                            <a *ngIf="tekst.referenca.referencaWeb" href="{{tekst.referenca.referencaWeb.link}}">{{tekst.obicanTekst.tekstualniSadzaj}} </a>
+                            <a *ngIf="tekst.referenca.referencaNaucniRad" (click)="goToNaucniRad(tekst.referenca.referencaNaucniRad.naucniRad.id)">{{tekst.obicanTekst.tekstualniSadzaj}} ({{tekst.referenca.referencaNaucniRad.naucniRad.id}})</a>
+                            <a *ngIf="tekst.referenca.referencaPoglavlja" (click)="goToPoglavlja(tekst.referenca.referencaPoglavlja.poglavlje.id)"> {{tekst.obicanTekst.tekstualniSadzaj}}</a>
+                            <a *ngIf="tekst.referenca.referencaRecenzija" (click)="goToRecenzija(tekst.referenca.referencaRecenzija.recenzija.id)">{{tekst.obicanTekst.tekstualniSadzaj}} ({{tekst.referenca.referencaRecenzija.recenzija.id}}) </a>
+                          </a>
+                        <span *ngIf="tekst.referenca==null && tekst.bojaPozadine==null && tekst.broj==null"> {{tekst.obicanTekst.tekstualniSadzaj}}</span>  
+                        </i> 
+                <!--podvuce -->
+                <u *ngIf="tekst.obicanTekst.podvuceno">
+                        <span *ngIf="tekst.bojaPozadine!=null">
+                          <span *ngIf="tekst.bojaPozadine=='blue'" style="background-color:blue">
+                            {{tekst.obicanTekst.tekstualniSadzaj}}  
+                          </span>
+                          <span *ngIf="tekst.bojaPozadine=='red'" style="background-color:red">
+                              {{tekst.obicanTekst.tekstualniSadzaj}}  
+                            </span>
+                            <span *ngIf="tekst.bojaPozadine=='green'" style="background-color:green">
+                                {{tekst.obicanTekst.tekstualniSadzaj}}  
+                            </span>
+                            <span *ngIf="tekst.bojaPozadine=='yellow'" style="background-color:yellow">
+                                  {{tekst.obicanTekst.tekstualniSadzaj}}  
+                              </span>
+                              <span *ngIf="tekst.bojaPozadine!='yellow' && tekst.bojaPozadine!='blue' && tekst.bojaPozadine!='green' && tekst.bojaPozadine!='red'">
+                                  {{tekst.obicanTekst.tekstualniSadzaj}}  
+                              </span>
+                        </span>
+                        <span *ngIf="tekst.broj!=null" style="font-size:6px;"> {{tekst.obicanTekst.tekstualniSadzaj}}   </span>
+                        <a *ngIf="tekst.referenca!=null" >
+                            <a *ngIf="tekst.referenca.referencaClanak">{{tekst.obicanTekst.tekstualniSadzaj}}  ({{tekst.referenca.referencaClanak.naziv}}, {{tekst.referenca.referencaClanak.oznak}}, {{tekst.referenca.referencaClanak.godina}}., {{tekst.referenca.referencaClanak.strana}})</a>
+                            <a *ngIf="tekst.referenca.referencaKnjiga">{{tekst.obicanTekst.tekstualniSadzaj}} ({{tekst.referenca.referencaKnjiga.autor}}: {{tekst.referenca.referencaKnjiga.naziv}}, {{tekst.referenca.referencaKnjiga.strana}})</a>
+                            <a *ngIf="tekst.referenca.referencaWeb" href="{{tekst.referenca.referencaWeb.link}}">{{tekst.obicanTekst.tekstualniSadzaj}} </a>
+                            <a *ngIf="tekst.referenca.referencaNaucniRad" (click)="goToNaucniRad(tekst.referenca.referencaNaucniRad.naucniRad.id)">{{tekst.obicanTekst.tekstualniSadzaj}} ({{tekst.referenca.referencaNaucniRad.naucniRad.id}})</a>
+                            <a *ngIf="tekst.referenca.referencaPoglavlja" (click)="goToPoglavlja(tekst.referenca.referencaPoglavlja.poglavlje.id)"> {{tekst.obicanTekst.tekstualniSadzaj}}</a>
+                            <a *ngIf="tekst.referenca.referencaRecenzija" (click)="goToRecenzija(tekst.referenca.referencaRecenzija.recenzija.id)">{{tekst.obicanTekst.tekstualniSadzaj}} ({{tekst.referenca.referencaRecenzija.recenzija.id}}) </a>
+                          </a>
+                        <span *ngIf="tekst.referenca==null && tekst.bojaPozadine==null && tekst.broj==null"> {{tekst.obicanTekst.tekstualniSadzaj}}</span>  
+                        </u>       
+                         <!--obican -->
+                <span *ngIf="!tekst.obicanTekst.naglaseno && !tekst.obicanTekst.iskoseno && !tekst.obicanTekst.naglaseno">
+                        <span *ngIf="tekst.bojaPozadine!=null">
+                          <span *ngIf="tekst.bojaPozadine=='blue'" style="background-color:blue">
+                            {{tekst.obicanTekst.tekstualniSadzaj}}  
+                          </span>
+                          <span *ngIf="tekst.bojaPozadine=='red'" style="background-color:red">
+                              {{tekst.obicanTekst.tekstualniSadzaj}}  
+                            </span>
+                            <span *ngIf="tekst.bojaPozadine=='green'" style="background-color:green">
+                                {{tekst.obicanTekst.tekstualniSadzaj}}  
+                            </span>
+                            <span *ngIf="tekst.bojaPozadine=='yellow'" style="background-color:yellow">
+                                  {{tekst.obicanTekst.tekstualniSadzaj}}  
+                              </span>
+                              <span *ngIf="tekst.bojaPozadine!='yellow' && tekst.bojaPozadine!='blue' && tekst.bojaPozadine!='green' && tekst.bojaPozadine!='red'">
+                                  {{tekst.obicanTekst.tekstualniSadzaj}}  
+                              </span>
+                        </span>
+                        <span *ngIf="tekst.broj!=null" style="font-size:6px;"> {{tekst.obicanTekst.tekstualniSadzaj}}   </span>
+                        <a *ngIf="tekst.referenca!=null" >
+                            <a *ngIf="tekst.referenca.referencaClanak">{{tekst.obicanTekst.tekstualniSadzaj}}  ({{tekst.referenca.referencaClanak.naziv}}, {{tekst.referenca.referencaClanak.oznak}}, {{tekst.referenca.referencaClanak.godina}}., {{tekst.referenca.referencaClanak.strana}})</a>
+                            <a *ngIf="tekst.referenca.referencaKnjiga">{{tekst.obicanTekst.tekstualniSadzaj}} ({{tekst.referenca.referencaKnjiga.autor}}: {{tekst.referenca.referencaKnjiga.naziv}}, {{tekst.referenca.referencaKnjiga.strana}})</a>
+                            <a *ngIf="tekst.referenca.referencaWeb" href="{{tekst.referenca.referencaWeb.link}}">{{tekst.obicanTekst.tekstualniSadzaj}} </a>
+                            <a *ngIf="tekst.referenca.referencaNaucniRad" (click)="goToNaucniRad(tekst.referenca.referencaNaucniRad.naucniRad.id)">{{tekst.obicanTekst.tekstualniSadzaj}} ({{tekst.referenca.referencaNaucniRad.naucniRad.id}})</a>
+                            <a *ngIf="tekst.referenca.referencaPoglavlja" (click)="goToPoglavlja(tekst.referenca.referencaPoglavlja.poglavlje.id)"> {{tekst.obicanTekst.tekstualniSadzaj}}</a>
+                            <a *ngIf="tekst.referenca.referencaRecenzija" (click)="goToRecenzija(tekst.referenca.referencaRecenzija.recenzija.id)">{{tekst.obicanTekst.tekstualniSadzaj}} ({{tekst.referenca.referencaRecenzija.recenzija.id}}) </a>
+                          </a>
+                        <span *ngIf="tekst.referenca==null && tekst.bojaPozadine==null && tekst.broj==null"> {{tekst.obicanTekst.tekstualniSadzaj}}</span>  
+                        </span>                              
+            </span> 
             
           </span>
         </span>

@@ -19,6 +19,7 @@ export class WorkDetailAuthorComponent implements OnInit {
   progress: { percentage: number } = { percentage: 0 }
   addRdf=false;
   rdfText='';
+  links=[];
 
   constructor(private workService:WorkService,
               private uploadService: UploadFileService,
@@ -37,6 +38,11 @@ export class WorkDetailAuthorComponent implements OnInit {
   getWork(){
     this.workService.getWork(this.route.snapshot.params['id'])
         .then(work => {
+          this.workService.getLinks(this.route.snapshot.params['id']).then(
+            links=> {this.links=links
+              console.log(JSON.stringify(links))
+            }
+          )
           console.log(work);
           this.work = work;
           for(let i in this.work.revisions){
@@ -176,9 +182,14 @@ export class WorkDetailAuthorComponent implements OnInit {
 
   addNewRdf(){
     console.log(this.rdfText);
-    this.workService.addRdf(this.route.snapshot.params['id'], this.rdfText);
-    this.rdfText='';
-    this.showAddRdf();
+    this.workService.addRdf(this.route.snapshot.params['id'], this.rdfText).then(
+      rdf=>{
+      this.rdfText='';
+      this.showAddRdf();
+      this.toastr.success('RDF is added');
+    }).catch(
+      err=>this.toastr.error('RDF is not valid')
+    )
   }
 
   gotoGetRDF(){
@@ -195,5 +206,9 @@ export class WorkDetailAuthorComponent implements OnInit {
       FileSaver.saveAs(blob, "metadata.json");
     }
     )
+  }
+
+  goToNaucniRad(id){
+    this.router.navigate(['naucniRadovi/',id])
   }
 }

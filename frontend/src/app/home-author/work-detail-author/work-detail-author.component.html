@@ -58,7 +58,7 @@
             <div class="col-lg-1"></div>
             <div class="col-lg-10 border">
               <div class="border-title">Pismo:</div>
-              <div class="border-title">
+              <div class="border-desc">
                 <a (click)="gotoGetPDFPismo(revision.id)" class="small-btn">PDF</a>
                 <a (click)="gotoGetXHTMLPismo(revision.id)" class="small-btn">XHTML</a>
               </div>
@@ -99,5 +99,15 @@
 
           </div>
         </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-9 main-chart">
+            <div class="border-title">Links:</div>
+            <div class="border-desc" style="font-size:12px;" >
+              <ul *ngFor="let link of links">
+                <li> <a (click)="goToNaucniRad(link)">{{link}}</a></li>
+              </ul>
+            </div>
+      </div>
       </div>
 </section>

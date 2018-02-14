@@ -728,4 +728,16 @@ public class NaucniRadService {
         }
 	}
 	
+	public ArrayList<String> getLinks(String id) throws IOException{
+		ArrayList<String> original= NaucniRadUtils.getLinks(id);
+		ArrayList<String> updated= new ArrayList<String>();
+		for (String string : original) {
+			if (!updated.contains(string))
+				if (!string.equals(id))
+					updated.add(string);
+		}
+		
+		return updated;
+	}
+	
 }
