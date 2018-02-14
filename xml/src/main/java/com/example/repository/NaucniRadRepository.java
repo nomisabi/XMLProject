@@ -20,10 +20,9 @@ public interface NaucniRadRepository {
 
 	List<NaucniRad> findByStatus(String status) throws IOException, JAXBException;
 
-	List<NaucniRad> findMy(String username) throws IOException, JAXBException;
+	List<NaucniRad> findMy(String id) throws IOException, JAXBException;
 
-	List<NaucniRad> findByReviewer(String status, String firstName, String lastName, String email)
-			throws IOException, JAXBException;
+	List<NaucniRad> findByReviewer(String status, String id) throws IOException, JAXBException;
 
 	NaucniRad findByReviewerAndID(String status, String email, String id, String idRevision)
 			throws IOException, JAXBException;

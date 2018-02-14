@@ -113,35 +113,34 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 	}
 
 	@Override
-	public List<NaucniRad> findMy(String username) throws IOException, JAXBException {
+	public List<NaucniRad> findMy(String id) throws IOException, JAXBException {
 		String queryName = "findMyWorks.xqy";
 		String query = utils.readQuery(queryName);
-		query = query.replace("param", username);
+		query = query.replace("param", id);
 		return getResponse(query);
 	}
 
 	@Override
-	public List<NaucniRad> findByReviewer(String status, String firstName, String lastName, String email)
-			throws IOException, JAXBException {
+	public List<NaucniRad> findByReviewer(String status, String id) throws IOException, JAXBException {
 		String queryName = "findByRewiever.xqy";
 		String query = utils.readQuery(queryName);
 		query = query.replace("status", status);
-		query = query.replace("ime", firstName);
-		query = query.replace("prezime", lastName);
-		query = query.replace("email", email);
+		query = query.replace("param", id);
+		System.out.println(query);
 		return getResponse(query);
 
 	}
 
 	@Override
-	public NaucniRad findByReviewerAndID(String status, String email, String id, String idRevision)
+	public NaucniRad findByReviewerAndID(String status, String idReviewer, String id, String idRevision)
 			throws IOException, JAXBException {
 		String queryName = "findByIdAndReviewer.xqy";
 		String query = utils.readQuery(queryName);
 		query = query.replace("status", status);
-		query = query.replace("email", email);
+		query = query.replace("param", idReviewer);
 		query = query.replace("id", id);
 		query = query.replace("revizija", idRevision);
+		System.out.println(query);
 		List<NaucniRad> radovi = getResponse(query);
 		if (radovi.size() == 1) {
 			return radovi.get(0);
@@ -154,7 +153,7 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 	public List<NaucniRad> searchAuthor(String ime, String prezime, String email, String param) {
 		StringQueryDefinition queryDefinition = queryManager.newStringDefinition();
 
-		String criteria = ime + " AND " + prezime + " AND "+ email + " AND " + param;
+		String criteria = ime + " AND " + prezime + " AND " + email + " AND " + param;
 		queryDefinition.setCriteria(criteria);
 		queryDefinition.setCollections(COLLECTION_REF);
 		SearchHandle results = queryManager.search(queryDefinition, new SearchHandle());

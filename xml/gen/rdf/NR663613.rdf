@@ -1,5 +1,0 @@
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
-  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR663613">
-    <ns0:title xmlns:ns0="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naslov0</ns0:title>
-  </rdf:Description>
-</rdf:RDF>

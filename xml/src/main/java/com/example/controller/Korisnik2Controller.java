@@ -60,11 +60,13 @@ public class Korisnik2Controller {
 
 	}
 
-	@RequestMapping(value = "/korisnici", method = RequestMethod.GET, params = { "param" })
-	public ResponseEntity<Korisnici> pronadjiKorisnika(@RequestParam("param") String param) {
+	@RequestMapping(value = "/naucni_radovi/{id}/revizija/{id_revizija}/korisnici", method = RequestMethod.GET, params = {
+			"param" })
+	public ResponseEntity<Korisnici> pronadjiKorisnika(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision, @RequestParam("param") String param) {
 		try {
-			Korisnici korisnici = korisnici2Service.pronadjiKorisnike(param);
-			if (korisnici != null) {
+			Korisnici korisnici = korisnici2Service.pronadjiKorisnike(id, idRevision, param);
+			if (korisnici != null && !korisnici.getKorisnik().isEmpty()) {
 				return new ResponseEntity<>(korisnici, HttpStatus.OK);
 
 			} else {

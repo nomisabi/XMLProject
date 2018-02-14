@@ -15,6 +15,7 @@ export class WorkDetailEditorComponent implements OnInit {
 
   work: WorkInterface;
   rate: boolean;
+  review: boolean;
   
 
   constructor(
@@ -32,6 +33,7 @@ export class WorkDetailEditorComponent implements OnInit {
   }
 
   getWork(){
+    this.review = false;
     this.rate = false;
     this.workService.getWork(this.route.snapshot.params['id'])
         .then(work => 
@@ -58,9 +60,11 @@ export class WorkDetailEditorComponent implements OnInit {
                 }
                 if (prihvacen < 2 && ceka === 0 && odbijen > 0){
                   console.log('dodaj recenzenta');
+                  this.review = true;
                 }
                 if (prihvacen < 2 && ceka === 1 && odbijen > 0){
                   console.log('dodaj recenzenta');
+                  this.review = true;
                 }
               }
 
@@ -81,6 +85,10 @@ export class WorkDetailEditorComponent implements OnInit {
   revise(id: string){
     this.workService.reviseRevision(this.work.id, id)
         .then(() => this.getWork());
+  }
+
+  gotoAddReview(id: string, idRevizije: string){
+    this.router.navigate([`/urednik/naucniRadovi/${id}/revizije/${idRevizije}/recenzent`]);
   }
 
 

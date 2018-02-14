@@ -27,6 +27,32 @@
               </div>
             </div>   
           </div>  
+          <div class="row">
+            <div class="col-lg-9 main-chart" style="margin-left: 80px;">
+              <p class="title">RECENZIJE 
+                  <a (click)="gotoAddReview(work.id,revision.id)" class="small-btn btn-xs" *ngIf="review" style="margin-left: 250px;">Dodaj recezenta</a>
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let review of revision.reviews; let j=index">
+                    <td style="width: 80px;">{{review.id}}</td>
+                    <td>{{review.status}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>              
           <div class="row" *ngIf="revision.hasLetter">
             <div class="col-lg-1"></div>
             <div class="col-lg-10 border">

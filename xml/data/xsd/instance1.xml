@@ -1,19 +1,17 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <pp:ProptatnoPismo xmlns:na="http://www.ftn.uns.ac.rs/naucni_rad"
  xmlns:ulog="http://www.ftn.uns.ac.rs/uloge"
- xmlns:rec="http://www.ftn.uns.ac.rs/recenzija"
+ xmlns:rc="http://www.ftn.uns.ac.rs/recenzija"
  xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo"
  xmlns:nr="http://www.ftn.uns.ac.rs/naucni_radovi"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.ftn.uns.ac.rs/propratnoPismo file:/Users/sabinomi/git/XMLProject/xml/data/xsd/ProtpratnoPismo.xsd" Id="ID000">
-    <ulog:Autor Id="ID001">
+ xsi:schemaLocation="http://www.ftn.uns.ac.rs/propratnoPismo file:/C:/Users/Nevena%20Djeric/git/XMLProject/xml/data/xsd/naucni_rad.xsd">
+    <ulog:Autor>
         <ulog:Ime>Ime0</ulog:Ime>
         <ulog:Prezime>Prezime0</ulog:Prezime>
         <ulog:Korisnicko_ime>Korisnicko_ime0</ulog:Korisnicko_ime>
         <ulog:Lozinka>Lozinka0</ulog:Lozinka>
         <ulog:Email>Email11</ulog:Email>
-        <ulog:Biography>Biography0</ulog:Biography>
         <ulog:Institucija>
             <ulog:Naziv>Naziv0</ulog:Naziv>
             <ulog:Adresa>
@@ -24,55 +22,18 @@
             </ulog:Adresa>
         </ulog:Institucija>
     </ulog:Autor>
-    <ulog:Urednik Id="ID002">
+    <ulog:Urednik>
         <ulog:Ime>Ime1</ulog:Ime>
         <ulog:Prezime>Prezime1</ulog:Prezime>
         <ulog:Korisnicko_ime>Korisnicko_ime1</ulog:Korisnicko_ime>
         <ulog:Lozinka>Lozinka1</ulog:Lozinka>
         <ulog:Email>Email33</ulog:Email>
-        <ulog:Naucni_radovi>ID000</ulog:Naucni_radovi>
-        <ulog:Naucni_radovi>ID001</ulog:Naucni_radovi>
     </ulog:Urednik>
     <pp:Datum>2006-05-04</pp:Datum>
     <pp:Sadrzaj>
         <pp:Rad>Rad0</pp:Rad>
         <pp:Rezultat>Rezultat0</pp:Rezultat>
-        <pp:Rezultat>Rezultat1</pp:Rezultat>
         <pp:Razlog>Razlog0</pp:Razlog>
-        <pp:Razlog>Razlog1</pp:Razlog>
-        <ulog:Recenzent Id="ID003">
-            <ulog:Ime>Ime2</ulog:Ime>
-            <ulog:Prezime>Prezime2</ulog:Prezime>
-            <ulog:Korisnicko_ime>Korisnicko_ime2</ulog:Korisnicko_ime>
-            <ulog:Lozinka>Lozinka2</ulog:Lozinka>
-            <ulog:Email>Email55</ulog:Email>
-            <ulog:Naucni_radovi>ID002</ulog:Naucni_radovi>
-            <ulog:Naucni_radovi>ID002</ulog:Naucni_radovi>
-        </ulog:Recenzent>
-        <ulog:Recenzent Id="ID004">
-            <ulog:Ime>Ime3</ulog:Ime>
-            <ulog:Prezime>Prezime3</ulog:Prezime>
-            <ulog:Korisnicko_ime>Korisnicko_ime3</ulog:Korisnicko_ime>
-            <ulog:Lozinka>Lozinka3</ulog:Lozinka>
-            <ulog:Email>Email77</ulog:Email>
-            <ulog:Naucni_radovi>ID000</ulog:Naucni_radovi>
-            <ulog:Naucni_radovi>ID002</ulog:Naucni_radovi>
-        </ulog:Recenzent>
     </pp:Sadrzaj>
     <pp:Potpis>Potpis0</pp:Potpis>
 </pp:ProptatnoPismo>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<korisnik xmlns="http://www.ftn.uns.ac.rs/korisnici"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.ftn.uns.ac.rs/korisnici file:/C:/Users/Nevena%20Djeric/git/XMLProject/xml/data/xsd/korisnici.xsd" Id="ID001">
-    <ime>ime0</ime>
-    <prezime>prezime0</prezime>
-    <korisnicko_ime>korisnicko_ime0</korisnicko_ime>
-    <lozinka>lozinka0</lozinka>
-    <email>email0</email>
-    <uloga>AUTOR</uloga>
-    <domen>domen0</domen>
-    <domen>domen1</domen>
-</korisnik>
->>>>>>> branch 'master' of https://github.com/nomisabi/XMLProject.git

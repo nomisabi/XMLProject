@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
-  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR915512/revizija/RV1">
-    <referencaNaucniRad xmlns:ns18="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">NR428196</referencaNaucniRad>
-  </rdf:Description>
-</rdf:RDF>

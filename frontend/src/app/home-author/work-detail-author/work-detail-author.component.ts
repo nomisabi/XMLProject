@@ -84,16 +84,20 @@ export class WorkDetailAuthorComponent implements OnInit {
       if (event.type === HttpEventType.UploadProgress) {
         this.progress.percentage = Math.round(100 * event.loaded / event.total);
       } else if (event instanceof HttpResponse) {
+        this.getWork();
         if (event.status === 200){
          console.log(event.body);
           this.toastr.success('Pismo uspesno poslato.');
-          this.getWork();
+         // this.getWork();
 
         }else if (event.status === 417){
-          this.toastr.error('Greska prilikom slanja pisma.')
+          this.toastr.error('Greska prilikom slanja pisma.');
         }
       }
-    });
+    },
+    error => {
+      //this.toastr.error('Greska prilikom slanja pisma.');
+      this.getWork()});
    // .catch(err =>  this.toastr.error('Greska prilikom slanja naucnog rada.'));
  
     this.selectedFiles = undefined

@@ -24,6 +24,8 @@ import com.example.korisnici.Korisnici;
 import com.example.korisnici.Korisnik;
 import com.example.model.naucni_rad.NaucniRad;
 import com.example.model.naucni_rad.Revizija;
+import com.example.model.recenzija.Recenzija;
+import com.example.model.uloge.Recenzent;
 import com.example.repository.Korisnik2RepositoryXML;
 import com.example.repository.NaucniRadRepositoryXML;
 import com.example.utils.MyValidationEventHandler;
@@ -63,19 +65,33 @@ public class Korisnici2Service {
 	public Korisnici pronadjiRecenzente(String id, String idRevision) throws IOException, JAXBException {
 		NaucniRad naucniRad = naucniRadRepositoryXML.findById(id);
 		List<String> domeni = new ArrayList<>();
+		List<Recenzija> recenzije = new ArrayList<>();
 
 		for (Revizija revizija : naucniRad.getRevizija()) {
 			if (revizija.getId().equals(idRevision)) {
 				domeni = revizija.getKljucnaRec();
+				recenzije = revizija.getRecenzija();
 			}
 		}
 		Korisnici recenzenti = korisnik2RepositoryXML.pronadjiRecenzente(domeni);
 
-		if (recenzenti == null) {
+		if (recenzenti == null && recenzije.isEmpty()) {
 			return korisnik2RepositoryXML.pronadjiSveRecenzente();
 		}
 
-		if (recenzenti.getKorisnik().size() < 3) {
+		if (recenzenti == null && !recenzije.isEmpty()) {
+			Korisnici sviRecezenti = korisnik2RepositoryXML.pronadjiSveRecenzente();
+			for (int i = 0; i < sviRecezenti.getKorisnik().size(); i++) {
+				for (Recenzija recenzija : recenzije) {
+					if (recenzija.getRecenzent().getId().equals(sviRecezenti.getKorisnik().get(i).getId())) {
+						sviRecezenti.getKorisnik().remove(i);
+					}
+				}
+			}
+			return sviRecezenti;
+		}
+
+		if (recenzenti.getKorisnik().size() < 3 && recenzije.isEmpty()) {
 			Korisnici sviRecenzenti = korisnik2RepositoryXML.pronadjiSveRecenzente();
 			for (Korisnik recenzent : sviRecenzenti.getKorisnik()) {
 				boolean flag = false;
@@ -90,11 +106,64 @@ public class Korisnici2Service {
 				}
 			}
 		}
+
+		if (recenzenti.getKorisnik().size() < 3 && !recenzije.isEmpty()) {
+			Korisnici sviRecenzenti = korisnik2RepositoryXML.pronadjiSveRecenzente();
+			for (Recenzija recenzija : recenzije) {
+				for (int i = 0; i < recenzenti.getKorisnik().size(); i++) {
+					if (recenzija.getRecenzent().getId().equals(recenzenti.getKorisnik().get(i).getId())) {
+						recenzenti.getKorisnik().remove(i);
+					}
+
+				}
+			}
+
+			for (Korisnik recenzent : sviRecenzenti.getKorisnik()) {
+				boolean flag = false;
+				boolean flag2 = false;
+				for (Korisnik recenznet2 : recenzenti.getKorisnik()) {
+					if (recenznet2.getId().equals(recenzent.getId())) {
+						flag = true;
+						break;
+					}
+				}
+				for (Recenzija recenzija : recenzije) {
+					if (recenzija.getRecenzent().getId().equals(recenzent.getId())) {
+						flag2 = true;
+					}
+				}
+
+				if (!flag && !flag2) {
+					recenzenti.getKorisnik().add(recenzent);
+				}
+			}
+		}
 		return recenzenti;
 	}
-	
-	public Korisnici pronadjiKorisnike(String param) throws IOException, JAXBException{
-		return korisnik2RepositoryXML.pronadjiKorisnike(param);
+
+	public Korisnici pronadjiKorisnike(String id, String idRevision, String param) throws IOException, JAXBException {
+		NaucniRad naucniRad = naucniRadRepositoryXML.findById(id);
+		Korisnici korisnici = korisnik2RepositoryXML.pronadjiKorisnike(param);
+		List<Recenzija> recenzije = new ArrayList<>();
+		for (Revizija revizija : naucniRad.getRevizija()) {
+			if (revizija.getId().equals(idRevision)) {
+				recenzije = revizija.getRecenzija();
+			}
+		}
+		if (recenzije.isEmpty()) {
+			return korisnici;
+		}
+
+		for (int i = 0; i < korisnici.getKorisnik().size(); i++) {
+			for (Recenzija recenzija : recenzije) {
+				if ((recenzija.getRecenzent().getId()).equals(korisnici.getKorisnik().get(i).getId())) {
+					korisnici.getKorisnik().remove(i);
+					break;
+				}
+			}
+		}
+		return korisnici;
+
 	}
 
 	private String setId() {

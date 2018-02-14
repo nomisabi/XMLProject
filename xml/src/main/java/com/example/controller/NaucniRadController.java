@@ -62,14 +62,17 @@ public class NaucniRadController {
 	TokenUtils tokenUtils;
 
 	@PostMapping("/api/naucni_radovi")
-	public ResponseEntity<String> createNaucniRad(@RequestParam("file") MultipartFile file) {
+	public ResponseEntity<String> createNaucniRad(@RequestParam("file") MultipartFile file,
+			HttpServletRequest request) {
+		String token = request.getHeader("X-Auth-Token");
+		String username = tokenUtils.getUsernameFromToken(token);
 		String message = "";
 		try {
 			storageService.deleteAll();
 			storageService.init();
 			storageService.store(file);
 
-			String id = naucniRadService.add(file.getOriginalFilename());
+			String id = naucniRadService.add(file.getOriginalFilename(), username);
 			storageService.deleteAll();
 
 			if (id != null) {
@@ -251,7 +254,11 @@ public class NaucniRadController {
 		System.out.println(revision.getId());
 
 		try {
-			naucniRadService.addReview(id, idRevision, revision.getReview1(), revision.getReview2());
+			if (revision.getReview2() != null) {
+				naucniRadService.addReview(id, idRevision, revision.getReview1(), revision.getReview2());
+			} else {
+				naucniRadService.addReview(id, idRevision, revision.getReview1());
+			}
 			return new ResponseEntity<>(HttpStatus.OK);
 
 		} catch (JAXBException | IOException e) {
@@ -536,12 +543,12 @@ public class NaucniRadController {
 
 		return new ResponseEntity<>(s, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/api/naucni_radovi/{id}/links", method = RequestMethod.GET, produces="application/json")
-	public ResponseEntity<ArrayList<String>> getLink(@PathVariable("id") String id) throws JAXBException, SAXException, IOException{
-		ArrayList<String> s= naucniRadService.getLinks(id);
-		return new ResponseEntity<>(s,HttpStatus.OK);
-	}
 
+	@RequestMapping(value = "/api/naucni_radovi/{id}/links", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<ArrayList<String>> getLink(@PathVariable("id") String id)
+			throws JAXBException, SAXException, IOException {
+		ArrayList<String> s = naucniRadService.getLinks(id);
+		return new ResponseEntity<>(s, HttpStatus.OK);
+	}
 
 }

@@ -16,8 +16,8 @@ export class UserService {
           .catch(this.handleError);
   }
 
-  findReviews(param: string): Promise<any>{
-    const url = `/api/korisnici`;
+  findReviews(id: string, idRevision: string, param: string): Promise<any>{
+    const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/korisnici`;
     const httpParams = new HttpParams().set('param', param);
     return this.http
           .get(url, {params: httpParams})
