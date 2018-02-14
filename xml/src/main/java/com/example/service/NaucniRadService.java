@@ -232,8 +232,6 @@ public class NaucniRadService {
 		}
 
 		nrRepositoryXML.add(naucniRad);
-		
-		
 
 	}
 
@@ -281,7 +279,7 @@ public class NaucniRadService {
 							.add(new Revision(revizija.getId(), revizija.getNaslov(), revizija.getStatus().toString()));
 				}
 			}
-			worksHash.put(naucniRad.getId(), new Work(naucniRad.getId(), revisions));
+
 			works.add(new Work(naucniRad.getId(), revisions));
 		}
 		return works;
@@ -347,16 +345,16 @@ public class NaucniRadService {
 
 	}
 
-	public void addLetter(String id, String idRevision, String file) throws IOException, JAXBException, SAXException, TransformerException {
+	public void addLetter(String id, String idRevision, String file)
+			throws IOException, JAXBException, SAXException, TransformerException {
 		NaucniRad naucniRad = findById(id);
 		ProptatnoPismo pismo = propratnoPismoUtils.unmarshalling(file);
 	
 		// String pismoStr = propratnoPismoUtils.marshalling(pismo);
 		// propratnoPismoUtils.validation(pismoStr);
-		
-		String newId="";
-		
-		
+
+		String newId = "";
+
 		for (Revizija revizija : naucniRad.getRevizija()) {
 			if (revizija.getId().equals(idRevision) && revizija.getProptatnoPismo() == null) {
 				pismo.setId("PP" + revizija.getId().substring(2, revizija.getId().length()));
@@ -474,6 +472,52 @@ public class NaucniRadService {
 				
 		return "RV" + revizije.size() + 1;
 
+	}
+
+	public List<Work> search(String param) {
+		List<NaucniRad> radovi = nrRepositoryXML.search(param);
+		List<Work> works = new ArrayList<>();
+
+		for (NaucniRad naucniRad : radovi) {
+			List<Revision> revisions = new ArrayList<>();
+			for (Revizija revizija : naucniRad.getRevizija()) {
+				if (revizija.getStatus().equals(TStatus.ODOBRODENO)) {
+					revisions
+							.add(new Revision(revizija.getId(), revizija.getNaslov(), revizija.getStatus().toString()));
+				}
+			}
+
+			if (!revisions.isEmpty()) {
+				works.add(new Work(naucniRad.getId(), revisions));
+			}
+		}
+		return works;
+	}
+
+	public List<Work> searchAuthor(String username, String param) throws IOException, JAXBException {
+		String korisnikStr = korisnici2Service.pronadjiKorisnickoIme(username);
+		Korisnik korisnik = korisnici2Service.unmarshalling(korisnikStr);
+
+		List<NaucniRad> radovi = nrRepositoryXML.searchAuthor(korisnik.getIme(), korisnik.getPrezime(),
+				korisnik.getEmail(), param);
+		List<Work> works = new ArrayList<>();
+
+		for (NaucniRad naucniRad : radovi) {
+			List<Revision> revisions = new ArrayList<>();
+			for (Revizija revizija : naucniRad.getRevizija()) {
+				for (Autor autor : revizija.getAutor()) {
+					if (autor.getIme().equals(korisnik.getIme()) && autor.getPrezime().equals(korisnik.getPrezime())
+							&& autor.getEmail().equals(korisnik.getEmail()))
+						revisions.add(
+								new Revision(revizija.getId(), revizija.getNaslov(), revizija.getStatus().toString()));
+				}
+			}
+
+			if (!revisions.isEmpty()) {
+				works.add(new Work(naucniRad.getId(), revisions));
+			}
+		}
+		return works;
 	}
 
 	public Long count() {

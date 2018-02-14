@@ -1,27 +1,41 @@
 import { Component, OnInit } from '@angular/core';
+import { WorkService } from '../works/work.service';
 import { Router } from '@angular/router';
 
-import { WorkService } from './work.service';
-
-
 @Component({
-  selector: 'app-works',
-  templateUrl: './works.component.html',
-  styleUrls: ['./works.component.css']
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
 })
-export class WorksComponent implements OnInit {
+export class SearchComponent implements OnInit {
+  flag: boolean;
+  param: string;
   works: WorkInterface[];
 
   constructor(private workService: WorkService,
               private router: Router) { }
 
   ngOnInit() {
-    this.getWorks();
+    this.flag = true;
   }
 
-  getWorks(){
-    this.workService.getWorks()
+  onChange(deviceValue) {
+    console.log(deviceValue);
+    if (deviceValue === "Napredna pretraga"){
+      this.flag = false;
+      this.works = [];
+    }else{
+      this.flag = true;
+      this.works = [];
+    }
+  }
+
+  find(){
+    console.log(this.param);
+
+    this.workService.search(this.param)
         .then(works => this.works = works);
+
   }
 
   gotoWorkDetail(id: string){

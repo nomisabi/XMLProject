@@ -1,0 +1,66 @@
+<br>
+<div style="float: right; width: 200px;" class="form-group">
+  <select class="form-control" (change)="onChange($event.target.value)">
+      <option selected="selected">Osnovna pretraga</option>
+      <option>Napredna pretraga</option> 
+</select>
+</div>
+
+
+    <form name="form" (ngSubmit)="find()" *ngIf="flag">
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-5 border">
+          <div class="border-title">Pretraga po tekstu</div>
+          <div class="container-4">
+            <input type="text" class="form-control" [(ngModel)]="param" name="param" autofocus>
+          </div>
+        </div>
+        <div class="col-lg-5 border">
+          <div class="border-title">&nbsp;</div>
+          <div class="full-button">
+              <input type="submit"  class="save-button-text" value="Pretrazi">
+          </div>
+        </div>
+      </div> 
+    </form>
+
+    <br><br><br>
+<div class="row">
+  <div class="col-lg-1"></div>
+  <div class="col-lg-10">
+        <table class="table table-hover">
+              <thead>
+              <tr>
+                  <th>#</th>
+                  <th>Revizija</th> 
+              </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let work of works">
+                    <td (click)="gotoWorkDetail(work.id)" style="width: 100px;">{{work.id}}</td>
+                        <td>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Naslov</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let revision of work.revisions">
+                                        <td style="width: 80px;">{{revision.id}}</td>
+                                        <td>{{revision.title| slice: 0:80}}</td>
+                                    </tr>
+                                </tbody>
+                        </table>
+                  </td>
+                </tr>
+            </tbody>
+          </table>
+      <br>
+  </div>   
+</div>
+  

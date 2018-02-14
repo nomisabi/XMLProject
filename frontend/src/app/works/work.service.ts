@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Response, RequestOptions, ResponseContentType } from '@angular/http';
 import { Headers } from '@angular/http/src/headers';
 
@@ -158,6 +158,26 @@ export class WorkService {
     const url = `/api/naucni_radovi/${id}/revizija/${idRevision}/odbaci`;
     return this.http
           .get(url)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
+  search(param: string): Promise<any>{
+    const url = `/api/naucni_radovi`;
+    const httpParams = new HttpParams().set('param', param);
+    return this.http
+          .get(url, {params: httpParams})
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
+  searchAuthor(param: string): Promise<any>{
+    const url = `/api/naucni_radovi/moji`;
+    const httpParams = new HttpParams().set('param', param);
+    return this.http
+          .get(url, {params: httpParams})
           .toPromise()
           .then(res => res)
           .catch(this.handleError);

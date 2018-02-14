@@ -25,8 +25,12 @@ public interface NaucniRadRepository {
 	List<NaucniRad> findByReviewer(String status, String firstName, String lastName, String email)
 			throws IOException, JAXBException;
 
-	public NaucniRad findByReviewerAndID(String status, String email, String id, String idRevision)
+	NaucniRad findByReviewerAndID(String status, String email, String id, String idRevision)
 			throws IOException, JAXBException;
+
+	List<NaucniRad> search(String param);
+
+	List<NaucniRad> searchAuthor(String ime, String prezime, String email, String param);
 
 	// ProductSearchResult findByName(String name);
 

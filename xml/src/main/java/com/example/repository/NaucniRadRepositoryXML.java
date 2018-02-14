@@ -28,7 +28,10 @@ import com.marklogic.client.io.JAXBHandle;
 import com.marklogic.client.io.SearchHandle;
 //import com.marklogic.client.query.KeyValueQueryDefinition;
 import com.marklogic.client.query.MatchDocumentSummary;
+import com.marklogic.client.query.MatchLocation;
+import com.marklogic.client.query.MatchSnippet;
 import com.marklogic.client.query.QueryManager;
+import com.marklogic.client.query.StringQueryDefinition;
 import com.marklogic.client.query.StructuredQueryBuilder;
 import com.marklogic.client.query.StructuredQueryDefinition;
 
@@ -144,6 +147,114 @@ public class NaucniRadRepositoryXML implements NaucniRadRepository {
 			return radovi.get(0);
 		}
 		return null;
+
+	}
+
+	@Override
+	public List<NaucniRad> searchAuthor(String ime, String prezime, String email, String param) {
+		StringQueryDefinition queryDefinition = queryManager.newStringDefinition();
+
+		String criteria = ime + " AND " + prezime + " AND "+ email + " AND " + param;
+		queryDefinition.setCriteria(criteria);
+		queryDefinition.setCollections(COLLECTION_REF);
+		SearchHandle results = queryManager.search(queryDefinition, new SearchHandle());
+
+		// Serialize search results to the standard output
+		MatchDocumentSummary matches[] = results.getMatchResults();
+		System.out.println("[INFO] Showing the results for: " + param + "\n");
+
+		MatchDocumentSummary result;
+		MatchLocation locations[];
+		String text;
+
+		List<NaucniRad> nr = new ArrayList<>();
+		for (MatchDocumentSummary summary : results.getMatchResults()) {
+			JAXBHandle<NaucniRad> contentHandle = getNaucniRadHandle();
+			logger.info("  * found {}", summary.getUri());
+			xmlDocumentManager.read(summary.getUri(), contentHandle);
+			nr.add((NaucniRad) contentHandle.get(NaucniRad.class));
+		}
+		for (int i = 0; i < matches.length; i++) {
+			result = matches[i];
+
+			System.out.println((i + 1) + ". RESULT DETAILS: ");
+			System.out.println("Result URI: " + result.getUri());
+
+			locations = result.getMatchLocations();
+			System.out.println("Document locations matched: " + locations.length + "\n");
+
+			for (MatchLocation location : locations) {
+
+				System.out.print(" - ");
+				for (MatchSnippet snippet : location.getSnippets()) {
+					text = snippet.getText().trim();
+					if (!text.equals("")) {
+						System.out.print(snippet.isHighlighted() ? text.toUpperCase() : text);
+						System.out.print(" ");
+					}
+				}
+				System.out.println("\n - Match location XPath: " + location.getPath());
+				System.out.println();
+			}
+
+			System.out.println();
+		}
+
+		return nr;
+
+	}
+
+	@Override
+	public List<NaucniRad> search(String param) {
+		StringQueryDefinition queryDefinition = queryManager.newStringDefinition();
+
+		// String criteria = "Celija2 OR test AND Potpis0";
+		queryDefinition.setCriteria(param);
+		queryDefinition.setCollections(COLLECTION_REF);
+		SearchHandle results = queryManager.search(queryDefinition, new SearchHandle());
+
+		// Serialize search results to the standard output
+		MatchDocumentSummary matches[] = results.getMatchResults();
+		System.out.println("[INFO] Showing the results for: " + param + "\n");
+
+		MatchDocumentSummary result;
+		MatchLocation locations[];
+		String text;
+
+		List<NaucniRad> nr = new ArrayList<>();
+		for (MatchDocumentSummary summary : results.getMatchResults()) {
+			JAXBHandle<NaucniRad> contentHandle = getNaucniRadHandle();
+			logger.info("  * found {}", summary.getUri());
+			xmlDocumentManager.read(summary.getUri(), contentHandle);
+			nr.add((NaucniRad) contentHandle.get(NaucniRad.class));
+		}
+		for (int i = 0; i < matches.length; i++) {
+			result = matches[i];
+
+			System.out.println((i + 1) + ". RESULT DETAILS: ");
+			System.out.println("Result URI: " + result.getUri());
+
+			locations = result.getMatchLocations();
+			System.out.println("Document locations matched: " + locations.length + "\n");
+
+			for (MatchLocation location : locations) {
+
+				System.out.print(" - ");
+				for (MatchSnippet snippet : location.getSnippets()) {
+					text = snippet.getText().trim();
+					if (!text.equals("")) {
+						System.out.print(snippet.isHighlighted() ? text.toUpperCase() : text);
+						System.out.print(" ");
+					}
+				}
+				System.out.println("\n - Match location XPath: " + location.getPath());
+				System.out.println();
+			}
+
+			System.out.println();
+		}
+
+		return nr;
 
 	}
 
