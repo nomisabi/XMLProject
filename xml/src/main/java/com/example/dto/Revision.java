@@ -9,6 +9,7 @@ public class Revision {
 	private String review1;
 	private String review2;
 	private boolean hasLetter;
+	private boolean hasReview;
 	private Review review;
 	private List<Review> reviews;
 	private boolean flag;
@@ -95,6 +96,14 @@ public class Revision {
 
 	public void setFlag(boolean flag) {
 		this.flag = flag;
+	}
+
+	public boolean isHasReview() {
+		return hasReview;
+	}
+
+	public void setHasReview(boolean hasReview) {
+		this.hasReview = hasReview;
 	}
 
 }

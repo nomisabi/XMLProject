@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<nr:ReferencaNaucniRad xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad"
- xmlns:ulog="http://www.ftn.uns.ac.rs/uloge"
+<rc:Recenzija xmlns:au="http://www.ftn.uns.ac.rs/uloge"
+ xmlns:na="http://www.ftn.uns.ac.rs/naucni_rad"
  xmlns:rc="http://www.ftn.uns.ac.rs/recenzija"
- xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi"
  xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo"
+ xmlns:nr="http://www.ftn.uns.ac.rs/naucni_radovi"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.ftn.uns.ac.rs/naucni_rad file:/Users/sabinomi/git/XMLProject/xml/data/xsd/naucni_rad.xsd" Strana="50" IdNaucnogRada="IdNaucnogRada0">
-    <nr:Naucni_rad>ID000</nr:Naucni_rad>
-</nr:ReferencaNaucniRad>
+ xsi:schemaLocation="http://www.ftn.uns.ac.rs/recenzija file:/C:/Users/Nevena%20Djeric/git/XMLProject/xml/data/xsd/recenzija.xsd">
+    <au:Recenzent>
+        <au:Ime>Ime0</au:Ime>
+        <au:Prezime>Prezime0</au:Prezime>
+        <au:Korisnicko_ime>Korisnicko_ime0</au:Korisnicko_ime>
+        <au:Lozinka>Lozinka0</au:Lozinka>
+        <au:Email>Email11</au:Email>
+    </au:Recenzent>
+    <rc:Sadrzaj>
+        <rc:Preporuka>Prihvaten</rc:Preporuka>
+        <rc:Pitanja>
+            <rc:TekstPitanja>TekstPitanja0</rc:TekstPitanja>
+            <rc:Odgovor>Odgovor0</rc:Odgovor>
+        </rc:Pitanja>
+        <rc:KommentarZaAutore>
+            <na:Tekst/>
+        </rc:KommentarZaAutore>
+        <rc:KommentarZaUrednika>
+            <na:Tekst/>
+        </rc:KommentarZaUrednika>
+        <rc:Dodatak>Dodatak111</rc:Dodatak>
+    </rc:Sadrzaj>
+</rc:Recenzija>

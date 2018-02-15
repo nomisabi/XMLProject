@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { WorkService } from '../../works/work.service';
 import { Router } from '@angular/router';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+
+import { WorkService } from '../../works/work.service';
+import { UploadFileService } from '../../home-author/add-work/upload-file.service';
 import * as FileSaver from 'file-saver'; 
 
 @Component({
@@ -10,16 +14,24 @@ import * as FileSaver from 'file-saver';
   styleUrls: ['./work-detail-reviewer.component.css']
 })
 export class WorkDetailReviewerComponent implements OnInit {
+  selectedFiles: FileList
+  currentFileUpload: File
+  progress: { percentage: number } = { percentage: 0 }
 
   work: WorkInterface;
+  flag: boolean;
 
   constructor(private workService:WorkService,
+              private uploadService: UploadFileService,
               private route: ActivatedRoute,
+              private toastr: ToastsManager, 
+              private vcr: ViewContainerRef,
               private router: Router) { 
-    
+    this.toastr.setRootViewContainerRef(vcr);
   }
 
   ngOnInit() {
+    this.flag = false;
     this.getWork();
   }
 
@@ -40,6 +52,11 @@ export class WorkDetailReviewerComponent implements OnInit {
   no(id: string){
     this.workService.disardReview(this.work.id,id)
         .then(() => this.getWork());
+
+  }
+
+  add(){
+    this.flag = true;
 
   }
 
@@ -66,5 +83,34 @@ export class WorkDetailReviewerComponent implements OnInit {
     this.router.navigate(['recenzent/naucniRadovi/'+this.route.snapshot.params['id']+'/xhtml']);
 
   }
+
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+  }
+
+  upload(id: string) {
+    this.progress.percentage = 0;
+ 
+    this.currentFileUpload = this.selectedFiles.item(0)
+    this.uploadService.pushFileReview(this.currentFileUpload,this.work.id, id)
+    .subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress) {
+        this.progress.percentage = Math.round(100 * event.loaded / event.total);
+      } else if (event instanceof HttpResponse) {
+        this.getWork();
+        if (event.status === 200){
+         console.log(event.body);
+          this.toastr.success('Recenzije uspesno poslata.');
+         // this.getWork();
+        }
+      }
+    },
+    error => {
+      this.toastr.error('Greska prilikom slanja recenzije.');
+      this.getWork()});
+ 
+    this.selectedFiles = undefined
+  }
+
 
 }

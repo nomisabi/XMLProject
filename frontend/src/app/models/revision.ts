@@ -5,6 +5,7 @@ interface RevisionInterface{
     review1: string;
     review2: string;
     hasLetter: boolean;
+    hasReview?: boolean;
     review: ReviewInterface;
     reviews: ReviewInterface[];
     flag?: boolean;

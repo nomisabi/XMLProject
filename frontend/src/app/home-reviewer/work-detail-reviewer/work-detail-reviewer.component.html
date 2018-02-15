@@ -19,11 +19,6 @@
   </div>
   <div *ngFor="let revision of work.revisions; let i=index">
       <div class="row">
-        <div class="col-lg-9 main-chart pFont">
-          <p class="title">REVIZIJA {{i+1}}</p>
-        </div>
-      </div>
-      <div class="row">
         <div class="col-lg-9 main-chart">
           <div class="row">
             <div class="col-lg-1"></div>
@@ -45,16 +40,55 @@
               </div>
             </div>
         </div>  
-        <div class="row" *ngIf="revision.review.status ==='PRIHVACEN'">
+        <div class="row" *ngIf="revision.review.status ==='PRIHVACEN' && !flag && !revision.hasReview">
           <div class="col-lg-1"></div>
           <div class="col-lg-5 border">
             <div class="border-title"></div>
             <div class="form-group">
               <button class="btn btn-success"
-              (click)="gotoAddReview(revision.id)">Dodaj recenziju</button>
+              (click)="add()">Dodaj recenziju</button>
             </div>
           </div>
-          
+      </div>  
+      <div class="row" *ngIf="revision.review.status ==='PRIHVACEN' && !flag && revision.hasReview">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-5 border">
+            <div class="border-title"></div>
+            <div class="form-group">
+              <button class="btn btn-success"
+              (click)="add()">Promeni recenziju</button>
+            </div>
+          </div>
+      </div>  
+      <div class="row" *ngIf="revision.review.status ==='PRIHVACEN' && flag">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-5 border">
+            <div class="border-title"></div>
+            <div class="form-group">
+                <label class="btn btn-default">
+                    <input type="file" (change)="selectFile($event)">
+                  </label>
+                  <br>
+                  &nbsp; &nbsp; &nbsp; <b> ILI </b>
+            </div>
+          </div>
+          <div class="col-lg-5 border">
+            <div class="border-title"></div>
+            <div class="form-group">
+                <button class="btn btn-success" [disabled]="!selectedFiles"
+                (click)="upload(revision.id)">Dodaj recenziju</button>
+            </div>
+          </div>
+      </div> 
+      <div class="row" *ngIf="flag">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-5 border">
+            <div class="border-title"></div>
+            <div class="form-group">
+              <button class="btn btn-success"
+              (click)="gotoAddReview(revision.id)">Popuni upitnik</button>
+            </div>
+          </div>
       </div>  
        
         </div>

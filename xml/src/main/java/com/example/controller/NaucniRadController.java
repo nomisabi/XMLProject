@@ -109,6 +109,29 @@ public class NaucniRadController {
 		}
 	}
 
+	@PostMapping("/api/naucni_radovi/{id}/revizija/{id_revizija}/recenzija")
+	public ResponseEntity<String> addRecenzija(@PathVariable("id") String id,
+			@PathVariable("id_revizija") String idRevision, @RequestParam("file") MultipartFile file,
+			HttpServletRequest request) {
+		String token = request.getHeader("X-Auth-Token");
+		String username = tokenUtils.getUsernameFromToken(token);
+		String message = "";
+		try {
+			storageService.deleteAll();
+			storageService.init();
+			storageService.store(file);
+
+			naucniRadService.addReviewUpload(id, idRevision, username, file.getOriginalFilename());
+			storageService.deleteAll();
+
+			return ResponseEntity.status(HttpStatus.OK).body(message);
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			message = "FAIL to upload " + file.getOriginalFilename() + "!";
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+		}
+	}
+
 	@PostMapping("/api/naucni_radovi/{id}/revizije")
 	public ResponseEntity<String> createRevizija(@RequestParam("file") MultipartFile file, @PathVariable String id) {
 		String message = "";
@@ -316,8 +339,15 @@ public class NaucniRadController {
 		String username = tokenUtils.getUsernameFromToken(token);
 		Recenzija recenzija;
 		try {
+
 			recenzija = naucniRadService.getReview(id, idRevision, username);
-			recenzija.setStatus(TStatusRecenzija.PRIHVACEN);
+			if (recenzija == null) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+
+			if (recenzija.getSadrzaj() != null) {
+				return new ResponseEntity<>(recenzija, HttpStatus.OK);
+			}
 			Recenzija.Sadrzaj sadrzaj = new Recenzija.Sadrzaj();
 
 			sadrzaj.setPreporuka(TPreporuka.POTREBNO_MANJAISPRAVKA);
@@ -448,38 +478,35 @@ public class NaucniRadController {
 		return new ResponseEntity<>(works, HttpStatus.OK);
 
 	}
-	
+
 	@RequestMapping(value = "/api/naucni_radovi/search", method = RequestMethod.POST)
-	public ResponseEntity<List<Work>> searchRdf(@RequestBody SearchForm form
-			) throws IOException, JAXBException {
+	public ResponseEntity<List<Work>> searchRdf(@RequestBody SearchForm form) throws IOException, JAXBException {
 
 		System.out.println(form.toString());
 		List<Work> works = naucniRadService.searchRdf(form);
 		return new ResponseEntity<>(works, HttpStatus.OK);
 
 	}
-	
+
 	@RequestMapping(value = "/api/naucni_radovi/search/moji", method = RequestMethod.POST)
-	public ResponseEntity<List<Work>> searchRdfMine(@RequestBody SearchForm form, HttpServletRequest request
-			) throws IOException, JAXBException {
+	public ResponseEntity<List<Work>> searchRdfMine(@RequestBody SearchForm form, HttpServletRequest request)
+			throws IOException, JAXBException {
 
 		String token = request.getHeader("X-Auth-Token");
 		String username = tokenUtils.getUsernameFromToken(token);
-		
+
 		System.out.println(form.toString());
-		try{
-		List<Work> works = naucniRadService.searchRdf(form, username);
+		try {
+			List<Work> works = naucniRadService.searchRdf(form, username);
 			return new ResponseEntity<>(works, HttpStatus.OK);
-		} catch (IOException e)
-		{
-			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
-		} catch (JAXBException e){
-			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+		} catch (IOException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch (JAXBException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
 	}
 
-	
 	@RequestMapping(value = "/api/naucni_radovi/moji", method = RequestMethod.GET, params = { "param" })
 	public ResponseEntity<List<Work>> searchAuthor(@RequestParam("param") String param, HttpServletRequest request) {
 		String token = request.getHeader("X-Auth-Token");

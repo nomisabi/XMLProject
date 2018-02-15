@@ -122,7 +122,7 @@ export class AddReviewComponent implements OnInit {
       }
       console.log(this.revision);
       this.workService.addReview(id,idRevision, this.revision)
-          .then(res => this.router.navigate(['/urednik/naucniRadovi/uObradi']));
+          .then(res => this.location.back());
     }else{
       if (this.review === 2){
         this.toastr.error('Morate izabrati dva recenzenta.');

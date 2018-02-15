@@ -66,6 +66,7 @@ import com.example.repository.NaucniRadRepositoryXML;
 import com.example.utils.NaucniRadUtils;
 import com.example.utils.PropratnoPismoUtils;
 import com.example.utils.RdfJsonUtil;
+import com.example.utils.RecenzijaUtils;
 import com.example.utils.RevizijaUtils;
 import com.example.utils.Utils;
 import com.google.common.base.Charsets;
@@ -88,6 +89,8 @@ public class NaucniRadService {
 	PropratnoPismoUtils propratnoPismoUtils;
 	@Autowired
 	RevizijaUtils revizijaUtils;
+	@Autowired
+	RecenzijaUtils recenzijaUtils;
 	@Autowired
 	Utils utils;
 
@@ -185,6 +188,11 @@ public class NaucniRadService {
 				for (Recenzija recenzija : revizija.getRecenzija()) {
 					if (recenzija.getRecenzent().getId().equals(korisnik.getId())) {
 						revision.setReview(new Review(recenzija.getId(), recenzija.getStatus().toString()));
+						if (recenzija.getSadrzaj() == null) {
+							revision.setHasReview(false);
+						} else {
+							revision.setHasReview(true);
+						}
 					}
 				}
 				revisions.add(revision);
@@ -216,15 +224,11 @@ public class NaucniRadService {
 				for (Recenzija recenzija : revizija.getRecenzija()) {
 					if (recenzija.getRecenzent().getId().equals(korisnik.getId())) {
 						return recenzija;
-
 					}
 				}
-
 			}
 		}
-
 		return null;
-
 	}
 
 	public void addReview(Recenzija rec, String id, String idRevision, String username)
@@ -431,6 +435,27 @@ public class NaucniRadService {
 		// write to database
 		NaucniRadUtils.updateRDF(id);
 
+	}
+
+	public void addReviewUpload(String id, String idRevision, String username, String file)
+			throws IOException, JAXBException, SAXException, TransformerException {
+		NaucniRad naucniRad = findById(id);
+		Recenzija recenzija = recenzijaUtils.unmarshalling(file);
+
+		String korisnikStr = korisnici2Service.pronadjiKorisnickoIme(username);
+		Korisnik korisnik = korisnici2Service.unmarshalling(korisnikStr);
+
+		for (Revizija revizija : naucniRad.getRevizija()) {
+			if (revizija.getId().equals(idRevision)) {
+				for (Recenzija recenzija2 : revizija.getRecenzija()) {
+					if (recenzija2.getRecenzent().getId().equals(korisnik.getId())) {
+						recenzija2.setSadrzaj(recenzija.getSadrzaj());
+						break;
+					}
+				}
+			}
+		}
+		nrRepositoryXML.add(naucniRad);
 	}
 
 	public List<Work> getWorksForReviewer(TStatusRecenzija status, String statusStr, String username)
@@ -840,38 +865,38 @@ public class NaucniRadService {
 
 	public List<Work> searchRdf(SearchForm form) throws IOException, JAXBException {
 		ArrayList<String> list = NaucniRadUtils.search(form);
-		List<Work> works= new ArrayList<Work>();
-		for (String id:list) {
+		List<Work> works = new ArrayList<Work>();
+		for (String id : list) {
 			NaucniRad nr = nrRepositoryXML.findById(id);
 			List<Revision> revs = new ArrayList<Revision>();
-			for (Revizija rev: nr.getRevizija())
-				if (rev.getStatus()==TStatus.ODOBRODENO){
+			for (Revizija rev : nr.getRevizija())
+				if (rev.getStatus() == TStatus.ODOBRODENO) {
 					revs.add(new Revision(rev.getId(), rev.getNaslov(), "ODOBRODENO"));
 				}
-			if (revs.size()!=0)		
+			if (revs.size() != 0)
 				works.add(new Work(id, revs));
-		}	
+		}
 		return works;
 	}
-	
+
 	public List<Work> searchRdf(SearchForm form, String username) throws IOException, JAXBException {
 		String korisnikStr = korisnici2Service.pronadjiKorisnickoIme(username);
 		Korisnik korisnik = korisnici2Service.unmarshalling(korisnikStr);
 		form.setIme(korisnik.getIme());
-		form.setPrezime(korisnik.getPrezime());		
-		
+		form.setPrezime(korisnik.getPrezime());
+
 		ArrayList<String> list = NaucniRadUtils.searchMine(form);
-		List<Work> works= new ArrayList<Work>();
-		for (String id:list) {
+		List<Work> works = new ArrayList<Work>();
+		for (String id : list) {
 			NaucniRad nr = nrRepositoryXML.findById(id);
 			List<Revision> revs = new ArrayList<Revision>();
-			for (Revizija rev: nr.getRevizija())
-				//if (rev.getStatus()==TStatus.ODOBRODENO){
+			for (Revizija rev : nr.getRevizija())
+				// if (rev.getStatus()==TStatus.ODOBRODENO){
 				revs.add(new Revision(rev.getId(), rev.getNaslov(), rev.getStatus().name()));
-				//}
-					
+			// }
+
 			works.add(new Work(id, revs));
-		}	
+		}
 		return works;
 	}
 
