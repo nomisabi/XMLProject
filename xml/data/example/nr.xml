@@ -1,0 +1,309 @@
+<nr:Naucni_rad xmlns="http://www.w3.org/ns/rdfa#" 
+ xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad"
+ xmlns:ulog="http://www.ftn.uns.ac.rs/uloge"
+ xmlns:rec="http://www.ftn.uns.ac.rs/recenzija"
+ xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo"
+ xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.ftn.uns.ac.rs/naucni_rad/ file:/C:/Users/Nevena%20Djeric/git/XMLProject/xml/data/xsd/naucni_rad.xsd" Verzija="50" Id="ID000" vocab="http://www.ftn.uns.ac.rs/naucni_rad/" about="http://www.ftn.uns.ac.rs/naucni_rad/ID000" typeof="nr:NaunciRad" property="verzija" content="50">
+    <nr:Revizija Status="Poslat" Duzina="0" Id="ID001" vocab="http://www.ftn.uns.ac.rs/naucni_rad/revizija/" about="http://www.ftn.uns.ac.rs/naucni_rad/ID000/revizija/RV1" typeof="nr:Revizija">
+        <nr:Naslov property="naslov">Naslov0</nr:Naslov>
+        <ulog:Autor property="autor" vocab="http://www.ftn.uns.ac.rs/naucni_rad/revizija/autor" about="http://www.ftn.uns.ac.rs/naucni_rad/ID000/revizija/RV1/autor/ID002" typeof="ulog:Autor" Id="ID002" content="ID002">
+            <ulog:Ime property="ime">Ime0</ulog:Ime>
+            <ulog:Prezime property="prezime">Prezime0</ulog:Prezime>
+            <ulog:Korisnicko_ime>uros</ulog:Korisnicko_ime>
+            <ulog:Lozinka>Lozinka0</ulog:Lozinka>
+            <ulog:Email property="email">Email11</ulog:Email>
+            <ulog:Biography>Biography0</ulog:Biography>
+            <ulog:Institucija>
+                <ulog:Naziv property="institucija">Naziv0</ulog:Naziv>
+                <ulog:Adresa>
+                    <ulog:Mesto>Mesto0</ulog:Mesto>
+                    <ulog:Postanski_broj>Postanski_</ulog:Postanski_broj>
+                    <ulog:Ulica>Ulica0</ulog:Ulica>
+                    <ulog:Broj>d</ulog:Broj>
+                </ulog:Adresa>
+            </ulog:Institucija>
+        </ulog:Autor>
+        <ulog:Autor property="autor" vocab="http://www.ftn.uns.ac.rs/naucni_rad/revizija/autor" about="http://www.ftn.uns.ac.rs/naucni_rad/ID000/revizija/RV1/autor/ID003" typeof="ulog:Autor" Id="ID003" content="ID003">
+            <ulog:Ime property="ime">Uros</ulog:Ime>
+            <ulog:Prezime property="prezime">Urosevic</ulog:Prezime>
+            <ulog:Korisnicko_ime>uros</ulog:Korisnicko_ime>
+            <ulog:Lozinka>Lozinka0</ulog:Lozinka>
+            <ulog:Email property="email">cupcake.restaurant123@gmail.com</ulog:Email>
+            <ulog:Institucija>
+                <ulog:Naziv property="institucija">Naziv0</ulog:Naziv>
+                <ulog:Adresa>
+                    <ulog:Mesto>Mesto0</ulog:Mesto>
+                    <ulog:Postanski_broj>Postanski_</ulog:Postanski_broj>
+                    <ulog:Ulica>Ulica0</ulog:Ulica>
+                    <ulog:Broj>d</ulog:Broj>
+                </ulog:Adresa>
+            </ulog:Institucija>
+        </ulog:Autor>
+        <ulog:Autor property="autor" vocab="http://www.ftn.uns.ac.rs/naucni_rad/revizija/autor" about="http://www.ftn.uns.ac.rs/naucni_rad/ID000/revizija/RV1/autor/ID004" typeof="ulog:Autor" Id="ID004" content="ID004">
+            <ulog:Ime property="ime">Ime2</ulog:Ime>
+            <ulog:Prezime property="prezime">Prezime2</ulog:Prezime><ulog:Korisnicko_ime>uros</ulog:Korisnicko_ime>
+            <ulog:Lozinka>Lozinka0</ulog:Lozinka>
+            <ulog:Email property="email">Email55</ulog:Email>
+            <ulog:Biography>Biography2</ulog:Biography>
+            <ulog:Institucija>
+                <ulog:Naziv property="institucija">Naziv2</ulog:Naziv>
+                <ulog:Adresa>
+                    <ulog:Mesto>Mesto2</ulog:Mesto>
+                    <ulog:Postanski_broj>Postanski_</ulog:Postanski_broj>
+                    <ulog:Ulica>Ulica2</ulog:Ulica>
+                    <ulog:Broj>d</ulog:Broj>
+                </ulog:Adresa>
+            </ulog:Institucija>
+        </ulog:Autor>
+        <nr:Abstrakt>
+            <nr:StukturiranAbstakt>
+                <nr:Purpose>Purpose1111111111111111111111111111111111111111111</nr:Purpose>
+                <nr:DesignMethodologyApproach>DesignMethodologyApproach1111111111111111111111111</nr:DesignMethodologyApproach>
+                <nr:Findings>Findings111111111111111111111111111111111111111111</nr:Findings>
+                <nr:OriginalityValue>OriginalityValue1111111111111111111111111111111111</nr:OriginalityValue>
+                <nr:ResearchLimitationsImplications>ResearchLimitationsImplications1111111111111111111</nr:ResearchLimitationsImplications>
+                <nr:PracticalImplications>PracticalImplications11111111111111111111111111111</nr:PracticalImplications>
+                <nr:SocialImplications>SocialImplications11111111111111111111111111111111</nr:SocialImplications>
+            </nr:StukturiranAbstakt>
+        </nr:Abstrakt>
+        <nr:Kljucna_rec property="kljucna_rec">Kljucna_rec0</nr:Kljucna_rec>
+        <nr:Kljucna_rec property="kljucna_rec">Kljucna_rec1</nr:Kljucna_rec>
+        <nr:Kljucna_rec property="kljucna_rec">Kljucna_rec2</nr:Kljucna_rec>
+        <nr:Sadrzaj>
+            <nr:Poglavlje Id="I5">
+                <nr:Naziv>Naziv0</nr:Naziv>
+                <nr:Paragraf>
+                    <nr:Figura Natpis="Natpis0" Url="Url0"/>
+                </nr:Paragraf>
+                <nr:Paragraf>
+                    <nr:Tabela>
+                        <nr:Red>
+                            <nr:Celija>Celija0</nr:Celija>
+                            <nr:Celija>Celija1</nr:Celija>
+                            <nr:Celija>Celija2</nr:Celija>
+                        </nr:Red>
+                        <nr:Red>
+                            <nr:Celija>Celija3</nr:Celija>
+                            <nr:Celija>Celija4</nr:Celija>
+                            <nr:Celija>Celija5</nr:Celija>
+                        </nr:Red>
+                        <nr:Red>
+                            <nr:Celija>Celija6</nr:Celija>
+                            <nr:Celija>Celija7</nr:Celija>
+                            <nr:Celija>Celija8</nr:Celija>
+                        </nr:Red>
+                    </nr:Tabela>
+                </nr:Paragraf>
+                <nr:Paragraf>
+                    <nr:Lista Tip="neuređena">
+                        <nr:Stavke Labela="Labela0" Id="Id0"/>
+                        <nr:Stavke Labela="Labela1" Id="Id1"/>
+                        <nr:Stavke Labela="Labela2" Id="Id2"/>
+                    </nr:Lista>
+                </nr:Paragraf>
+            </nr:Poglavlje>
+            <nr:Poglavlje Id="ID000006">
+                <nr:Naziv>Naziv1</nr:Naziv>
+                <nr:Paragraf>
+                    <nr:Figura Natpis="Natpis1" Url="Url1"/>
+                </nr:Paragraf>
+                <nr:Paragraf>
+                    <nr:Tekst>
+                        <nr:Footnote Broj="500">
+                            <nr:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="true" Iskoseno="false" Podvuceno="false">
+                                <nr:Tekstualni_sadzaj>Tekstualni_sadzaj0</nr:Tekstualni_sadzaj>
+                            </nr:ObicanTekst>
+                        </nr:Footnote>
+                        <nr:Citat>
+                            <nr:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="true" Podvuceno="false">
+                                <nr:Tekstualni_sadzaj>Tekstualni_sadzaj2</nr:Tekstualni_sadzaj>
+                            </nr:ObicanTekst>
+                        </nr:Citat>
+                        <nr:Link>
+                            <nr:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="true">
+                                <nr:Tekstualni_sadzaj>naucni rad</nr:Tekstualni_sadzaj>
+                            </nr:ObicanTekst>
+                            <nr:Referenca >
+                                <nr:ReferencaNaucniRad Strana="50" property="referencaNaucniRad" IdNaucnogRada="NR652651" content="NR652651">
+                                </nr:ReferencaNaucniRad>
+                            </nr:Referenca>
+                        </nr:Link>
+                        <nr:Link>
+                            <nr:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <nr:Tekstualni_sadzaj>clanak</nr:Tekstualni_sadzaj>
+                            </nr:ObicanTekst>
+                            <nr:Referenca>
+                                <nr:ReferencaClanak Strana="50">
+                                    <nr:Naziv> Nat Geographic
+                                    </nr:Naziv>
+                                    <nr:Oznak>12
+                                    </nr:Oznak>
+                                    <nr:Izdavac>
+                                        <nr:Naziv>Naziv2</nr:Naziv>
+                                        <ulog:Adresa>
+                                            <ulog:Mesto>Mesto3</ulog:Mesto>
+                                            <ulog:Postanski_broj>Postanski_</ulog:Postanski_broj>
+                                            <ulog:Ulica>Ulica3</ulog:Ulica>
+                                            <ulog:Broj>d</ulog:Broj>
+                                        </ulog:Adresa>
+                                    </nr:Izdavac>
+                                    <nr:Godina>2017</nr:Godina>
+                                </nr:ReferencaClanak>
+                            </nr:Referenca>
+                        </nr:Link>
+                        <nr:Link>
+                            <nr:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <nr:Tekstualni_sadzaj>knjiga</nr:Tekstualni_sadzaj>
+                            </nr:ObicanTekst>
+                            <nr:Referenca>
+                                <nr:ReferencaKnjiga>
+                                    <nr:Naziv>knjiga</nr:Naziv>
+                                    <nr:Autor>xy zw</nr:Autor>
+                                    <nr:Izdavac>
+                                        <nr:Naziv>Iz32423d</nr:Naziv>
+                                        <ulog:Adresa>
+                                            <ulog:Mesto>ns</ulog:Mesto>
+                                            <ulog:Postanski_broj>3234</ulog:Postanski_broj>
+                                            <ulog:Ulica>erewrwe</ulog:Ulica>
+                                            <ulog:Broj>d</ulog:Broj>
+                                        </ulog:Adresa>
+                                    </nr:Izdavac>
+                                    <nr:Godina>2017</nr:Godina>
+                                </nr:ReferencaKnjiga>
+                            </nr:Referenca>
+                        </nr:Link>
+                        <nr:Link>
+                            <nr:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <nr:Tekstualni_sadzaj>pog</nr:Tekstualni_sadzaj>
+                            </nr:ObicanTekst>
+                            <nr:Referenca>
+                                <nr:ReferencaPoglavlja>
+                                    <nr:Poglavlje>pog3</nr:Poglavlje>
+                                </nr:ReferencaPoglavlja>
+                            </nr:Referenca>
+                        </nr:Link>
+                        <nr:Link>
+                            <nr:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <nr:Tekstualni_sadzaj>web</nr:Tekstualni_sadzaj>
+                            </nr:ObicanTekst>
+                            <nr:Referenca>
+                                <nr:ReferencaWeb>
+                                    <nr:Naziv>Naziv0</nr:Naziv>
+                                    <nr:Link>http://www.oxygenxml.com</nr:Link>
+                                    <nr:Datum>2006-05-04</nr:Datum>
+                                </nr:ReferencaWeb>
+                            </nr:Referenca>
+                        </nr:Link>
+                    </nr:Tekst>
+                </nr:Paragraf>
+                <nr:Paragraf>
+                    <nr:Lista Tip="uređena">
+                        <nr:Stavke Labela="Labela3" Id="Id3"/>
+                        <nr:Stavke Labela="Labela4" Id="Id4"/>
+                        <nr:Stavke Labela="Labela5" Id="Id5"/>
+                    </nr:Lista>                    
+                </nr:Paragraf>
+                <nr:Paragraf>
+                    <nr:Tekst>
+                        <nr:Link>
+                            <nr:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <nr:Tekstualni_sadzaj>Jump to I5</nr:Tekstualni_sadzaj>
+                            </nr:ObicanTekst>
+                            <nr:Referenca>
+                                <nr:ReferencaPoglavlja>
+                                    <nr:Poglavlje>I5</nr:Poglavlje>
+                                </nr:ReferencaPoglavlja>
+                            </nr:Referenca>
+                        </nr:Link>
+                    </nr:Tekst>
+                </nr:Paragraf>
+            </nr:Poglavlje>
+            <nr:Poglavlje Id="pog3">
+                <nr:Naziv>Naziv3</nr:Naziv>
+                <nr:Paragraf>
+                    <nr:Tabela>
+                        <nr:Red>
+                            <nr:Celija>Celija9</nr:Celija>
+                            <nr:Celija>Celija10</nr:Celija>
+                            <nr:Celija>Celija11</nr:Celija>
+                        </nr:Red>
+                        <nr:Red>
+                            <nr:Celija>Celija12</nr:Celija>
+                            <nr:Celija>Celija13</nr:Celija>
+                            <nr:Celija>Celija14</nr:Celija>
+                        </nr:Red>
+                        <nr:Red>
+                            <nr:Celija>Celija15</nr:Celija>
+                            <nr:Celija>Celija16</nr:Celija>
+                            <nr:Celija>Celija17</nr:Celija>
+                        </nr:Red>
+                    </nr:Tabela>
+                </nr:Paragraf>
+                <nr:Paragraf>
+                    <nr:Tekst>
+                        <nr:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                            <nr:Tekstualni_sadzaj>Tekstualni_sadzaj3</nr:Tekstualni_sadzaj>
+                        </nr:ObicanTekst>
+                        <nr:Highlight BojaPozadine="blue">
+                            <nr:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <nr:Tekstualni_sadzaj>Tekstualni_sadzaj4</nr:Tekstualni_sadzaj>
+                            </nr:ObicanTekst>
+                        </nr:Highlight>
+                        <nr:Highlight BojaPozadine="red">
+                            <nr:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="false">
+                                <nr:Tekstualni_sadzaj>Tekstualni_sadzaj5</nr:Tekstualni_sadzaj>
+                            </nr:ObicanTekst>
+                        </nr:Highlight>
+                    </nr:Tekst>
+                </nr:Paragraf>
+                <nr:Paragraf>
+                    <nr:Tabela>
+                        <nr:Red>
+                            <nr:Celija>Celija18</nr:Celija>
+                            <nr:Celija>Celija19</nr:Celija>
+                            <nr:Celija>Celija20</nr:Celija>
+                        </nr:Red>
+                        <nr:Red>
+                            <nr:Celija>Celija21</nr:Celija>
+                            <nr:Celija>Celija22</nr:Celija>
+                            <nr:Celija>Celija23</nr:Celija>
+                        </nr:Red>
+                        <nr:Red>
+                            <nr:Celija>Celija24</nr:Celija>
+                            <nr:Celija>Celija25</nr:Celija>
+                            <nr:Celija>Celija26</nr:Celija>
+                        </nr:Red>
+                    </nr:Tabela>
+                </nr:Paragraf>
+            </nr:Poglavlje>
+        </nr:Sadrzaj>
+        <nr:Referenca>
+            <nr:ReferencaClanak Strana="50">
+                <nr:Naziv>
+                </nr:Naziv>
+                <nr:Oznak>
+                </nr:Oznak>
+                <nr:Izdavac>
+                    <nr:Naziv>Naziv4</nr:Naziv>
+                    <ulog:Adresa>
+                        <ulog:Mesto>Mesto4</ulog:Mesto>
+                        <ulog:Postanski_broj>Postanski_</ulog:Postanski_broj>
+                        <ulog:Ulica>Ulica4</ulog:Ulica>
+                        <ulog:Broj>d</ulog:Broj>
+                    </ulog:Adresa>
+                </nr:Izdavac>
+                <nr:Godina>2017</nr:Godina>
+            </nr:ReferencaClanak>
+        </nr:Referenca>
+        <nr:Referenca>
+            <nr:ReferencaNaucniRad Strana="50" property="referencaNaucniRad" IdNaucnogRada="NR652651" content="NR652651">
+            </nr:ReferencaNaucniRad>
+        </nr:Referenca>
+        <nr:Referenca>
+
+        </nr:Referenca>
+    </nr:Revizija>
+</nr:Naucni_rad>
+ 
