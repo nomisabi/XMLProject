@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/propratnoPismo"
+    xmlns="http://www.ftn.uns.ac.rs/propratnoPismo" xmlns:au="http://www.ftn.uns.ac.rs/uloge"
+    xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad">
+
+    <xs:import namespace="http://www.ftn.uns.ac.rs/naucni_rad" schemaLocation="naucni_rad.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/recenzija" schemaLocation="recenzija.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/uloge" schemaLocation="uloge.xsd"/>
+    <xs:element name="ProptatnoPismo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Autor" type="xs:IDREF"/>
+                <xs:element name="Urednik" type="xs:IDREF"/>
+                <xs:element name="Datum" type="xs:date"/>
+                <xs:element name="Sadrzaj">
+                    <xs:complexType>
+                        <xs:choice>
+                            <xs:element name="Rad">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" ref="nr:Tekst"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" name="Rezultat">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element ref="nr:Tekst"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" name="Razlog">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element ref="nr:Tekst"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" name="Recenzent" type="xs:IDREF"/>
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Potpis">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Id" type="xs:ID"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

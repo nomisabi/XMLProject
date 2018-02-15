@@ -20,6 +20,7 @@ export class WorkDetailAuthorComponent implements OnInit {
   addRdf=false;
   rdfText='';
   links=[];
+  ref=[]
 
   constructor(private workService:WorkService,
               private uploadService: UploadFileService,
@@ -46,6 +47,7 @@ export class WorkDetailAuthorComponent implements OnInit {
           console.log(work);
           this.work = work;
           for(let i in this.work.revisions){
+          
             if(this.work.revisions[i].status === 'POTREBNA_IZMENA'){
               this.work.revisions[i].flag = true;
               if (this.work.revisions.length-1 > +i){
@@ -67,6 +69,27 @@ export class WorkDetailAuthorComponent implements OnInit {
               
               
             }
+            if (this.work.revisions[i].reviews!=null){
+              if (this.work.revisions[i].reviews.length!=0)
+              {
+                let x=0;
+                for (let index = 0; index < this.work.revisions[i].reviews.length; index++) {
+                  const element = this.work.revisions[i].reviews[index];
+                  if (element.status=='PRIHVACEN')
+                    {
+                      x=1;
+                      break;
+                    }
+                }
+                if (x==1)
+                  this.ref.push(true);
+                else
+                this.ref.push(false);
+              }
+              else 
+              this.ref.push(false);
+            }else 
+            this.ref.push(false);
           }
         })
   }
@@ -206,7 +229,7 @@ export class WorkDetailAuthorComponent implements OnInit {
 
   gotoGetJSON(){
     this.workService.getRdfJSON(this.route.snapshot.params['id']).then(
-      rdf=> {var blob = new Blob([rdf], {type: "application/json;charset=utf-8"});
+      rdf=> {var blob = new Blob([JSON.stringify(rdf)], {type: "application/json;charset=utf-8"});
       FileSaver.saveAs(blob, "metadata.json");
     }
     )
@@ -215,4 +238,20 @@ export class WorkDetailAuthorComponent implements OnInit {
   goToNaucniRad(id){
     this.router.navigate(['naucniRadovi/',id])
   }
+
+  downloadRec(id){
+    this.workService.getPdfRef(this.route.snapshot.params['id'], id).then(
+      response=>{
+      let blob = new Blob([response], { 
+        type: 'application/pdf' // must match the Accept type
+      });
+
+      var filename = 'reviews.pdf';
+      console.log(blob);
+      console.log(response);
+      FileSaver.saveAs(blob, filename);
+      }
+  )
+  }
+
 }

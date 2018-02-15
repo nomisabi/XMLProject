@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -37,8 +39,12 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.example.dto.Revision;
+import com.example.model.naucni_rad.NaucniRad;
+import com.example.model.naucni_rad.Revizija;
 import com.example.model.recenzija.Recenzija;
 import com.example.model.recenzija.search.RecenzijaSearchResult;
+import com.example.repository.NaucniRadRepositoryXML;
 import com.example.repository.RecenzijaRepositoryXML;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
@@ -48,6 +54,8 @@ import net.sf.saxon.TransformerFactoryImpl;
 @Service
 public class RecenzijaService {
 
+	 @Autowired
+	 protected NaucniRadRepositoryXML nrRepositoryXML;
 	 @Autowired
 	 protected RecenzijaRepositoryXML recenzijaRepositoryXML;
 	 
@@ -128,8 +136,17 @@ public class RecenzijaService {
 			return pdfFile;
 		}
 		
-		public InputStreamResource generatePDF(String id, File pdfFile) throws JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException{
-			Recenzija rec= recenzijaRepositoryXML.findById(id);
+		public InputStreamResource generatePDF(String nrId, String revId, File pdfFile) throws JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException{
+			
+			NaucniRad naucniRad = nrRepositoryXML.findById(nrId);
+			Revizija revision =null;
+			for (Revizija revizija : naucniRad.getRevizija()) {
+				if (revizija.getId().equals(revId)) {
+					revision=revizija;
+				}				
+			}
+			
+			
 
 	    	// Initialize FOP factory object
 	    	FopFactory fopFactory = FopFactory.newInstance(new File("src/main/java/fop.xconf"));
@@ -138,19 +155,19 @@ public class RecenzijaService {
 	    	TransformerFactory transformerFactory = new TransformerFactoryImpl();
 			
 			// Point to the XSL-FO file
-			File xslFile = new File(XSL_FO_FILE);
+			File xslFile = new File(XSL_FO_FILE_NO_RECENZENT);
 
 			// Create transformation source
 			StreamSource transformSource = new StreamSource(xslFile);		
 			
-			JAXBContext jaxbContext = JAXBContext.newInstance(Recenzija.class);
+			JAXBContext jaxbContext = JAXBContext.newInstance(Revizija.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
 			// output pretty printed
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
 			StringWriter sw = new StringWriter();
-			jaxbMarshaller.marshal(rec, sw);
+			jaxbMarshaller.marshal(revision, sw);
 			String xmlString = sw.toString();
 			
 			// Initialize the transformation subject

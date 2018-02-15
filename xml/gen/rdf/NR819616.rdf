@@ -1,0 +1,50 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR819616">
+    <ns29:verzija xmlns:ns29="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">50</ns29:verzija>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR819616/revizija/RV1">
+    <ns30:kategorija xmlns:ns30="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">proba</ns30:kategorija>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR819616/revizija/RV1">
+    <ns31:naslov xmlns:ns31="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naslov0</ns31:naslov>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID003">
+    <ns32:autor xmlns:ns32="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">http://www.ftn.uns.ac.rs/uloge/autor/ID003</ns32:autor>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID003">
+    <ns33:ime xmlns:ns33="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Uros</ns33:ime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID003">
+    <ns34:prezime xmlns:ns34="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Urosevic</ns34:prezime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID003">
+    <ns35:email xmlns:ns35="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">cupcake.restaurant123@gmail.com</ns35:email>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID003">
+    <ns36:institucija xmlns:ns36="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naziv0</ns36:institucija>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID111">
+    <ns37:autor xmlns:ns37="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">http://www.ftn.uns.ac.rs/uloge/autor/ID111</ns37:autor>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID111">
+    <ns38:ime xmlns:ns38="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Ime1</ns38:ime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID111">
+    <ns39:prezime xmlns:ns39="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Prezime1</ns39:prezime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID111">
+    <ns40:email xmlns:ns40="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Email33</ns40:email>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID111">
+    <ns41:institucija xmlns:ns41="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naziv1</ns41:institucija>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR819616/revizija/RV1">
+    <ns42:kljucna_rec xmlns:ns42="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Kljucna_rec0</ns42:kljucna_rec>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR819616/revizija/RV1">
+    <ns43:kljucna_rec xmlns:ns43="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Kljucna_rec1</ns43:kljucna_rec>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR819616/revizija/RV1">
+    <ns44:referencaNaucniRad xmlns:ns44="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">NR224751</ns44:referencaNaucniRad>
+  </rdf:Description>
+</rdf:RDF>

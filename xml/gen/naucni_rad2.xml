@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nr:Naucni_rad xmlns="http://www.w3.org/ns/rdfa#" 
+ xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad"
+ xmlns:ulog="http://www.ftn.uns.ac.rs/uloge"
+ xmlns:rec="http://www.ftn.uns.ac.rs/recenzija"
+ xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo"
+ xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.ftn.uns.ac.rs/naucni_rad/ file:/C:/Users/Nevena%20Djeric/git/XMLProject/xml/data/xsd/naucni_rad.xsd" Verzija="50" Id="ID000" vocab="http://www.ftn.uns.ac.rs/naucni_rad/" about="http://www.ftn.uns.ac.rs/naucni_rad/ID000" typeof="nr:NaunciRad">
+    <nr:Revizija vocab="http://www.ftn.uns.ac.rs/naucni_rad/revizija/" about="http://www.ftn.uns.ac.rs/naucni_rad/ID000/revizija/RV1" typeof="nr:Revizija">
+        <nr:Naslov property="naslov">Naslov0</nr:Naslov>
+        <ulog:Autor property="autor" vocab="http://www.ftn.uns.ac.rs/uloge/autor" about="http://www.ftn.uns.ac.rs/uloge/autor" typeof="ulog:Autor" Id="ID003">
+            <ulog:Ime property="ime">Uros</ulog:Ime>
+            <ulog:Prezime property="prezime">Urosevic</ulog:Prezime>
+            <ulog:Korisnicko_ime>uros</ulog:Korisnicko_ime>
+            <ulog:Lozinka>Lozinka0</ulog:Lozinka>
+            <ulog:Email property="email">cupcake.restaurant123@gmail.com</ulog:Email>
+            <ulog:Institucija>
+                <ulog:Naziv property="institucija">Naziv0</ulog:Naziv>
+                <ulog:Adresa>
+                    <ulog:Mesto>Mesto0</ulog:Mesto>
+                    <ulog:Postanski_broj>Postanski_</ulog:Postanski_broj>
+                    <ulog:Ulica>Ulica0</ulog:Ulica>
+                    <ulog:Broj>d</ulog:Broj>
+                </ulog:Adresa>
+            </ulog:Institucija>
+        </ulog:Autor>
+        <ulog:Autor property="autor" vocab="http://www.ftn.uns.ac.rs/uloge/autor" about="http://www.ftn.uns.ac.rs/uloge/autor" typeof="ulog:Autor" >
+            <ulog:Ime property="ime">Ime1</ulog:Ime>
+            <ulog:Prezime property="prezime">Prezime1</ulog:Prezime>
+            <ulog:Korisnicko_ime>Korisnicko_ime1</ulog:Korisnicko_ime>
+            <ulog:Lozinka>Lozinka1</ulog:Lozinka>
+            <ulog:Email property="email">Email33</ulog:Email>
+            <ulog:Institucija>
+                <ulog:Naziv property="institucija">Naziv1</ulog:Naziv>
+                <ulog:Adresa>
+                    <ulog:Mesto>Mesto1</ulog:Mesto>
+                    <ulog:Postanski_broj>Postanski_</ulog:Postanski_broj>
+                    <ulog:Ulica>Ulica1</ulog:Ulica>
+                    <ulog:Broj>d</ulog:Broj>
+                </ulog:Adresa>
+            </ulog:Institucija>
+        </ulog:Autor>
+        <nr:Abstrakt>
+            <nr:NeStrukturiranAbstrakt>
+                <nr:Tekst>Tekst111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</nr:Tekst>
+            </nr:NeStrukturiranAbstrakt>
+        </nr:Abstrakt>
+        <nr:Kljucna_rec property="kljucna_rec">Kljucna_rec0</nr:Kljucna_rec>
+        <nr:Kljucna_rec property="kljucna_rec">Kljucna_rec1</nr:Kljucna_rec>
+        <nr:Sadrzaj>
+            <nr:Poglavlje Id="I5">
+                <nr:Naziv>Naziv0</nr:Naziv>
+                <nr:Paragraf>
+                    <nr:Lista>
+                        <nr:Stavke/>
+                        <nr:Stavke/>
+                    </nr:Lista>
+                </nr:Paragraf>
+                <nr:Paragraf>
+                    <nr:Tekst/>
+                </nr:Paragraf>
+            </nr:Poglavlje>
+            <nr:Poglavlje Id="I6">
+                <nr:Naziv>Naucni rad</nr:Naziv>
+                <nr:Paragraf>
+                    <nr:Lista>
+                        <nr:Stavke/>
+                        <nr:Stavke/>
+                    </nr:Lista>
+                </nr:Paragraf>
+				<nr:Paragraf>
+		   			<nr:Tekst>
+                        <nr:Link>
+                            <nr:ObicanTekst Velicina="12" Tip="Times New Roman" Boja="black" Naglaseno="false" Iskoseno="false" Podvuceno="true">
+                                <nr:Tekstualni_sadzaj>naucni rad</nr:Tekstualni_sadzaj>
+                            </nr:ObicanTekst>
+                            <nr:Referenca >
+                                <nr:ReferencaNaucniRad Strana="50" IdNaucnogRada="NR224751">
+                                    <nr:Naucni_rad property="referencaNaucniRad">ID000</nr:Naucni_rad>
+                                </nr:ReferencaNaucniRad>
+                            </nr:Referenca>
+                        </nr:Link>
+		    		</nr:Tekst>
+				</nr:Paragraf>
+                <nr:Paragraf>
+                    <nr:Tabela>
+                        <nr:Red>
+                            <nr:Celija>Celija0</nr:Celija>
+                            <nr:Celija>Celija1</nr:Celija>
+                        </nr:Red>
+                        <nr:Red>
+                            <nr:Celija>Celija2</nr:Celija>
+                            <nr:Celija>Celija3</nr:Celija>
+                        </nr:Red>
+                    </nr:Tabela>
+                </nr:Paragraf>
+            </nr:Poglavlje>
+        </nr:Sadrzaj>
+    </nr:Revizija>
+</nr:Naucni_rad>
+

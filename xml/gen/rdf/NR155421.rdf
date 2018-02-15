@@ -1,0 +1,44 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR155421/revizija/RV1">
+    <ns46:naslov xmlns:ns46="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naslov0</ns46:naslov>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor">
+    <ns47:autor xmlns:ns47="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">            <ulog:Ime xmlns:ulog="http://www.ftn.uns.ac.rs/uloge" xmlns="http://www.w3.org/ns/rdfa#" xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad" xmlns:rec="http://www.ftn.uns.ac.rs/recenzija" xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo" xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Uros</ulog:Ime>            <ulog:Prezime xmlns:ulog="http://www.ftn.uns.ac.rs/uloge" xmlns="http://www.w3.org/ns/rdfa#" xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad" xmlns:rec="http://www.ftn.uns.ac.rs/recenzija" xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo" xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Urosevic</ulog:Prezime>            <ulog:Korisnicko_ime xmlns:ulog="http://www.ftn.uns.ac.rs/uloge" xmlns="http://www.w3.org/ns/rdfa#" xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad" xmlns:rec="http://www.ftn.uns.ac.rs/recenzija" xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo" xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">uros</ulog:Korisnicko_ime>            <ulog:Lozinka xmlns:ulog="http://www.ftn.uns.ac.rs/uloge" xmlns="http://www.w3.org/ns/rdfa#" xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad" xmlns:rec="http://www.ftn.uns.ac.rs/recenzija" xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo" xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Lozinka0</ulog:Lozinka>            <ulog:Email xmlns:ulog="http://www.ftn.uns.ac.rs/uloge" xmlns="http://www.w3.org/ns/rdfa#" xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad" xmlns:rec="http://www.ftn.uns.ac.rs/recenzija" xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo" xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">cupcake.restaurant123@gmail.com</ulog:Email>            <ulog:Institucija xmlns:ulog="http://www.ftn.uns.ac.rs/uloge" xmlns="http://www.w3.org/ns/rdfa#" xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad" xmlns:rec="http://www.ftn.uns.ac.rs/recenzija" xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo" xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">                <ulog:Naziv>Naziv0</ulog:Naziv>                <ulog:Adresa>                    <ulog:Mesto>Mesto0</ulog:Mesto>                    <ulog:Postanski_broj>Postanski_</ulog:Postanski_broj>                    <ulog:Ulica>Ulica0</ulog:Ulica>                    <ulog:Broj>d</ulog:Broj>                </ulog:Adresa>            </ulog:Institucija>        </ns47:autor>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor">
+    <ns48:ime xmlns:ns48="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Uros</ns48:ime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor">
+    <ns49:prezime xmlns:ns49="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Urosevic</ns49:prezime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor">
+    <ns50:email xmlns:ns50="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">cupcake.restaurant123@gmail.com</ns50:email>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor">
+    <ns51:institucija xmlns:ns51="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naziv0</ns51:institucija>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor">
+    <ns52:autor xmlns:ns52="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">            <ulog:Ime xmlns:ulog="http://www.ftn.uns.ac.rs/uloge" xmlns="http://www.w3.org/ns/rdfa#" xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad" xmlns:rec="http://www.ftn.uns.ac.rs/recenzija" xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo" xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Ime1</ulog:Ime>            <ulog:Prezime xmlns:ulog="http://www.ftn.uns.ac.rs/uloge" xmlns="http://www.w3.org/ns/rdfa#" xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad" xmlns:rec="http://www.ftn.uns.ac.rs/recenzija" xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo" xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Prezime1</ulog:Prezime>            <ulog:Korisnicko_ime xmlns:ulog="http://www.ftn.uns.ac.rs/uloge" xmlns="http://www.w3.org/ns/rdfa#" xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad" xmlns:rec="http://www.ftn.uns.ac.rs/recenzija" xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo" xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Korisnicko_ime1</ulog:Korisnicko_ime>            <ulog:Lozinka xmlns:ulog="http://www.ftn.uns.ac.rs/uloge" xmlns="http://www.w3.org/ns/rdfa#" xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad" xmlns:rec="http://www.ftn.uns.ac.rs/recenzija" xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo" xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Lozinka1</ulog:Lozinka>            <ulog:Email xmlns:ulog="http://www.ftn.uns.ac.rs/uloge" xmlns="http://www.w3.org/ns/rdfa#" xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad" xmlns:rec="http://www.ftn.uns.ac.rs/recenzija" xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo" xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Email33</ulog:Email>            <ulog:Institucija xmlns:ulog="http://www.ftn.uns.ac.rs/uloge" xmlns="http://www.w3.org/ns/rdfa#" xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad" xmlns:rec="http://www.ftn.uns.ac.rs/recenzija" xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo" xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">                <ulog:Naziv>Naziv1</ulog:Naziv>                <ulog:Adresa>                    <ulog:Mesto>Mesto1</ulog:Mesto>                    <ulog:Postanski_broj>Postanski_</ulog:Postanski_broj>                    <ulog:Ulica>Ulica1</ulog:Ulica>                    <ulog:Broj>d</ulog:Broj>                </ulog:Adresa>            </ulog:Institucija>        </ns52:autor>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor">
+    <ns53:ime xmlns:ns53="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Ime1</ns53:ime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor">
+    <ns54:prezime xmlns:ns54="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Prezime1</ns54:prezime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor">
+    <ns55:email xmlns:ns55="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Email33</ns55:email>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor">
+    <ns56:institucija xmlns:ns56="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naziv1</ns56:institucija>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR155421/revizija/RV1">
+    <ns57:kljucna_rec xmlns:ns57="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Kljucna_rec0</ns57:kljucna_rec>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR155421/revizija/RV1">
+    <ns58:kljucna_rec xmlns:ns58="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Kljucna_rec1</ns58:kljucna_rec>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR155421/revizija/RV1">
+    <ns59:referencaNaucniRad xmlns:ns59="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">I5c</ns59:referencaNaucniRad>
+  </rdf:Description>
+</rdf:RDF>

@@ -92,7 +92,7 @@ public class RecenzijaController {
         }
     }
     
-    @RequestMapping(value = "api/recenzije/{id}/download", method = RequestMethod.GET, produces = "application/pdf")
+  /*  @RequestMapping(value = "api/recenzije/{id}/download", method = RequestMethod.GET, produces = "application/pdf")
     public ResponseEntity<InputStreamResource> downloadPDFFile(@PathVariable("id") String id)
             throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {
     	
@@ -103,7 +103,7 @@ public class RecenzijaController {
                 .contentLength(pdfFile.length())
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(resource);
-    }
+    }*/
     
 
     
@@ -133,4 +133,17 @@ public class RecenzijaController {
             throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {  	  
         return recenzijaService.generateHTMLNoRecenzent(id);
     }	
+    
+    @RequestMapping(value = "api/naunci_rad/{nrId}/revizija/{revId}/recenzije/download", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<InputStreamResource> downloadPDFFile(@PathVariable("nrId") String nrId, @PathVariable("revId") String revId)
+            throws IOException, JAXBException, SAXException, TransformerException, ParserConfigurationException {
+    	
+    	File pdfFile=recenzijaService.createFile();
+    	InputStreamResource resource = recenzijaService.generatePDF(nrId, revId, pdfFile);
+        return ResponseEntity
+                .ok()
+                .contentLength(pdfFile.length())
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
+    }
 }

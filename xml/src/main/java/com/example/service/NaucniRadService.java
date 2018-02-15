@@ -50,6 +50,7 @@ import org.xml.sax.SAXException;
 
 import com.example.dto.Review;
 import com.example.dto.Revision;
+import com.example.dto.SearchForm;
 import com.example.dto.Work;
 import com.example.korisnici.Korisnik;
 import com.example.model.naucni_rad.NaucniRad;
@@ -835,6 +836,35 @@ public class NaucniRadService {
 		}
 
 		return updated;
+	}
+
+	public List<Work> searchRdf(SearchForm form) throws IOException, JAXBException {
+		ArrayList<String> list = NaucniRadUtils.search(form);
+		List<Work> works= new ArrayList<Work>();
+		for (String id:list) {
+			NaucniRad nr = nrRepositoryXML.findById(id);
+			List<Revision> rev = new ArrayList<Revision>();
+			
+			works.add(new Work(id, new ArrayList<>()));
+		}	
+		return works;
+	}
+	
+	public List<Work> searchRdf(SearchForm form, String username) throws IOException, JAXBException {
+		String korisnikStr = korisnici2Service.pronadjiKorisnickoIme(username);
+		Korisnik korisnik = korisnici2Service.unmarshalling(korisnikStr);
+		form.setIme(korisnik.getIme());
+		form.setPrezime(korisnik.getPrezime());		
+		
+		ArrayList<String> list = NaucniRadUtils.search(form);
+		List<Work> works= new ArrayList<Work>();
+		for (String id:list) {
+			NaucniRad nr = nrRepositoryXML.findById(id);
+			List<Revision> rev = new ArrayList<Revision>();
+			
+			works.add(new Work(id, new ArrayList<>()));
+		}	
+		return works;
 	}
 
 }

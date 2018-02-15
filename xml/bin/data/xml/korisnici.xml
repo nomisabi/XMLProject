@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ko:korisnici xmlns:ko="http://www.ftn.uns.ac.rs/korisnici"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.ftn.uns.ac.rs/korisnici ../xsd/korisnici.xsd">
+	<ko:korisnik Id="ID001">
+		<ko:ime>Petar</ko:ime>
+		<ko:prezime>Petrovic</ko:prezime>
+		<ko:korisnicko_ime>pero</ko:korisnicko_ime>
+		<ko:lozinka>pero</ko:lozinka>
+		<ko:email>WVyolNVCr9.R01w9x</ko:email>
+		<ko:uloga>UREDNIK</ko:uloga>
+		<ko:domen>domen0</ko:domen>
+		<ko:domen>domen1</ko:domen>
+	</ko:korisnik>
+	<ko:korisnik Id="ID002">
+		<ko:ime>Milan</ko:ime>
+		<ko:prezime>Milanovic</ko:prezime>
+		<ko:korisnicko_ime>mile</ko:korisnicko_ime>
+		<ko:lozinka>mile</ko:lozinka>
+		<ko:email>f</ko:email>
+		<ko:uloga>RECENZENT</ko:uloga>
+		<ko:domen>domen0</ko:domen>
+		<ko:domen>domen1</ko:domen>
+	</ko:korisnik>
+	<ko:korisnik Id="ID003">
+		<ko:ime>Uros</ko:ime>
+		<ko:prezime>Urosevic</ko:prezime>
+		<ko:korisnicko_ime>uros</ko:korisnicko_ime>
+		<ko:lozinka>uros</ko:lozinka>
+		<ko:email>cupcake.restaurant123@gmail.com</ko:email>
+		<ko:uloga>AUTOR</ko:uloga>
+		<ko:domen>domen0</ko:domen>
+		<ko:domen>domen1</ko:domen>
+	</ko:korisnik>
+	<ko:korisnik Id="ID004">
+		<ko:ime>Ivana</ko:ime>
+		<ko:prezime>Ivanovic</ko:prezime>
+		<ko:korisnicko_ime>iva</ko:korisnicko_ime>
+		<ko:lozinka>iva</ko:lozinka>
+		<ko:email>PKTrhvbR9EQEGWEgTg_</ko:email>
+		<ko:uloga>RECENZENT</ko:uloga>
+		<ko:domen>domen0</ko:domen>
+		<ko:domen>domen1</ko:domen>
+	</ko:korisnik>
+	<ko:korisnik Id="ID005">
+		<ko:ime>Marko</ko:ime>
+		<ko:prezime>Markovic</ko:prezime>
+		<ko:korisnicko_ime>mare</ko:korisnicko_ime>
+		<ko:lozinka>mare</ko:lozinka>
+		<ko:email>mare@mare</ko:email>
+		<ko:uloga>RECENZENT</ko:uloga>
+		<ko:domen>Kljucna_rec0</ko:domen>
+		<ko:domen>domen1</ko:domen>
+	</ko:korisnik>
+	
+</ko:korisnici>

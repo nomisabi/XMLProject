@@ -36,11 +36,7 @@
 	</target>
 	
 	<target name="generate_classes_1" depends="init">
-<<<<<<< HEAD
-		<xjc schema="${data.dir}/xsd/ProtpratnoPismo.xsd" destdir="${gen.dir}"/>
-=======
-		<xjc schema="${data.dir}/xsd/korisnici.xsd" destdir="${gen.dir}"/>
->>>>>>> branch 'master' of https://github.com/nomisabi/XMLProject.git
+		<xjc schema="${data.dir}/xsd/naucni_rad.xsd" destdir="${gen.dir}"/>
 	</target>
 
 	<target name="generate_all" depends="generate_classes_1"/>

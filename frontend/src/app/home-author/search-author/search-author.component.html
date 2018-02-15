@@ -27,7 +27,64 @@
       </div> 
     </form>
 
-    <br><br><br>
+    <form name="form" (ngSubmit)="find2()" *ngIf="!flag">
+      <br>
+      <br>
+      <div class="row">
+          <div class="col-lg-1"></div>
+        <div class="col-lg-5 "><div class="border-title">Rad</div></div>
+      </div>
+      
+      <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-5 border">
+          <div class="border-title">Kategorija</div>
+          <div class="container-4">
+            <input type="text" class="form-control" [(ngModel)]="searchForm.kategorija" name="kategorija" autofocus>
+          </div>
+        </div>
+        <div class="col-lg-5 border">
+          <div class="border-title">verzija</div>
+          <div class="container-4">
+            <input type="text" class="form-control" [(ngModel)]="searchForm.verzija" name="verzija" >
+          </div>
+        </div>
+      </div> 
+      <div class="row">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-5 border">
+            <div class="border-title">Kljucna rec</div>
+            <div class="container-4">
+              <input type="text" class="form-control" [(ngModel)]="searchForm.kljucna_rec" name="kljucna_rec" >
+            </div>
+          </div>
+          <div class="col-lg-5 border">
+          </div>
+        </div>  
+        <div class="row">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-5 border">
+            <div class="border-title">Mod trazenje</div>
+            <div class="border-desc">
+              <input type="radio" id="AND"
+              name="contact" value="AND" checked (change)="selectAnd()">
+             <label for="AND">SVAKI (i) </label>
+         
+             <input type="radio" id="OR"
+              name="contact" value="OR" (change)="selectOr()">
+             <label for="OR">bar jedan (ili)</label>
+            </div>
+          </div>
+          <div class="col-lg-5 border">
+              <div class="border-title">&nbsp;</div>
+              <div class="full-button">
+                  <input type="submit"  class="save-button-text" value="Pretrazi">
+              </div>
+          </div>
+        </div> 
+    </form>
+
+  <br><br><br>
 <div class="row">
   <div class="col-lg-1"></div>
   <div class="col-lg-10">

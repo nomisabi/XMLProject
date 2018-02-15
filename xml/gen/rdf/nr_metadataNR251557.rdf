@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR251557/revizija/RV1">
+    <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">ID111</autor>
+    <email xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Email33</email>
+    <ime xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Ime1</ime>
+    <institucija xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naziv1</institucija>
+    <kategorija xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">proba</kategorija>
+    <kljucna_rec xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Kljucna_rec0</kljucna_rec>
+    <kljucna_rec xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Kljucna_rec1</kljucna_rec>
+    <naslov xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naslov0</naslov>
+    <prezime xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Prezime1</prezime>
+    <referencaNaucniRad xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">NR224751</referencaNaucniRad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR251557/revizija/RV1/autor/ID003">
+    <autor xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">ID003</autor>
+    <email xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">cupcake.restaurant123@gmail.com</email>
+    <ime xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Uros</ime>
+    <institucija xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naziv0</institucija>
+    <prezime xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Urosevic</prezime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR251557">
+    <verzija xmlns="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">50</verzija>
+  </rdf:Description>
+</rdf:RDF>

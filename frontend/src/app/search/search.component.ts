@@ -11,9 +11,20 @@ export class SearchComponent implements OnInit {
   flag: boolean;
   param: string;
   works: WorkInterface[];
+  searchForm: SearchForm;
 
   constructor(private workService: WorkService,
-              private router: Router) { }
+              private router: Router) {
+      this.searchForm={
+        ime:'',
+        prezime:'',
+        institucija:'',
+        verzija:'',
+        kljucna_rec:'',
+        kategorija:'',
+        mod:'and'
+      }
+  }
 
   ngOnInit() {
     this.flag = true;
@@ -38,6 +49,13 @@ export class SearchComponent implements OnInit {
 
   }
 
+  find2(){
+    console.log(JSON.stringify(this.searchForm));
+    this.workService.searchForm(this.searchForm)
+      .then(works => this.works = works);
+
+  }
+
   gotoWorkDetail(id: string){
     if(this.router.url.startsWith('/urednik')){
       this.router.navigate([`/urednik/naucniRadovi/${id}`]);
@@ -47,5 +65,16 @@ export class SearchComponent implements OnInit {
       this.router.navigate([`/naucniRadovi/${id}`]);
     }
   }
+
+  selectAnd(){
+    console.log('and');
+    this.searchForm.mod='and';
+  }
+
+  selectOr(){
+    console.log('or');
+    this.searchForm.mod='or';
+  }
+
 
 }

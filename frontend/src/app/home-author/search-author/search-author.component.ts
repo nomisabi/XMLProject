@@ -13,9 +13,21 @@ export class SearchAuthorComponent implements OnInit {
   flag: boolean;
   param: string;
   works: WorkInterface[];
+  searchForm: SearchForm;
 
   constructor(private workService: WorkService,
-              private router: Router) { }
+              private router: Router) 
+    {
+      this.searchForm={
+        ime:'',
+        prezime:'',
+        institucija:'',
+        verzija:'',
+        kljucna_rec:'',
+        kategorija:'',
+        mod:'and'
+      }
+    }
 
   ngOnInit() {
     this.flag = true;
@@ -44,4 +56,20 @@ export class SearchAuthorComponent implements OnInit {
     this.router.navigate([`/autor/naucniRadovi/${id}`]);
   }
 
+  selectAnd(){
+    console.log('and');
+    this.searchForm.mod='and';
+  }
+
+  selectOr(){
+    console.log('or');
+    this.searchForm.mod='or';
+  }
+
+  find2(){
+    console.log(JSON.stringify(this.searchForm));
+    this.workService.searchFormAuthor(this.searchForm)
+      .then(works => this.works = works);
+
+  }
 }

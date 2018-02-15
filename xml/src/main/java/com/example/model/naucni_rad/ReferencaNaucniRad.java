@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
+
 /**
  * <p>Java class for anonymous complex type.
  * 
@@ -27,9 +28,6 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="Naucni_rad" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
- *       &lt;/sequence>
  *       &lt;attribute name="Strana">
  *         &lt;simpleType>
  *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}integer">
@@ -37,6 +35,7 @@ import javax.xml.bind.annotation.XmlType;
  *           &lt;/restriction>
  *         &lt;/simpleType>
  *       &lt;/attribute>
+ *       &lt;attribute name="IdNaucnogRada" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -45,42 +44,14 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "naucniRad"
-})
+@XmlType(name = "")
 @XmlRootElement(name = "ReferencaNaucniRad")
 public class ReferencaNaucniRad {
 
-    @XmlElement(name = "Naucni_rad", required = true)
-    @XmlIDREF
-    @XmlSchemaType(name = "IDREF")
-    protected Object naucniRad;
     @XmlAttribute(name = "Strana")
     protected BigInteger strana;
-
-    /**
-     * Gets the value of the naucniRad property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
-     */
-    public Object getNaucniRad() {
-        return naucniRad;
-    }
-
-    /**
-     * Sets the value of the naucniRad property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
-     */
-    public void setNaucniRad(Object value) {
-        this.naucniRad = value;
-    }
+    @XmlAttribute(name = "IdNaucnogRada")
+    protected String idNaucnogRada;
 
     /**
      * Gets the value of the strana property.
@@ -104,6 +75,30 @@ public class ReferencaNaucniRad {
      */
     public void setStrana(BigInteger value) {
         this.strana = value;
+    }
+
+    /**
+     * Gets the value of the idNaucnogRada property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getIdNaucnogRada() {
+        return idNaucnogRada;
+    }
+
+    /**
+     * Sets the value of the idNaucnogRada property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setIdNaucnogRada(String value) {
+        this.idNaucnogRada = value;
     }
 
 }

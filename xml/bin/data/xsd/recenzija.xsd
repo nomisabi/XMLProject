@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/recenzija"
+    xmlns:rc="http://www.ftn.uns.ac.rs/recenzija" xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad"
+    xmlns:ulog="http://www.ftn.uns.ac.rs/uloge">
+    <xs:import namespace="http://www.ftn.uns.ac.rs/naucni_rad" schemaLocation="naucni_rad.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/uloge" schemaLocation="uloge.xsd"/>
+    <xs:element name="Recenzija">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ulog:Recenzent"/>
+                <xs:element name="Sadrzaj">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Preporuka" type="rc:TPreporuka"/>
+                            <xs:element maxOccurs="unbounded" name="Pitanja">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="TekstPitanja">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:minLength value="5"/>
+                                                  <xs:maxLength value="100"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element maxOccurs="1" minOccurs="1" name="Odgovor">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:minLength value="1"/>
+                                                  <xs:maxLength value="50"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="KommentarZaAutore">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element ref="nr:Tekst"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="KommentarZaUrednika">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element ref="nr:Tekst"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Dodatak">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="10"/>
+                                        <xs:maxLength value="300"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Id" type="xs:ID"/>
+            <xs:attribute name="Status" type="rc:TStatusRecenzija" default="Ceka se"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="TPreporuka">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Prihvaten"/>
+            <xs:enumeration value="Odbijen"/>
+            <xs:enumeration value="PotrebnoVecaispravka"/>
+            <xs:enumeration value="PotrebnoManjaispravka"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TStatusRecenzija">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Ceka se"/>
+            <xs:enumeration value="Prihvacen"/>
+            <xs:enumeration value="Odbijen"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

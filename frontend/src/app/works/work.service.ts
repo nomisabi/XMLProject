@@ -173,6 +173,25 @@ export class WorkService {
           .catch(this.handleError);
   }
 
+
+  searchForm(form: SearchForm): Promise<any>{
+    const url = `/api/naucni_radovi/search`;
+    return this.http
+          .post(url, form)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
+  searchFormAuthor(form: SearchForm): Promise<any>{
+    const url = `/api/naucni_radovi/search/moji`;
+    return this.http
+          .post(url, form)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+  }
+
   searchAuthor(param: string): Promise<any>{
     const url = `/api/naucni_radovi/moji`;
     const httpParams = new HttpParams().set('param', param);
@@ -254,6 +273,19 @@ export class WorkService {
     let httpHeaders:HttpHeaders = new HttpHeaders({"Accept": 'application/pdf','Content-Type':'application/pdf'});
     
     const url = `/api/naunci_rad/${id}/revizija/${revId}/protpatnoPismo/download`;
+    return this.http
+          .get(url, {headers:httpHeaders, responseType:'blob' })
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+
+          
+  }
+
+  getPdfRef(id: string, revId:string):Promise<any>{
+    let httpHeaders:HttpHeaders = new HttpHeaders({"Accept": 'application/pdf','Content-Type':'application/pdf'});
+    
+    const url = `/api/naunci_rad/${id}/revizija/${revId}/recenzije/download`;
     return this.http
           .get(url, {headers:httpHeaders, responseType:'blob' })
           .toPromise()

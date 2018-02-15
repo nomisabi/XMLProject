@@ -1,39 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pp:ProptatnoPismo xmlns:na="http://www.ftn.uns.ac.rs/naucni_rad"
+<nr:ReferencaNaucniRad xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad"
  xmlns:ulog="http://www.ftn.uns.ac.rs/uloge"
  xmlns:rc="http://www.ftn.uns.ac.rs/recenzija"
+ xmlns:na="http://www.ftn.uns.ac.rs/naucni_radovi"
  xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo"
- xmlns:nr="http://www.ftn.uns.ac.rs/naucni_radovi"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.ftn.uns.ac.rs/propratnoPismo file:/C:/Users/Nevena%20Djeric/git/XMLProject/xml/data/xsd/naucni_rad.xsd">
-    <ulog:Autor>
-        <ulog:Ime>Ime0</ulog:Ime>
-        <ulog:Prezime>Prezime0</ulog:Prezime>
-        <ulog:Korisnicko_ime>Korisnicko_ime0</ulog:Korisnicko_ime>
-        <ulog:Lozinka>Lozinka0</ulog:Lozinka>
-        <ulog:Email>Email11</ulog:Email>
-        <ulog:Institucija>
-            <ulog:Naziv>Naziv0</ulog:Naziv>
-            <ulog:Adresa>
-                <ulog:Mesto>Mesto0</ulog:Mesto>
-                <ulog:Postanski_broj>Postanski_</ulog:Postanski_broj>
-                <ulog:Ulica>Ulica0</ulog:Ulica>
-                <ulog:Broj>d</ulog:Broj>
-            </ulog:Adresa>
-        </ulog:Institucija>
-    </ulog:Autor>
-    <ulog:Urednik>
-        <ulog:Ime>Ime1</ulog:Ime>
-        <ulog:Prezime>Prezime1</ulog:Prezime>
-        <ulog:Korisnicko_ime>Korisnicko_ime1</ulog:Korisnicko_ime>
-        <ulog:Lozinka>Lozinka1</ulog:Lozinka>
-        <ulog:Email>Email33</ulog:Email>
-    </ulog:Urednik>
-    <pp:Datum>2006-05-04</pp:Datum>
-    <pp:Sadrzaj>
-        <pp:Rad>Rad0</pp:Rad>
-        <pp:Rezultat>Rezultat0</pp:Rezultat>
-        <pp:Razlog>Razlog0</pp:Razlog>
-    </pp:Sadrzaj>
-    <pp:Potpis>Potpis0</pp:Potpis>
-</pp:ProptatnoPismo>
+ xsi:schemaLocation="http://www.ftn.uns.ac.rs/naucni_rad file:/Users/sabinomi/git/XMLProject/xml/data/xsd/naucni_rad.xsd" Strana="50" IdNaucnogRada="IdNaucnogRada0">
+    <nr:Naucni_rad>ID000</nr:Naucni_rad>
+</nr:ReferencaNaucniRad>

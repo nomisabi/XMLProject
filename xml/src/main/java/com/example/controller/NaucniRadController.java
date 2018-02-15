@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.dto.Revision;
+import com.example.dto.SearchForm;
 import com.example.dto.Work;
 import com.example.model.naucni_rad.NaucniRad;
 import com.example.model.naucni_rad.Revizija;
@@ -447,7 +448,38 @@ public class NaucniRadController {
 		return new ResponseEntity<>(works, HttpStatus.OK);
 
 	}
+	
+	@RequestMapping(value = "/api/naucni_radovi/search", method = RequestMethod.POST)
+	public ResponseEntity<List<Work>> searchRdf(@RequestBody SearchForm form
+			) throws IOException, JAXBException {
 
+		System.out.println(form.toString());
+		List<Work> works = naucniRadService.searchRdf(form);
+		return new ResponseEntity<>(works, HttpStatus.OK);
+
+	}
+	
+	@RequestMapping(value = "/api/naucni_radovi/search/moji", method = RequestMethod.POST)
+	public ResponseEntity<List<Work>> searchRdfMine(@RequestBody SearchForm form, HttpServletRequest request
+			) throws IOException, JAXBException {
+
+		String token = request.getHeader("X-Auth-Token");
+		String username = tokenUtils.getUsernameFromToken(token);
+		
+		System.out.println(form.toString());
+		try{
+		List<Work> works = naucniRadService.searchRdf(form, username);
+			return new ResponseEntity<>(works, HttpStatus.OK);
+		} catch (IOException e)
+		{
+			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+		} catch (JAXBException e){
+			return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	
 	@RequestMapping(value = "/api/naucni_radovi/moji", method = RequestMethod.GET, params = { "param" })
 	public ResponseEntity<List<Work>> searchAuthor(@RequestParam("param") String param, HttpServletRequest request) {
 		String token = request.getHeader("X-Auth-Token");

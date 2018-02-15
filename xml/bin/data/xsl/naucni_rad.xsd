@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/naucni_rad"
+    xmlns:nr="http://www.ftn.uns.ac.rs/naucni_rad" xmlns:ulog="http://www.ftn.uns.ac.rs/uloge"
+    xmlns:rec="http://www.ftn.uns.ac.rs/recenzija"
+    xmlns:pp="http://www.ftn.uns.ac.rs/propratnoPismo">
+    <xs:import namespace="http://www.ftn.uns.ac.rs/uloge" schemaLocation="uloge.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/recenzija" schemaLocation="recenzija.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/propratnoPismo"
+        schemaLocation="ProtpratnoPismo.xsd"/>
+    <xs:element name="Naucni_rad">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="1" ref="nr:Revizija"/>
+            </xs:sequence>
+            <xs:attribute name="Verzija" use="required">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="Id" type="xs:ID" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Referenca">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element ref="nr:ReferencaClanak"/>
+                <xs:element ref="nr:ReferencaKnjiga"/>
+                <xs:element ref="nr:ReferencaWeb"/>
+                <xs:element ref="nr:ReferencaNaucniRad"/>
+                <xs:element ref="nr:ReferencaPoglavlja"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Izdavac">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Naziv">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="5"/>
+                            <xs:maxLength value="200"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element ref="ulog:Adresa"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="TStatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Poslat"/>
+            <xs:enumeration value="U obradi"/>
+            <xs:enumeration value="Odobrodeno"/>
+            <xs:enumeration value="Odbijen"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TTipLista">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="neuređena"/>
+            <xs:enumeration value="uređena"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="Poglavlje">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Naziv">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="5"/>
+                            <xs:maxLength value="200"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Paragraf" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:choice>
+                            <xs:element ref="nr:Tekst"/>
+                            <xs:element name="Figura">
+                                <xs:complexType>
+                                    <xs:attribute name="Natpis" type="xs:string"/>
+                                    <xs:attribute name="Url" type="xs:string"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element ref="nr:Tabela"> </xs:element>
+                            <xs:element ref="nr:Lista"/>
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element ref="nr:Poglavlje" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="Id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:ID">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="20"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Lista">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="Stavke">
+                    <xs:complexType>
+                        <xs:attribute name="Labela">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:minLength value="1"/>
+                                    <xs:maxLength value="30"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="Id" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="nr:Lista"/>
+            </xs:sequence>
+            <xs:attribute default="neuređena" name="Tip" type="nr:TTipLista"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="Font">
+        <xs:attribute name="Velicina" type="xs:integer" default="12"/>
+        <xs:attribute default="Times New Roman" name="Tip" type="xs:string"/>
+        <xs:attribute default="black" name="Boja" type="xs:string"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="FontStil">
+        <xs:attribute default="false" name="Naglaseno" type="xs:boolean"/>
+        <xs:attribute default="false" name="Iskoseno" type="xs:boolean"/>
+        <xs:attribute default="false" name="Podvuceno" type="xs:boolean"/>
+    </xs:attributeGroup>
+    <xs:element name="Tekst">
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded" minOccurs="0">
+                <xs:element ref="nr:ObicanTekst"/>
+                <xs:element name="Highlight">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="nr:ObicanTekst"/>
+                        </xs:sequence>
+                        <xs:attribute name="BojaPozadine" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Citat">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="nr:ObicanTekst"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Link">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="nr:ObicanTekst"/>
+                            <xs:element ref="nr:Referenca"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="MatematickaForma">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="nr:ObicanTekst"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Footnote">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="nr:ObicanTekst"/>
+                        </xs:sequence>
+                        <xs:attribute name="Broj">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:integer">
+                                    <xs:minInclusive value="1"/>
+                                    <xs:maxInclusive value="1000"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element ref="nr:Tekst"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ObicanTekst">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Tekstualni_sadzaj" type="xs:string"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="nr:Font"/>
+            <xs:attributeGroup ref="nr:FontStil"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Revizija">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Naslov">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="1000"/>
+                            <xs:minLength value="5"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" ref="ulog:Autor"/>
+                <xs:element name="Abstrakt">
+                    <xs:complexType>
+                        <xs:choice>
+                            <xs:element ref="nr:NeStrukturiranAbstrakt"/>
+                            <xs:element ref="nr:StukturiranAbstakt"/>
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" name="Kljucna_rec">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="50"/>
+                            <xs:minLength value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Sadrzaj">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" ref="nr:Poglavlje"> </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="nr:Referenca"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="rec:Recenzija"/>
+                <xs:element maxOccurs="1" minOccurs="0" ref="pp:ProptatnoPismo"/>
+            </xs:sequence>
+            <xs:attribute default="Poslat" name="Status" type="nr:TStatus" use="optional"/>
+            <xs:attribute name="Duzina" type="xs:integer"/>
+            <xs:attribute name="Id" type="xs:ID"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Tabela">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element form="qualified" maxOccurs="unbounded" name="Red">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="Celija">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="0"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="StukturiranAbstakt">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Purpose">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="50"/>
+                            <xs:maxLength value="1000"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="DesignMethodologyApproach">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="50"/>
+                            <xs:maxLength value="1000"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Findings">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="50"/>
+                            <xs:maxLength value="1000"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="OriginalityValue">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="50"/>
+                            <xs:maxLength value="1000"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ResearchLimitationsImplications">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="50"/>
+                                <xs:maxLength value="1000"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="PracticalImplications">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="50"/>
+                                <xs:maxLength value="1000"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="SocialImplications">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="50"/>
+                                <xs:maxLength value="1000"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="NeStrukturiranAbstrakt">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Tekst">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="200"/>
+                            <xs:maxLength value="10000"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReferencaPoglavlja">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Poglavlje" type="xs:IDREF"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReferencaKnjiga">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Naziv"/>
+                <xs:element name="Autor"/>
+                <xs:element ref="nr:Izdavac"/>
+                <xs:element name="Godina"/>
+            </xs:sequence>
+            <xs:attribute name="Strana">
+                <xs:simpleType>
+                    <xs:restriction base="xs:integer">
+                        <xs:minInclusive value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReferencaWeb">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Naziv" type="xs:string"/>
+                <xs:element name="Link">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="http://[a-zA-Z]+"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Datum" type="xs:date"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReferencaClanak">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Naziv"/>
+                <xs:element name="Oznak"/>
+                <xs:element ref="nr:Izdavac"/>
+                <xs:element name="Godina"/>
+            </xs:sequence>
+            <xs:attribute name="Strana">
+                <xs:simpleType>
+                    <xs:restriction base="xs:integer">
+                        <xs:minInclusive value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReferencaNaucniRad">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Naucni_rad" type="xs:IDREF"/>
+            </xs:sequence>
+            <xs:attribute name="Strana">
+                <xs:simpleType>
+                    <xs:restriction base="xs:integer">
+                        <xs:minInclusive value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

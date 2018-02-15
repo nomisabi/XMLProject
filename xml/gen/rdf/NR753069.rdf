@@ -1,0 +1,50 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR753069">
+    <ns13:verzija xmlns:ns13="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">50</ns13:verzija>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR753069/revizija/RV1">
+    <ns14:kategorija xmlns:ns14="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">proba</ns14:kategorija>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR753069/revizija/RV1">
+    <ns15:naslov xmlns:ns15="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naslov0</ns15:naslov>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID003">
+    <ns16:autor xmlns:ns16="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">ID003</ns16:autor>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID003">
+    <ns17:ime xmlns:ns17="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Uros</ns17:ime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID003">
+    <ns18:prezime xmlns:ns18="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Urosevic</ns18:prezime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID003">
+    <ns19:email xmlns:ns19="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">cupcake.restaurant123@gmail.com</ns19:email>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID003">
+    <ns20:institucija xmlns:ns20="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naziv0</ns20:institucija>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID111">
+    <ns21:autor xmlns:ns21="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">ID001</ns21:autor>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID111">
+    <ns22:ime xmlns:ns22="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Ime1</ns22:ime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID111">
+    <ns23:prezime xmlns:ns23="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Prezime1</ns23:prezime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID111">
+    <ns24:email xmlns:ns24="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Email33</ns24:email>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/uloge/autor/ID111">
+    <ns25:institucija xmlns:ns25="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Naziv1</ns25:institucija>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR753069/revizija/RV1">
+    <ns26:kljucna_rec xmlns:ns26="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Kljucna_rec0</ns26:kljucna_rec>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR753069/revizija/RV1">
+    <ns27:kljucna_rec xmlns:ns27="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Kljucna_rec1</ns27:kljucna_rec>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/naucni_rad/NR753069/revizija/RV1">
+    <ns28:referencaNaucniRad xmlns:ns28="http://www.w3.org/ns/rdfa#" rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">NR224751</ns28:referencaNaucniRad>
+  </rdf:Description>
+</rdf:RDF>

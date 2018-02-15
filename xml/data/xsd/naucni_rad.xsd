@@ -56,7 +56,7 @@
             <xs:enumeration value="U obradi"/>
             <xs:enumeration value="Odobrodeno"/>
             <xs:enumeration value="Odbijen"/>
-             <xs:enumeration value="Obrisan"/>
+            <xs:enumeration value="Obrisan"/>
             <xs:enumeration value="Potrebna izmena"/>
         </xs:restriction>
     </xs:simpleType>
@@ -390,9 +390,6 @@
     </xs:element>
     <xs:element name="ReferencaNaucniRad">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element name="Naucni_rad" type="xs:IDREF"/>
-            </xs:sequence>
             <xs:attribute name="Strana">
                 <xs:simpleType>
                     <xs:restriction base="xs:integer">
@@ -400,6 +397,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>
+            <xs:attribute name="IdNaucnogRada" type="xs:string"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="ReferencaRecenzija">
