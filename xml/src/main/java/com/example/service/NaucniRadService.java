@@ -843,9 +843,13 @@ public class NaucniRadService {
 		List<Work> works= new ArrayList<Work>();
 		for (String id:list) {
 			NaucniRad nr = nrRepositoryXML.findById(id);
-			List<Revision> rev = new ArrayList<Revision>();
-			
-			works.add(new Work(id, new ArrayList<>()));
+			List<Revision> revs = new ArrayList<Revision>();
+			for (Revizija rev: nr.getRevizija())
+				if (rev.getStatus()==TStatus.ODOBRODENO){
+					revs.add(new Revision(rev.getId(), rev.getNaslov(), "ODOBRODENO"));
+				}
+			if (revs.size()!=0)		
+				works.add(new Work(id, revs));
 		}	
 		return works;
 	}
@@ -856,13 +860,17 @@ public class NaucniRadService {
 		form.setIme(korisnik.getIme());
 		form.setPrezime(korisnik.getPrezime());		
 		
-		ArrayList<String> list = NaucniRadUtils.search(form);
+		ArrayList<String> list = NaucniRadUtils.searchMine(form);
 		List<Work> works= new ArrayList<Work>();
 		for (String id:list) {
 			NaucniRad nr = nrRepositoryXML.findById(id);
-			List<Revision> rev = new ArrayList<Revision>();
-			
-			works.add(new Work(id, new ArrayList<>()));
+			List<Revision> revs = new ArrayList<Revision>();
+			for (Revizija rev: nr.getRevizija())
+				//if (rev.getStatus()==TStatus.ODOBRODENO){
+				revs.add(new Revision(rev.getId(), rev.getNaslov(), rev.getStatus().name()));
+				//}
+					
+			works.add(new Work(id, revs));
 		}	
 		return works;
 	}

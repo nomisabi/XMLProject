@@ -17,11 +17,15 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
 
 import com.example.dto.SearchForm;
 import com.example.model.naucni_rad.NaucniRad;
+import com.example.model.naucni_rad.Revizija;
+import com.example.model.naucni_rad.TStatus;
+import com.example.repository.NaucniRadRepositoryXML;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.marklogic.client.DatabaseClient;
 import com.marklogic.client.DatabaseClientFactory;
@@ -41,7 +45,8 @@ import com.marklogic.client.semantics.SPARQLQueryManager;
 @Component
 public class NaucniRadUtils {
 	
-
+	@Autowired
+	protected static NaucniRadRepositoryXML nrRepositoryXML;
 	private static final String NR_GRAPH_URI = "example/naucni_rad/metadata";
 	
 	private JAXBContext getNaucniRadContext() throws JAXBException {
@@ -316,6 +321,22 @@ public class NaucniRadUtils {
 		return second[0];
 	}
 	
+	private static String getNaucniRadWithRv(String path) throws IOException, JAXBException{
+		String[] first= path.split("/naucni_rad/");
+		String[] second= first[1].split("/revizija/");
+		String id= second[0];
+		String[] third= second[1].split("/");
+		String revId= third[0];
+		NaucniRad nr= nrRepositoryXML.findById(id);
+		if (nr!=null)
+			for (Revizija rev: nr.getRevizija())
+				if (rev.equals(revId)){
+					if (rev.getStatus()==TStatus.ODOBRODENO)
+						return id;
+				}
+		return null;
+	}
+	
 	private static String getNaucniRadNR(String path){
 		String[] first= path.split("/naucni_rad/");
 		return first[1];
@@ -332,7 +353,7 @@ public class NaucniRadUtils {
 		}
 	}
 	
-	public static ArrayList<String> search(SearchForm form) throws IOException {
+	public static ArrayList<String> searchMine(SearchForm form) throws IOException {
 		
 		DatabaseClient client2= DatabaseClientFactory.newClient("localhost", 8000, "admin", "admin",
 				DatabaseClientFactory.Authentication.DIGEST);
@@ -453,6 +474,170 @@ public class NaucniRadUtils {
 			for ( JsonNode row : tuples ) {
 				String subject = row.path("s").path("value").asText();
 				works2.add(getNaucniRad(subject));				
+			}
+			
+			works = new ArrayList<String>(works1);
+			works.retainAll(works2);
+			
+		}
+
+		client2.release();
+		
+		System.out.println("[INFO] End.");
+		return works;
+	}
+	
+	public static ArrayList<String> search(SearchForm form) throws IOException, JAXBException {
+		
+		DatabaseClient client2= DatabaseClientFactory.newClient("localhost", 8000, "admin", "admin",
+				DatabaseClientFactory.Authentication.DIGEST);
+		
+		// Create a SPARQL query manager to query RDF datasets
+		SPARQLQueryManager sparqlQueryManager = client2.newSPARQLQueryManager();
+						
+		// Initialize Jackson results handle
+		JacksonHandle resultsHandle = new JacksonHandle();
+		resultsHandle.setMimetype(SPARQLMimeTypes.SPARQL_JSON);
+
+		ArrayList<String> works= new ArrayList<String>();
+		
+		if (form.getMod().equals("and")){
+			// klucna rec i kategorija
+			SPARQLQueryDefinition query = sparqlQueryManager.newQueryDefinition("SELECT * WHERE {?s ?p ?o . ?s ?p2 ?o2 . FILTER regex(str(?o), ?i) . FILTER regex(str(?p), \"kljucna_rec\") . FILTER regex(str(?o2), ?i2) . FILTER regex(str(?p2), \"kategorija\").}")
+			.withBinding("i", form.getKljucna_rec()).withBinding("i2", form.getKategorija());
+			
+			resultsHandle = sparqlQueryManager.executeSelect(query, resultsHandle);
+			ArrayList<String> works1= new ArrayList<String>();
+			if (resultsHandle.get().path("results").path("bindings")!=null)
+				{JsonNode tuples = resultsHandle.get().path("results").path("bindings");
+				for ( JsonNode row : tuples ) {
+					String subject = row.path("s").path("value").asText();
+					String id ="";
+					try{
+					id = getNaucniRadWithRv(subject);
+					} catch (Exception e){
+						id = getNaucniRad(subject);
+					}
+					if (id!=null)
+						if (!works1.contains(id))
+							works1.add(id);				
+				}
+			}
+			// ime i prezime
+			query = sparqlQueryManager.newQueryDefinition("SELECT * WHERE {?s ?p ?o . ?s ?p2 ?o2 . FILTER regex(str(?o), ?i) . FILTER regex(str(?p), \"ime\") . FILTER regex(str(?o2), ?i2) . FILTER regex(str(?p2), \"prezime\")}")
+					.withBinding("i", form.getIme()).withBinding("i2", form.getPrezime());
+				
+			resultsHandle = sparqlQueryManager.executeSelect(query, resultsHandle);
+			ArrayList<String> works2= new ArrayList<String>();
+			if (resultsHandle.get().path("results").path("bindings")!=null){
+				JsonNode tuples = resultsHandle.get().path("results").path("bindings");
+				for ( JsonNode row : tuples ) {
+					String subject = row.path("s").path("value").asText();
+					if (subject.contains("naucni_rad")){
+						String id="";
+						try{
+						id = getNaucniRadWithRv(subject);
+						} catch (Exception e){
+						id = getNaucniRad(subject);
+						}
+						if (id!=null)
+							if (!works2.contains(id))
+								works2.add(id);			
+					}
+			}}
+			
+			// institucija
+			query = sparqlQueryManager.newQueryDefinition("SELECT * WHERE {?s ?p ?o . FILTER regex(str(?o), ?i) . FILTER regex(str(?p), \"institucija\").}")
+			.withBinding("i",form.getInstitucija());
+			
+			resultsHandle = sparqlQueryManager.executeSelect(query, resultsHandle);
+			ArrayList<String> works3= new ArrayList<String>();
+				if (resultsHandle.get().path("results").path("bindings")!=null){
+				JsonNode tuples = resultsHandle.get().path("results").path("bindings");
+				for ( JsonNode row : tuples ) {
+					String subject = row.path("s").path("value").asText();
+					if (subject.contains("naucni_rad")){
+						
+						String id = "";
+						try{
+						id= getNaucniRadWithRv(subject);
+						} catch (Exception e){
+							id= getNaucniRad(subject);
+						}
+						if (id!=null)
+							if (!works3.contains(id))
+								works3.add(id);			
+					}			
+				}}
+		
+			//verzija
+			query = sparqlQueryManager.newQueryDefinition("SELECT * WHERE {?s ?p ?o . FILTER regex(str(?o), ?i) . FILTER regex(str(?p), \"verzija\").}")
+			.withBinding("i", form.getVerzija());
+			
+			resultsHandle = sparqlQueryManager.executeSelect(query, resultsHandle);
+			ArrayList<String> works4= new ArrayList<String>();
+			JsonNode tuples = resultsHandle.get().path("results").path("bindings");
+			for ( JsonNode row : tuples ) {
+				String subject = row.path("s").path("value").asText();
+				String id = getNaucniRad(subject);
+				if (!works4.contains(id))
+					works4.add(id);						
+			}
+			works = new ArrayList<String>(works1);
+			works.retainAll(works2);
+			works.retainAll(works3);
+			works.retainAll(works4);
+			System.out.println(works.size());
+			
+		}else{
+			if (form.getIme().equals(""))
+				form.setIme("111111343111111111111111");
+			if (form.getPrezime().equals(""))
+				form.setPrezime("111111343111111111111111");
+			if (form.getVerzija().equals(""))
+				form.setVerzija("111111343111111111111111");
+			if (form.getInstitucija().equals(""))
+				form.setInstitucija("111111343111111111111111");
+			if (form.getKategorija().equals(""))
+				form.setKategorija("111111343111111111111111");
+			if (form.getKljucna_rec().equals(""))
+				form.setKljucna_rec("111111343111111111111111");
+			
+			SPARQLQueryDefinition query = sparqlQueryManager.newQueryDefinition("SELECT * WHERE {{?s ?p ?o .FILTER regex(str(?o), ?i) . FILTER regex(str(?p), \"verzija\") .}"
+					+ "UNION {?s ?p ?o .FILTER regex(str(?o), ?i2) . FILTER regex(str(?p), \"kategorija\") .} "
+					+ "UNION {?s ?p ?o .FILTER regex(str(?o), ?i3) . FILTER regex(str(?p), \"kljucna_rec\") .}} ")
+					.withBinding("i", form.getVerzija()).withBinding("i2", form.getKategorija()).withBinding("i3", form.getKljucna_rec());
+			
+			resultsHandle = sparqlQueryManager.executeSelect(query, resultsHandle);
+			ArrayList<String> works1= new ArrayList<String>();
+			JsonNode tuples = resultsHandle.get().path("results").path("bindings");
+			for ( JsonNode row : tuples ) {
+				String subject = row.path("s").path("value").asText();
+				try{
+					String id= getNaucniRadWithRv(subject);
+					if (id!=null)
+						works1.add(id);
+				} catch (Exception e){
+					works1.add(getNaucniRad(subject));
+				}
+				
+			}
+			
+			SPARQLQueryDefinition query2 = sparqlQueryManager.newQueryDefinition("SELECT * WHERE {{?s ?p ?o .FILTER regex(str(?o), ?i4) . FILTER regex(str(?p), \"ime\") .}"
+					+ "UNION {?s ?p ?o .FILTER regex(str(?o), ?i5) . FILTER regex(str(?p), \"prezime\") .} "
+					+ "UNION {?s ?p ?o .FILTER regex(str(?o), ?i6) . FILTER regex(str(?p), \"institucija\") .}} ")
+					.withBinding("i4", form.getIme()).withBinding("i5", form.getPrezime()).withBinding("i6", form.getInstitucija());
+	
+			resultsHandle = sparqlQueryManager.executeSelect(query, resultsHandle);
+			ArrayList<String> works2= new ArrayList<String>();
+			tuples = resultsHandle.get().path("results").path("bindings");
+			for ( JsonNode row : tuples ) {
+				String subject = row.path("s").path("value").asText();
+				if (subject.contains("revizija")){
+					String id= getNaucniRadWithRv(subject);
+					if (id!=null)
+						works2.add(getNaucniRad(subject));	
+				}
 			}
 			
 			works = new ArrayList<String>(works1);
